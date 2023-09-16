@@ -1,0 +1,20 @@
+SET hello world
+SET numb 20
+INCRBY numb 24
+GET numb
+STRLEN hello
+APPEND hello " !!!"
+GETRANGE hello 0 4
+EXISTS numb
+RENAME numb number
+EXPIRE number 10
+LPUSH mylist 1 2 3 4 5
+LRANGE mylist 0 -1
+LPOP mylist
+LLEN mylist
+TYPE mylist
+HSET bike model Deimos brand Ergonom price 6000
+HGET bike price
+TTL number
+FLUSHDB
+GET hello

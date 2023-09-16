@@ -1,0 +1,100 @@
+keys *
+ttl hello
+ttl employee:1:last_name
+ttl employee:1:first_name
+ttl naoexiste
+set expira 10
+expire expira 20
+ttl expira
+persist expira
+ttl expira
+expire expira 5
+ttl expira
+keys *
+LINDEX hello
+LINDEX hello 0
+LPUSH lista ola
+keys *
+LPUSH lista adeus
+keys *
+get lista
+RPUSH byebye
+RPUSH lista byebye
+RPOP lista
+help LINSERT
+LINSERT lista BEFORE ola
+LINSERT lista BEFORE new ola
+LINSERT lista BEFORE novo ola
+LINSERT lista AFTER novo ola
+llen lista
+LINSERT lista BEFORE ola new
+LINSERT lista BEFORE ola novo
+LINSERT lista AFTER ola new_after
+LPOP lista
+LINDEX lista 0
+LINDEX lista 1
+LINDEX lista 2
+LINDEX lista 3
+LINDEX lista 4
+llen lista
+type lista
+SADD set numb1
+SADD set numb2
+SADD set [numb1 numb2 numb3]
+SADD set oi
+SREM numb1
+SREM set numb1
+SREM set oi
+SISMEMBER oi
+SISMEMBER set oi
+SISMEMBER set numb2
+SISMEMBER set numb1
+SISMEMBER set numb3
+SADD set numb3
+SISMEMBER set numb3
+SISMEMBER set numb2
+SISMEMBER set numb1
+SMEMBERS set
+SCARD set
+KEYS *
+SMEMBERS lista
+SMEMBERS set
+SUNION set
+SADD newSet 1 2 3 4 numb3
+SMEMBERS newSet
+SUNION set newSet
+SINTER set newSet
+SDIFF set newSet
+SDIFF newSet set
+KEYS *
+hset bike:1 model Deimos brand Ergonom type 'Enduro bikes' price 4972
+keys *
+HGET bike:1 price
+HGET bike:1 model
+HGET bike:1 type
+HEXISTS bike:1 brand
+HEXISTS bike:1 wheels
+HKEYS bike:1
+HVALS bike:1
+HLEN bike:1
+ZADD sortedSet 2000 doisMil
+ZADD sortedSet 1000 mil
+ZADD sortedSet 20 vinte
+ZADD sortedSet 50 cinquenta
+ZRANGE sortedSet 0 -1
+ZSCORE sortedSet vinte
+ZSCORE sortedSet mil
+ZSCORE sortedSet sete
+ZINCRBY sortedSet 2 vinte
+ZCARD sortedSet
+ACL CAT
+XADD temperatures:us-ny:10007 * temp_f 87.2 pressure 29.69 humidity 46
+XRANGE temperatures:us-ny:10007 1658354934941-0 + COUNT 2
+MULTI
+EXEC
+KEYS *
+set key 2
+MULTI
+INCR key
+ exec
+get key

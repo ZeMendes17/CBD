@@ -1,0 +1,1 @@
+cat ex2/CBD-12-batch.txt | redis-cli
