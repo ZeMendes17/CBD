@@ -1,4 +1,4 @@
-package com.mycompany.app;
+package redis.ex3;
 
 import static org.junit.Assert.assertTrue;
 
