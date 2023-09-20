@@ -1,21 +1,37 @@
 package redis.ex3;
 
 import redis.clients.jedis.Jedis;
+import java.util.Set; 
 
 public class SimplePost {
-    public static String USERS_KEY = "users"; // Key set for users' name
-    public static void main(String[] args) {
-        Jedis jedis = new Jedis();
-        // some users
-        String[] users = { "Ana", "Pedro", "Maria", "Luis" };
-        // jedis.del(USERS_KEY); // remove if exists to avoid wrong type
-        for (String user : users)
-            jedis.sadd(USERS_KEY, user);
+ 
+	private Jedis jedis;
+	public static String USERS = "users"; // Key set for users' name
+	
+	public SimplePost() {
+		this.jedis = new Jedis("redis://localhost:6379");
+	}
+ 
+	public void saveUser(String username) {
+		jedis.sadd(USERS, username);
+	}
+	public Set<String> getUser() {
+		return jedis.smembers(USERS);
+	}
+	
+	public Set<String> getAllKeys() {
+		return jedis.keys("*");
+	}
+ 
+	public static void main(String[] args) {
+		SimplePost board = new SimplePost();
+		// set some users
+		String[] users = { "Ana", "Pedro", "Maria", "Luis" };
+		for (String user: users) 
+			board.saveUser(user);
 
-        // jedis.smembers(USERS_KEY).forEach(System.out::println); // does not work dunno why
-        for (String string : jedis.smembers(USERS_KEY)) {
-            System.out.println(string);
-        }
-        jedis.close();
-    }
+		board.getAllKeys().forEach(System.out::println);
+
+		board.getUser().forEach(System.out::println);
+	}
 }
