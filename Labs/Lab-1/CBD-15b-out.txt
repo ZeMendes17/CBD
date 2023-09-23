@@ -1,0 +1,295 @@
+Welcome to our Service System!
+
+Please enter your username: ZeMendes
+You can order up to 10 products in 300 seconds.
+
+
+What would you like to do?
+
+1. Order products
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+2
+
+Available products:
+1. sweatshirt
+2. t-shirt
+3. jeans
+4. jacket
+5. shoes
+6. socks
+7. scarf
+8. hat
+9. sunglasses
+
+What would you like to do?
+
+1. Order products
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+3
+
+You have no orders yet.
+
+What would you like to do?
+
+1. Order products
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+4
+
+You can order products.
+
+What would you like to do?
+
+1. Order products
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+1
+
+Available products:
+1. sweatshirt
+2. t-shirt
+3. jeans
+4. jacket
+5. shoes
+6. socks
+7. scarf
+8. hat
+9. sunglasses
+
+Please enter the number of the product you want to order: 7
+How many would you like to order? 2
+You ordered 2 - scarf
+
+What would you like to do?
+
+1. Order products
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+4
+
+You can order products.
+
+What would you like to do?
+
+1. Order products
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+1
+
+Available products:
+1. sweatshirt
+2. t-shirt
+3. jeans
+4. jacket
+5. shoes
+6. socks
+7. scarf
+8. hat
+9. sunglasses
+
+Please enter the number of the product you want to order: 1
+How many would you like to order? 4
+You ordered 4 - sweatshirt
+
+What would you like to do?
+
+1. Order products
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+3
+
+Your orders:
+1. scarf - 2
+2. sweatshirt - 4
+
+What would you like to do?
+
+1. Order products
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+1
+
+Available products:
+1. sweatshirt
+2. t-shirt
+3. jeans
+4. jacket
+5. shoes
+6. socks
+7. scarf
+8. hat
+9. sunglasses
+
+Please enter the number of the product you want to order: 5
+How many would you like to order? 5
+You cannot order more than 10 products!
+Try again.
+
+What would you like to do?
+
+1. Order products
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+3
+
+Your orders:
+1. scarf - 2
+2. sweatshirt - 4
+
+What would you like to do?
+
+1. Order products
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+1
+
+Available products:
+1. sweatshirt
+2. t-shirt
+3. jeans
+4. jacket
+5. shoes
+6. socks
+7. scarf
+8. hat
+9. sunglasses
+
+Please enter the number of the product you want to order: 5
+How many would you like to order? 4
+You ordered 4 - shoes
+
+What would you like to do?
+
+1. Order products
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+1
+
+You cannot order more products. Please wait for the restriction to be over. Time left: 258 seconds
+
+What would you like to do?
+
+1. Order products
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+3
+
+Your orders:
+1. scarf - 2
+2. sweatshirt - 4
+3. shoes - 4
+
+What would you like to do?
+
+1. Order products
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+4
+
+You need to wait 245 seconds.
+
+What would you like to do?
+
+1. Order products
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+4
+
+You can order products.
+
+What would you like to do?
+
+1. Order products
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+1
+
+Available products:
+1. sweatshirt
+2. t-shirt
+3. jeans
+4. jacket
+5. shoes
+6. socks
+7. scarf
+8. hat
+9. sunglasses
+
+Please enter the number of the product you want to order: 5
+How many would you like to order? 1
+You ordered 1 - shoes
+
+What would you like to do?
+
+1. Order products
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+3
+
+Your orders:
+1. scarf - 2
+2. sweatshirt - 4
+3. shoes - 4
+4. shoes - 1
+
+What would you like to do?
+
+1. Order products
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+5
+
+Exiting...

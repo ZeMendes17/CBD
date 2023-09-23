@@ -1,0 +1,263 @@
+Welcome to our Service System!
+
+Please enter your username: zezzocas
+You can make 3 orders in 120 seconds.
+
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+2
+
+Available products:
+1. sweatshirt
+2. t-shirt
+3. jeans
+4. jacket
+5. shoes
+6. socks
+7. scarf
+8. hat
+9. sunglasses
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+4
+
+You can order products.
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+1
+
+Available products:
+1. sweatshirt
+2. t-shirt
+3. jeans
+4. jacket
+5. shoes
+6. socks
+7. scarf
+8. hat
+9. sunglasses
+
+Please enter the number of the product you want to order: 2
+You ordered t-shirt
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+1
+
+Available products:
+1. sweatshirt
+2. t-shirt
+3. jeans
+4. jacket
+5. shoes
+6. socks
+7. scarf
+8. hat
+9. sunglasses
+
+Please enter the number of the product you want to order: 4
+You ordered jacket
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+1
+
+Available products:
+1. sweatshirt
+2. t-shirt
+3. jeans
+4. jacket
+5. shoes
+6. socks
+7. scarf
+8. hat
+9. sunglasses
+
+Please enter the number of the product you want to order: 8
+You ordered hat
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+1
+
+Available products:
+1. sweatshirt
+2. t-shirt
+3. jeans
+4. jacket
+5. shoes
+6. socks
+7. scarf
+8. hat
+9. sunglasses
+
+Please enter the number of the product you want to order: 1
+You cannot order more products. Please wait for the restriction to be over. Time left: 96 seconds
+You ordered sweatshirt
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+3
+
+Your orders:
+t-shirt
+jacket
+hat
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+4
+
+You need to wait 70 seconds.
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+1
+
+Available products:
+1. sweatshirt
+2. t-shirt
+3. jeans
+4. jacket
+5. shoes
+6. socks
+7. scarf
+8. hat
+9. sunglasses
+
+Please enter the number of the product you want to order: 1
+You cannot order more products. Please wait for the restriction to be over. Time left: 65 seconds
+You ordered sweatshirt
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+4
+
+You need to wait 14 seconds.
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+4
+
+You can order products.
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+1
+
+Available products:
+1. sweatshirt
+2. t-shirt
+3. jeans
+4. jacket
+5. shoes
+6. socks
+7. scarf
+8. hat
+9. sunglasses
+
+Please enter the number of the product you want to order: 1
+You ordered sweatshirt
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+3
+
+Your orders:
+t-shirt
+jacket
+hat
+sweatshirt
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+5
+
+Exiting...
