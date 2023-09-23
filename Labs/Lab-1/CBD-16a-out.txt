@@ -1,0 +1,609 @@
+Welcome to the Message System!
+
+Please enter your username: Anthony
+Welcome Anthony!
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 2
+
+You are the only user!
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 3
+
+You do not follow anyone yet!
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 4
+
+You have no messages yet!
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 6
+
+You have no followers yet!
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 5
+
+You do not follow anyone yet!
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 7
+
+You are the only user!
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 1
+
+Enter your message: Hello? Somebody out there?
+Message sent!
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 1
+
+Enter your message: Give me a follow :)
+Message sent!
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 4
+
+Your message history:
+Hello? Somebody out there?
+Give me a follow :)
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 8
+
+Goodbye!
+
+// Mudar para outro user
+
+Welcome to the Message System!
+
+Please enter your username: Mike
+Welcome Mike!
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 7
+
+All users:
+Anthony
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 5
+
+You do not follow anyone yet!
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 2
+
+Enter the username of the user you want to follow: Anth
+User does not exist!
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 2
+
+Enter the username of the user you want to follow: Anthony
+You are now following Anthony
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 5
+
+Enter the username of the user whose message history you want to read: Anthony
+Anthony's message history:
+Hello? Somebody out there?
+Give me a follow :)
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 1
+
+Enter your message: Hey Anthony, give me a follow!
+Message sent!
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 4
+
+Your message history:
+Hey Anthony, give me a follow!
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 6
+
+Your followers:
+Anthony
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 7
+
+All users:
+Anthony
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 8
+
+Goodbye!
+
+// Mudar outra vez
+
+Please enter your username: Anthony
+Welcome back Anthony!
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 7
+
+All users:
+Mike
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 2
+
+Enter the username of the user you want to follow: Mike
+You are now following Mike
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 5
+
+Enter the username of the user whose message history you want to read: Mike
+Mike's message history:
+Hey Anthony, give me a follow!
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 1
+
+Enter your message: Already did!
+Message sent!
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 3
+
+Enter the username of the user you want to unfollow: Mike
+You are no longer following Mike
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 6
+
+You have no followers yet!
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 1
+
+Enter your message: I'm out of here
+Message sent!
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 4
+
+Your message history:
+Hello? Somebody out there?
+Give me a follow :)
+Already did!
+I'm out of here
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 9
+
+Goodbye!
+
+// Mudar outra vez
+
+Please enter your username: Mike
+Welcome back Mike!
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 6
+
+You have no followers yet!
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 7
+
+You are the only user!
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 1
+
+Enter your message: Where did Anthony go?
+Message sent!
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 4
+
+Your message history:
+Hey Anthony, give me a follow!
+Where did Anthony go?
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 5
+
+You do not follow anyone yet!
+
+What would you like to do?
+
+1. Send a message
+2. Follow a user
+3. Unfollow a user
+4. Read my message history
+5. Read user's message history
+6. See who I follow
+7. See all users
+8. Exit
+9. Delete my account and exit
+
+Enter your choice: 8
+
+Goodbye!

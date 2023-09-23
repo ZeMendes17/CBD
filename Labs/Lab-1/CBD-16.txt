@@ -1,0 +1,7 @@
+Estruturas:
+
+Um set que guarda o nome de todos os users que o sistema possui, "users"
+
+Um conjunto de sets que guardam quem o user segue. Segue a forma: followers:userName, em que userName é o nome do user.
+
+Um conjunto de listas que guardam as mensagens de cada utilizador. Segue a forma: messages:userName, em que userName é o nome do user.

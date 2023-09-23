@@ -31,9 +31,9 @@ public class MessageSystem {
     // remove a user from the system
     public void removeUser(String username) {
         jedis.srem(USERS_SET, username);
-        // remove all the followers of the user
-        for (String follower : jedis.smembers(FOLLOWERS_SET + ":" + username)) {
-            jedis.srem(FOLLOWERS_SET + ":" + follower, username);
+        // removes the user from the followers set of all the users
+        for (String user : jedis.smembers(USERS_SET)) {
+            jedis.srem(FOLLOWERS_SET + ":" + user, username);
         }
         // removes the set of followers of the user
         jedis.del(FOLLOWERS_SET + ":" + username);
@@ -74,6 +74,11 @@ public class MessageSystem {
         System.out.println("Welcome to the Message System!\n");
         System.out.print("Please enter your username: ");
         String username = sc.nextLine();
+        if (ms.jedis.sismember(USERS_SET, username)) {
+            System.out.println("Welcome back " + username + "!");
+        } else {
+            System.out.println("Welcome " + username + "!");
+        }
         ms.addUser(username);
 
         int choice;
@@ -82,10 +87,12 @@ public class MessageSystem {
             System.out.println("1. Send a message");
             System.out.println("2. Follow a user");
             System.out.println("3. Unfollow a user");
-            System.out.println("4. See your message history");
-            System.out.println("5. See your followers");
-            System.out.println("6. See all users");
-            System.out.println("7. Exit\n");
+            System.out.println("4. Read my message history");
+            System.out.println("5. Read user's message history");
+            System.out.println("6. See who I follow");
+            System.out.println("7. See all users");
+            System.out.println("8. Exit");
+            System.out.println("9. Delete my account and exit\n");
             System.out.print("Enter your choice: ");
 
             choice = sc.nextInt();
@@ -100,41 +107,104 @@ public class MessageSystem {
                     System.out.println("Message sent!");
                     break;
                 case 2:
+                    if (ms.getUsers().length == 1) {
+                        System.out.println("You are the only user!");
+                        break;
+                    }
                     System.out.print("Enter the username of the user you want to follow: ");
                     sc.nextLine();
                     String userToFollow = sc.nextLine();
-                    ms.addFollower(userToFollow, username);
+                    if (!ms.jedis.sismember(USERS_SET, userToFollow)) {
+                        System.out.println("User does not exist!");
+                        break;
+                    }
+                    if (ms.jedis.sismember(FOLLOWERS_SET + ":" + username, userToFollow)) {
+                        System.out.println("You already follow this user!");
+                        break;
+                    }
+                    ms.addFollower(username, userToFollow);
                     System.out.println("You are now following " + userToFollow);
                     break;
                 case 3:
+                    if (ms.getFollowers(username).length == 0) {
+                        System.out.println("You do not follow anyone yet!");
+                        break;
+                    }
                     System.out.print("Enter the username of the user you want to unfollow: ");
                     sc.nextLine();
                     String userToUnfollow = sc.nextLine();
-                    ms.removeFollower(userToUnfollow, username);
+                    if (!ms.jedis.sismember(USERS_SET, userToUnfollow)) {
+                        System.out.println("User does not exist!");
+                        break;
+                    }
+                    ms.removeFollower(username, userToUnfollow);
                     System.out.println("You are no longer following " + userToUnfollow);
                     break;
                 case 4:
+                    if (ms.getMsgs(username).length == 0) {
+                        System.out.println("You have no messages yet!");
+                        break;
+                    }
                     System.out.println("Your message history:");
                     for (String msg : ms.getMsgs(username)) {
                         System.out.println(msg);
                     }
                     break;
                 case 5:
+                    if (ms.getFollowers(username).length == 0) {
+                        System.out.println("You do not follow anyone yet!");
+                        break;
+                    }
+                    System.out.print("Enter the username of the user whose message history you want to read: ");
+                    sc.nextLine();
+                    String userToRead = sc.nextLine();
+                    if (!ms.jedis.sismember(USERS_SET, userToRead)) {
+                        System.out.println("User does not exist!");
+                        break;
+                    }
+                    if (!ms.jedis.sismember(FOLLOWERS_SET + ":" + username, userToRead)) {
+                        System.out.println("You do not follow this user!");
+                        break;
+                    }
+                    if (ms.getMsgs(userToRead).length == 0) {
+                        System.out.println("User has no messages yet!");
+                        break;
+                    }
+                    System.out.println(userToRead + "'s message history:");
+                    for (String msg : ms.getMsgs(userToRead)) {
+                        System.out.println(msg);
+                    }
+                    break;
+                case 6:
+                    if (ms.getFollowers(username).length == 0) {
+                        System.out.println("You have no followers yet!");
+                        break;
+                    }
                     System.out.println("Your followers:");
                     for (String follower : ms.getFollowers(username)) {
                         System.out.println(follower);
                     }
                     break;
-                case 6:
+                case 7:
+                    if (ms.getUsers().length == 1) {
+                        System.out.println("You are the only user!");
+                        break;
+                    }
                     System.out.println("All users:");
                     for (String user : ms.getUsers()) {
-                        System.out.println(user);
+                        if (!user.equals(username))
+                            System.out.println(user);
                     }
                     break;
-                case 7:
+                case 8:
+                    System.out.println("Goodbye!");
+                    System.exit(0);
+                    break;
+                case 9:
                     System.out.println("Goodbye!");
                     ms.removeUser(username);
                     System.exit(0);
+                    break;
                 default:
                     System.out.println("Invalid choice!");
             }
