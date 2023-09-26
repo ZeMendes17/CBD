@@ -74,7 +74,7 @@ public class AutocompleteB {
     public static void main(String[] args) {
         AutocompleteB auto = new AutocompleteB();
         // insert all the names to a List
-        List<NamePopularity> names = auto.loadNamesCSV("../nomes-pt-2021.csv");
+        List<NamePopularity> names = auto.loadNamesCSV("nomes-pt-2021.csv");
         // order the names by popularity
         List<String> orderedNames = auto.orderNamesByPopularity(names);
         // add the list to redis

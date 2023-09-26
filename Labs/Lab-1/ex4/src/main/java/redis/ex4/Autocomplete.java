@@ -63,7 +63,7 @@ public class Autocomplete {
     public static void main(String[] args) {
         Autocomplete auto = new Autocomplete();
         // insert all the names to a List
-        List<String> names = auto.loadNames("../names.txt");
+        List<String> names = auto.loadNames("names.txt");
         // add the list to redis
         auto.addNames(names);
 
