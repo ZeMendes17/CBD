@@ -86,7 +86,7 @@ public class AutocompleteB {
             System.out.print("Search for ('Enter' for quit): ");
             String prefix = sc.nextLine();
             if (prefix.isEmpty()) { // if the user enters empty string, quit
-                auto.clear(); // if we want to clear the redis database
+                // auto.clear(); // if we want to clear the redis database
                 break;
             }
             List<String> matchingNames = auto.searchNames(prefix);
