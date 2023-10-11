@@ -9,7 +9,7 @@ import org.bson.Document;
 import java.util.Scanner;
 
 
-public class Main {
+public class Ex4a {
 
     // set with the users
     public static String USERS = "users";
@@ -110,7 +110,7 @@ public class Main {
                         // set user orderCount to 0
                         collection.updateOne(Filters.eq("username", username), new Document("$set", new Document(ORDER_COUNT, 0)));
                         // update the timeslot
-                        collection.updateOne(Filters.eq("username", username), new Document("$set", new Document(USER_TIMESLOT, System.currentTimeMillis() / 1000 + TIMESLOT)));
+                        collection.updateOne(Filters.eq("username", username), new Document("$set", new Document(USER_TIMESLOT, System.currentTimeMillis() / 1000)));
                     } else {
                         System.err.println(ERROR_MESSAGE + timeLeft + " seconds");
                         return false;
@@ -120,7 +120,7 @@ public class Main {
                 // increment the order count
                 collection.updateOne(Filters.eq("username", username), new Document("$inc", new Document(ORDER_COUNT, 1)));
             } else {
-                collection.updateOne(Filters.eq("username", username), new Document("$set", new Document(USER_TIMESLOT, System.currentTimeMillis() / 1000 + TIMESLOT)));
+                collection.updateOne(Filters.eq("username", username), new Document("$set", new Document(USER_TIMESLOT, System.currentTimeMillis() / 1000)));
                 collection.updateOne(Filters.eq("username", username), new Document("$set", new Document(ORDER_COUNT, 1)));
             }
             // add the order
@@ -208,6 +208,7 @@ public class Main {
                                 if (timeLeft <= 0) { // timeslot is over
                                     collection.updateOne(Filters.eq("username", username), new Document("$set", new Document(ORDER_COUNT, 0)));
                                     collection.updateOne(Filters.eq("username", username), new Document("$unset", new Document(USER_TIMESLOT, "")));
+                                    System.out.println("You can order products.");
                                 } else {
                                     System.out.println("You are in a timeslot. Time left: " + timeLeft + " seconds");
                                 }
