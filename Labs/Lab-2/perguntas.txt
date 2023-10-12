@@ -1,2 +1,0 @@
-as repostas do 2
-se no 11 e 12 pode usar o $in ou tem de ser $or
