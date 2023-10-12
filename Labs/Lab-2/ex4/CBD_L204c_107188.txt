@@ -1,0 +1,37 @@
+Diferenças conceptuais entre as implementações baseadas em Redis e Mongo:
+
+Sendo Redis uma base de dados do tipo chave-valor, apresenta uma
+implementação mais fácil baseada em "set's" e "get's".
+Já o Mongo é uma base de dados de documentos, que apesar de possuir uma
+implementação mais complexa, também permite o armazenamento dados mais
+complexos. 
+Para a implementação da solução do problema apresentado, a base de dados
+Redis é mais simples e permite obter dados de forma mais rápida de leitura,
+uma vez que armazena os dados em memória. No entanto para armazenar dados
+coorrelacionados, como o timeslot e o número de produtos que já pediu nesse
+timeslot, estes estão guardados sem qualquer relação (timeslot:username->value
+e order_count:username->value).
+O Mongo tem a vantagem de ao carregar um documento tem acesso a todos os dados
+que este armazena. No entanto, é bastante mais complexo e mais lento em leituras 
+em comparação com o Redis.
+Para o problema proposto, o Redis é mais adequado para a solução, uma vez que,
+tal como mencionado, é mais rápido na leitura de dados quando comparado com o
+Mongo, o que é essencial neste problema uma vez que estamos a tratar de quantos produtos (ou
+unidade de produtos) cada utilizador pode ter num determinado intervalo de tempo.
+É crucial ter um acesso rápido para saber se o utilizador pode ou não efetuar um pedido.
+
+
+Métricas de Desempenho:
+Utilizando a classe Ex4c.java, obtemos as seguintes métricas quanto à inserção, pesquisa e remoção
+de um utilizador.
+
+Redis, insert a user: 12830484 ns
+Redis, get a user: 524239 ns
+Redis, remove a user: 459859 ns
+
+MongoDB, insert a user: 80357510 ns
+MongoDB, get a user: 16568177 ns
+MongoDB, remove a user: 4859329 ns
+
+Conseguimos perceber que na inserção, Mongo demora aproximadamente 6.26 vezes mais,
+na pesquisa, aproximadamente 31.60 mais e na remoção, aproximadamente 10.57 mais.

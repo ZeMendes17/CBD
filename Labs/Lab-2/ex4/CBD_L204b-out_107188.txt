@@ -1,0 +1,489 @@
+Welcome to our Service System!
+
+Please enter your username: Mendes
+You can make 10 orders in 300 seconds.
+
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+2
+
+Available products:
+1. sweatshirt
+2. t-shirt
+3. jeans
+4. jacket
+5. shoes
+6. socks
+7. scarf
+8. hat
+9. sunglasses
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+3
+
+Your orders:
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+3
+
+Your orders:
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+3
+
+Your orders:
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+4
+
+You can order products.
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+1
+
+Available products:
+1. sweatshirt
+2. t-shirt
+3. jeans
+4. jacket
+5. shoes
+6. socks
+7. scarf
+8. hat
+9. sunglasses
+
+Please enter the number of the product you want to order: 2
+Please enter the quantity: 3
+You ordered 3 t-shirt
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+3
+
+Your orders:
+3 - t-shirt
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+4
+
+You can order products.
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+1
+
+Available products:
+1. sweatshirt
+2. t-shirt
+3. jeans
+4. jacket
+5. shoes
+6. socks
+7. scarf
+8. hat
+9. sunglasses
+
+Please enter the number of the product you want to order: 9
+Please enter the quantity: 4
+You ordered 4 sunglasses
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+3
+
+Your orders:
+3 - t-shirt
+4 - sunglasses
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+4
+
+You can order products.
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+1
+
+Available products:
+1. sweatshirt
+2. t-shirt
+3. jeans
+4. jacket
+5. shoes
+6. socks
+7. scarf
+8. hat
+9. sunglasses
+
+Please enter the number of the product you want to order: 3
+Please enter the quantity: 4
+You can only order 3 products.
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+3
+
+Your orders:
+3 - t-shirt
+4 - sunglasses
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+1
+
+Available products:
+1. sweatshirt
+2. t-shirt
+3. jeans
+4. jacket
+5. shoes
+6. socks
+7. scarf
+8. hat
+9. sunglasses
+
+Please enter the number of the product you want to order: 3
+Please enter the quantity: 3
+You ordered 3 jeans
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+3
+
+Your orders:
+3 - t-shirt
+4 - sunglasses
+3 - jeans
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+1
+
+Available products:
+1. sweatshirt
+2. t-shirt
+3. jeans
+4. jacket
+5. shoes
+6. socks
+7. scarf
+8. hat
+9. sunglasses
+
+Please enter the number of the product you want to order: 2
+Please enter the quantity: 1
+You cannot order more products. Please wait for the restriction to be over. Time left: 219 seconds
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+4
+
+You are in a timeslot. Time left: 213 seconds
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+3
+
+Your orders:
+3 - t-shirt
+4 - sunglasses
+3 - jeans
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+4
+
+You are in a timeslot. Time left: 101 seconds
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+3
+
+Your orders:
+3 - t-shirt
+4 - sunglasses
+3 - jeans
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+4   
+
+You can order products.
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+1
+
+Available products:
+1. sweatshirt
+2. t-shirt
+3. jeans
+4. jacket
+5. shoes
+6. socks
+7. scarf
+8. hat
+9. sunglasses
+
+Please enter the number of the product you want to order: 3
+Please enter the quantity: 1
+You ordered 1 jeans
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+3
+
+Your orders:
+3 - t-shirt
+4 - sunglasses
+3 - jeans
+1 - jeans
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+1
+
+Available products:
+1. sweatshirt
+2. t-shirt
+3. jeans
+4. jacket
+5. shoes
+6. socks
+7. scarf
+8. hat
+9. sunglasses
+
+Please enter the number of the product you want to order: 9 
+Please enter the quantity: 10
+You can only order 9 products.
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+1
+
+Available products:
+1. sweatshirt
+2. t-shirt
+3. jeans
+4. jacket
+5. shoes
+6. socks
+7. scarf
+8. hat
+9. sunglasses
+
+Please enter the number of the product you want to order: 9
+Please enter the quantity: 9
+You ordered 9 sunglasses
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+4
+
+You are in a timeslot. Time left: 273 seconds
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+4
+
+You are in a timeslot. Time left: 267 seconds
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+3
+
+Your orders:
+3 - t-shirt
+4 - sunglasses
+3 - jeans
+1 - jeans
+9 - sunglasses
+
+What would you like to do?
+
+1. Order a product
+2. Show available products
+3. Show my orders
+4. Check my timeslot
+5. Exit
+
+5
+
+Exiting...

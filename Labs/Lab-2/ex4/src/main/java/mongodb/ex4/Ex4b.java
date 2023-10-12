@@ -6,10 +6,11 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import org.bson.Document;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class Ex4a {
+public class Ex4b {
 
     // set with the users
     public static String USERS = "users";
@@ -18,7 +19,7 @@ public class Ex4a {
     public static String USER_TIMESLOT = "timeslot";
 
     // store how many products a user ordered in the current timeslot
-    public static String ORDER_COUNT = "order_count";
+    public static String PRODUCT_COUNT = "product_count";
 
     // store the orders for each user
     public static String USER_ORDERS = "orders";
@@ -29,9 +30,9 @@ public class Ex4a {
             "Time left: "; // will display the time that the user needs to wait
 
     // timeslot
-    public static int TIMESLOT = 2 * 60; // 2 minutes
+    public static int TIMESLOT = 5 * 60; // 5 minutes
     // limit of products that can be ordered
-    public static int LIMIT = 3;
+    public static int LIMIT = 10;
 
 
 
@@ -44,12 +45,12 @@ public class Ex4a {
         //        }
 
         Document user = new Document("username", username)
-                .append(ORDER_COUNT, 0)
+                .append(PRODUCT_COUNT, 0)
                 .append(USER_ORDERS, new BasicDBList());
 
         try(MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017")) {
             MongoDatabase db = mongoClient.getDatabase("cbd");
-            db.getCollection("atendimento").insertOne(user);
+            db.getCollection("atendimento2").insertOne(user);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -58,7 +59,7 @@ public class Ex4a {
     private static boolean checkTimeslot(String username) {
         try (MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017")) {
             MongoDatabase db = mongoClient.getDatabase("cbd");
-            MongoCollection<Document> collection = db.getCollection("atendimento");
+            MongoCollection<Document> collection = db.getCollection("atendimento2");
             FindIterable<Document> user = collection.find(Filters.eq("username", username));
             if (user.first() == null) {
                 System.err.println("User not found");
@@ -78,7 +79,7 @@ public class Ex4a {
                 // remove the timeslot
                 collection.updateOne(Filters.eq("username", username), new Document("$unset", new Document(USER_TIMESLOT, "")));
                 // make the order count 0
-                collection.updateOne(Filters.eq("username", username), new Document("$set", new Document(ORDER_COUNT, 0)));
+                collection.updateOne(Filters.eq("username", username), new Document("$set", new Document(PRODUCT_COUNT, 0)));
                 return false;
             }
             return true;
@@ -88,27 +89,27 @@ public class Ex4a {
         }
     }
 
-    private static boolean orderProduct(String username, String product) {
+    private static boolean orderProduct(String username, String product, int quantity) {
         // if user is in a timeslot
         try (MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017")) {
             MongoDatabase db = mongoClient.getDatabase("cbd");
-            MongoCollection<Document> collection = db.getCollection("atendimento");
+            MongoCollection<Document> collection = db.getCollection("atendimento2");
             if (checkTimeslot(username)) {
                 // get the order count
                 FindIterable<Document> user = collection.find(Filters.eq("username", username));
                 MongoCursor<Document> cursor = user.iterator();
                 Document doc = cursor.next();
-                int orderCount = doc.getInteger(ORDER_COUNT);
+                int productCount = doc.getInteger(PRODUCT_COUNT);
 
                 // if the user has reached the limit
-                if (orderCount >= LIMIT) {
+                if (productCount >= LIMIT) {
                     // get the current time
                     long currentTime = System.currentTimeMillis() / 1000;
                     long initTime = doc.getLong(USER_TIMESLOT);
                     long timeLeft = TIMESLOT - (currentTime - initTime);
                     if (timeLeft <= 0) {
-                        // set user orderCount to 0
-                        collection.updateOne(Filters.eq("username", username), new Document("$set", new Document(ORDER_COUNT, 0)));
+                        // set user productCount to 0
+                        collection.updateOne(Filters.eq("username", username), new Document("$set", new Document(PRODUCT_COUNT, 0)));
                         // update the timeslot
                         collection.updateOne(Filters.eq("username", username), new Document("$set", new Document(USER_TIMESLOT, System.currentTimeMillis() / 1000)));
                     } else {
@@ -116,15 +117,19 @@ public class Ex4a {
                         return false;
                     }
                 }
+                else if (productCount + quantity > LIMIT) {
+                    System.err.println("You can only order " + (LIMIT - productCount) + " products.");
+                    return false;
+                }
 
                 // increment the order count
-                collection.updateOne(Filters.eq("username", username), new Document("$inc", new Document(ORDER_COUNT, 1)));
+                collection.updateOne(Filters.eq("username", username), new Document("$inc", new Document(PRODUCT_COUNT, quantity)));
             } else {
                 collection.updateOne(Filters.eq("username", username), new Document("$set", new Document(USER_TIMESLOT, System.currentTimeMillis() / 1000)));
-                collection.updateOne(Filters.eq("username", username), new Document("$set", new Document(ORDER_COUNT, 1)));
+                collection.updateOne(Filters.eq("username", username), new Document("$set", new Document(PRODUCT_COUNT, quantity)));
             }
             // add the order
-            collection.updateOne(Filters.eq("username", username), Updates.push(USER_ORDERS, product));
+            collection.updateOne(Filters.eq("username", username), Updates.push(USER_ORDERS, product + "__" + quantity));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -172,10 +177,16 @@ public class Ex4a {
                         System.out.println("Invalid product number!");
                         break;
                     }
+                    System.out.print("Please enter the quantity: ");
+                    int quantity = sc.nextInt();
+                    if (quantity < 1 || quantity > LIMIT) {
+                        System.out.println("Invalid quantity!");
+                        break;
+                    }
 
-                    boolean result = orderProduct(username, products[Integer.parseInt(product) - 1]);
+                    boolean result = orderProduct(username, products[Integer.parseInt(product) - 1], quantity);
                     if (result) {
-                        System.out.println("You ordered " + products[Integer.parseInt(product) - 1]);
+                        System.out.println("You ordered " + quantity + " " + products[Integer.parseInt(product) - 1]);
                     }
                     break;
                 case 2:
@@ -187,48 +198,51 @@ public class Ex4a {
                     // check if user has orders
                     try (MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017")) {
                         MongoDatabase db = mongoClient.getDatabase("cbd");
-                        MongoCollection<Document> collection = db.getCollection("atendimento");
-                        String orders = collection.find(Filters.eq("username", username)).first().get(USER_ORDERS).toString();
+                        MongoCollection<Document> collection = db.getCollection("atendimento2");
+                        // get the orders
+                        MongoCursor<Document> cursor = collection.find(Filters.eq("username", username)).iterator();
+                        Document doc = cursor.next();
+                        ArrayList<Object> orders = (ArrayList<Object>) doc.get(USER_ORDERS);
 
                         System.out.println("Your orders:");
-                        System.out.println((orders));
+                        for (Object order : orders) {
+                            String[] orderSplit = order.toString().split("__");
+                            System.out.println(orderSplit[1] + " - " + orderSplit[0]);
+                        }
                     } catch (NullPointerException e) {
                         System.out.println("You have no orders");
                         break;
                     }
                     break;
-                    case 4:
-                        try(MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017")) {
-                            MongoDatabase db = mongoClient.getDatabase("cbd");
-                            MongoCollection<Document> collection = db.getCollection("atendimento");
-                            if (checkTimeslot(username) && collection.find(Filters.eq("username", username)).first().getInteger(ORDER_COUNT) >= LIMIT) {
-                                long currentTime = System.currentTimeMillis() / 1000;
-                                long initTime = collection.find(Filters.eq("username", username)).first().getLong(USER_TIMESLOT);
-                                long timeLeft = TIMESLOT - (currentTime - initTime);
-                                if (timeLeft <= 0) { // timeslot is over
-                                    collection.updateOne(Filters.eq("username", username), new Document("$set", new Document(ORDER_COUNT, 0)));
-                                    collection.updateOne(Filters.eq("username", username), new Document("$unset", new Document(USER_TIMESLOT, "")));
-                                    System.out.println("You can order products.");
-                                } else {
-                                    System.out.println("You are in a timeslot. Time left: " + timeLeft + " seconds");
-                                }
-                            } else {
+                case 4:
+                    try(MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017")) {
+                        MongoDatabase db = mongoClient.getDatabase("cbd");
+                        MongoCollection<Document> collection = db.getCollection("atendimento2");
+                        if (checkTimeslot(username) && collection.find(Filters.eq("username", username)).first().getInteger(PRODUCT_COUNT) >= LIMIT) {
+                            long currentTime = System.currentTimeMillis() / 1000;
+                            long initTime = collection.find(Filters.eq("username", username)).first().getLong(USER_TIMESLOT);
+                            long timeLeft = TIMESLOT - (currentTime - initTime);
+                            if (timeLeft <= 0) { // timeslot is over
+                                collection.updateOne(Filters.eq("username", username), new Document("$set", new Document(PRODUCT_COUNT, 0)));
+                                collection.updateOne(Filters.eq("username", username), new Document("$unset", new Document(USER_TIMESLOT, "")));
                                 System.out.println("You can order products.");
+                            } else {
+                                System.out.println("You are in a timeslot. Time left: " + timeLeft + " seconds");
                             }
-                        } catch (NullPointerException e) {
+                        } else {
                             System.out.println("You can order products.");
                         }
-                        break;
-                    case 5:
-                        System.out.println("Exiting...");
-                        return;
-                    default:
-                        System.out.println("Invalid option!");
+                    } catch (NullPointerException e) {
+                        System.out.println("You can order products.");
+                    }
+                    break;
+                case 5:
+                    System.out.println("Exiting...");
+                    return;
+                default:
+                    System.out.println("Invalid option!");
 
             }
         }
-    }
-
-    public static void addUser(String ze) {
     }
 }
