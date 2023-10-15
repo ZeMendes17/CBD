@@ -498,5 +498,83 @@ Este teorema diz que um sistema distribuído só pode apresentar duas de três c
 
 \subsection{Tipos de Bases de Dados NoSQL}
 
+\begin{flushleft}
+  Existem vários tipos de bases de dados NoSQL. Core types:
+  \begin{itemize}
+    \item \textbf{Key-value stores}
+    \item \textbf{Document stores}
+    \item \textbf{Column stores}
+    \item \textbf{Graph databases}
+  \end{itemize}
+
+  Non-core types:
+  \begin{itemize}
+    \item \textbf{Object databases}
+    \item \textbf{Native XML databases}
+    \item \textbf{RDF stores}
+    \item \textbf{\dots}
+  \end{itemize}
+\end{flushleft}
+
+\subsubsection{Key-value Databases}
+
+Esta base de dados está focada em \textbf{armazanamento chave-valor}. É a mais simples
+e funciona como uma simples hash table, tabela de dispersão (mapping).
+
+\begin{flushleft}
+  \textbf{Chave} - Identificador (chave primária) único, normalmente uma string;
+  
+  \textbf{Valor} - Pode assumir uma variedade de tipos, desde texto a estruturas de dados, \dots;
+\end{flushleft}
+
+As \uline{operações} são realizadas \uline{sobre um valor} de uma determinada chave.
+
+A sua \textbf{simplicidade} permite uma boa \textbf{performance} e facilidade na \textbf{escalabilidade}. No entanto,
+\uline{não permite} a realização de
+queries complexos nem o armazenamento de dados complexos.
+Usadas para perfis de utilizadores, informações de sessão, carrinhos de compras, preferências do utilizado, \dots
+
+Tipicamente armazenam \uline{dados não persistentes}. \uline{Não permitem relações entre entidades}.
+Não usar quando existem relações entre entidades, ou quando as queries pretendem
+ter acesso aos valor.
+
+\subsubsection{Document Databases}
+
+O modelo de dados é uma estrutura complexa (tipicamente JSON ou XML), \textbf{self-describing},
+uma vez que o nome dos atributos se descreve a si próprio, organizadas
+numa \textbf{estrutura hierárquica} e onde cada documento tem um \textbf{identificador único}.
+
+Pertmitem \uline{queries} sobre vários documentos, não só pela sua chave (id),
+mas também pelo seu valor. É possível contruir índices, nos query patterns
+podemos criar, atualizar e remover documentos, bem como é possível fazer
+pesquisa usando queries complexas.
+
+Quando comparadas com as bases de dados chave-valor, estas são uma evolução,
+em que o valor é examinavél.
+
+\begin{center}
+  \includegraphics[scale=0.2]{9}
+\end{center}
+
+\begin{flushleft}
+  \textbf{Usar:} Log de eventos, blogs, sistemas de gestão de conteúdos,
+  web analytics, aplicações e-commerce, \dots
+  \textbf{Documentos estruturados com um schema semelhante}.
+
+  \textbf{Não usar:} Operações de \textbf{set} que envolva múltiplos documentos,
+  onde o design da estrutura do documento esteja sempre a mudar e
+  em relações \textbf{many-to-many}.
+\end{flushleft}
+
+\subsubsection{Column Databases}
+
+
+
+
+
+
+
+
+
 
 \end{document}
