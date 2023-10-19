@@ -168,8 +168,8 @@ db.restaurants.find({"grades.score": {$gt: 85}})
 
 // 7. Encontre os restaurantes que obtiveram uma ou mais pontuações (score) entre
 [80 e 100]
-db.restaurants.find({"grades.score": {$gte: 80, $lte: 100}})
-// 5
+db.restaurants.find({grades:{$elemMatch: {score: {$gte: 80, $lte: 100}}}}) 
+// 4
 
 // 8. Indique os restaurantes com latitude inferior a -95,7
 db.restaurants.find({"address.coord.0": {$lt: -95.7}})
