@@ -114,3 +114,17 @@ fifth = function() {
 //     { _id: 'Carrie', cast: 16 },
 //     (...)
 // ]
+
+// 6. Qual o diretor com maior rating imdb com mais de 10 filmes?
+sixth = function() {
+    return db.movies.aggregate([
+        {$unwind: "$directors"},
+        {$group: {_id: "$directors", count: {$sum: 1}, rating: {$avg: "$imdb.rating"}}},
+        {$match: {count: {$gt: 10}}},
+        {$sort: {rating: -1}},
+        {$limit: 1}
+    ])
+}
+
+// Resultado:
+// [ { _id: 'Satyajit Ray', count: 19, rating: 8.063157894736841 } ]

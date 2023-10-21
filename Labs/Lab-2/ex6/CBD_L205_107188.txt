@@ -1,0 +1,88 @@
+A base de dados foi criada por adaptação de um dataset público: https://github.com/neelabalan/mongodb-sample-dataset/blob/main/sample_mflix/movies.json
+
+# Estrutura do dataset:
+
+O dataset, movies, é composto por 23539 documentos. Cada documento contém 18 campos, sendo eles:
+- plot (string): curta descrição do filme
+- genres (array): gêneros do filme
+- runtime (int): duração do filme em minutos
+- cast (array): atores que representaram no filme
+- num_mflix_comments (int): número de comentários no site mflix
+- poster (string): link para o poster do filme
+- title (string): título do filme
+- fullplot (string): descrição completa do filme
+- languages (array): idiomas do filme
+- released (ISODate): data de lançamento do filme
+- rated (string): classificação indicativa do filme (ex: PG-13, R, etc)
+- awards (object): este campo contém 3 campos: wins (int), nominations (int) e text (string). Isto é, o número de prêmios, o número de indicações e uma descrição
+- lastupdated (string): data da última atualização do documento
+- year (int): ano de lançamento do filme
+- imdb (object): este campo contém 3 campos: rating (float), votes (int), id (int). Isto é, a nota do filme no imdb, o número de votos e o id do filme no imdb
+- countries (array): países onde o filme foi produzido
+- type (string): tipo do filme (ex: movie, series, etc)
+- tomatoes (object): este campo contém 2 campos: viewer (object), que tem 3 campos, rating (float), numReviews (int) e meter (int),
+isto é, a nota do filme no site rottentomatoes, o número de reviews e o percentual de aprovação do filme no site rottentomatoes,
+e o campo lastUpdated (ISODate), que é a data da última atualização no site
+
+# Exercícios
+
+## c)
+
+### 1) Liste os géneros, o elenco, o título e o ano, sem listar o _id, de todos os filmes
+de comédia que possuam o ator "Charles Chaplin" no elenco e que tenha sido lançado
+depois de 1935
+
+db.movies.find( { genres: "Comedy", cast: "Charles Chaplin", year: { $gt: 1935 } }, { _id: 0, genres: 1, title: 1, year: 1, cast: 1 } )
+
+### 2) Liste os títulos dos filmes que têm o diretor "James Cameron", tenha sido
+nomeado a mais de 20 prêmios, não possua os gêneros "Horror" e "Drama" ou tenha um
+rating do imdb superior a 8.0
+
+db.movies.find( { directors: "James Cameron", "awards.nominations": { $gt: 20 }, $or: [ { genres: { $not: { $in: ["Horror", "Drama"] } } }, { "imdb.rating": { $gt: 8.0 } }] }, { _id: 0, title: 1 } )
+
+### 3) Liste o título, os géneros e o ano do filme mais antigo da categoria "Sci-Fi" e com o diretor "Steven Spielberg"
+
+db.movies.find( { genres: "Sci-Fi", directors: "Steven Spielberg" }, { _id: 0, title: 1, genres: 1, year: 1 } ).sort( { year: 1 } ).limit(1)
+
+### 4) Liste o título, o elenco e o rating imdb dos 5 primeiros filmes com o menor rating imdb
+em que o elenco possui 3 elementos, e o título não comece com a letra "A" ou "B"
+
+db.movies.find( { cast: { $size: 3 }, title: { $not: { $regex: /^[AB]/ } } }, { _id: 0, title: 1, cast: 1, "imdb.rating": 1 } ).sort({ "imdb.rating": 1 }).limit(5)
+
+### 5) Liste os filmes que sejam uma curtas-metragens (runtime menor que 42 minutos), com
+classificação "PG-13" e que não pertencem ao gênero "Crime" ou "Horror"
+
+db.movies.find( { runtime: { $lt: 42 }, rated: "PG-13", genres: { $not: { $in: ["Crime", "Horror"] } } }, { _id: 0, title: 1, genres: 1, rated: 1, runtime: 1 } )
+
+### 6) Liste os filmes produzidos entre 1980 e 2000, que não sejam na linguagem "English",
+que no seu plot possua as palavras "Wild" ou "Jack" e seja um filme "Adventure" e
+"Action"
+
+db.movies.find( { year: { $gte: 1980, $lte: 2000 }, language: { $ne: "English" }, $or: [ { plot: { $regex: /Wild/ } }, { plot: { $regex: /Jack/ } }], $and: [ { genres: "Adventure" }, { genres: "Action" }] }, { _id: 0, title: 1, genres: 1, year: 1, plot: 1, language: 1 } )
+
+
+## d)
+
+### 1) Quais são os 10 atores/atrizes com mais filmes?
+
+db.movies.aggregate([ { $unwind: "$cast" }, { $group: { _id: "$cast", count: { $sum: 1 } } }, { $sort: { count: -1 } }, { $limit: 10 }] )
+
+### 2) Qual a média de prêmios recebidos por cada género de filme?
+
+db.movies.aggregate([ { $unwind: "$genres" }, { $group: { _id: "$genres", avgAwards: { $avg: "$awards.wins" } } }] )
+
+### 3) Qual o diretor com mais filmes depois de 1990?
+
+db.movies.aggregate([ { $match: { year: { $gt: 1990 } } }, { $unwind: "$directors" }, { $group: { _id: "$directors", count: { $sum: 1 } } }, { $sort: { count: -1 } }, { $limit: 1 }] )
+
+### 4) Os 3 atores com mais runtime ao longo de todos os filmes? Mostre em quantos filmes cada um participou
+
+db.movies.aggregate([ { $unwind: "$cast" }, { $group: { _id: "$cast", runtime: { $sum: "$runtime" }, count: { $sum: 1 } } }, { $sort: { runtime: -1 } }, { $limit: 3 }] )
+
+### 5) Apresente por ordem decrescente os filmes com maior cast
+
+db.movies.aggregate([ { $unwind: "$cast" }, { $group: { _id: "$title", cast: { $sum: 1 } } }, { $sort: { cast: -1 } }] )
+
+### 6) Qual o diretor com maior rating imdb com mais de 10 filmes?
+
+db.movies.aggregate([ { $unwind: "$directors" }, { $group: { _id: "$directors", count: { $sum: 1 }, rating: { $avg: "$imdb.rating" } } }, { $match: { count: { $gt: 10 } } }, { $sort: { rating: -1 } }, { $limit: 1 }] )
