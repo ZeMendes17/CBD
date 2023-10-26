@@ -575,6 +575,53 @@ em que o valor é examinavél.
 
 
 
+\pagebreak
+\section{NoSQL Databases - Column Databases}
 
+A ideia geral é que vamos \textbf{armazenar e processar dados por coluna} (column) em vez de por linha
+(row). Geralmente tem origem em queries agregadores de dados, que permitem gerar
+dados suscetíveis de serem analisados para fins \textbf{estatísticos} ou para \textbf{business intelligence}.
+
+Visa então os \uline{serviços acima da utilização do armazenamento}, permitindo \textbf{processamento paralelo}
+e consequentemente a construção de \textbf{aplicações de alto desempenho}.
+
+A falta de normalização faz com que os dados sejam esparsos e que hajam bastantes campos
+nulos. É descrita como: “sparse, distributed, persistent
+multidimensional sorted map”.
+
+\begin{center}
+  \includegraphics[scale=0.3]{10}
+  \includegraphics[scale=0.3]{11}
+\end{center}
+
+\pagebreak
+
+\subsection{Vantagens}
+É vantajoso em cenários em que são feitos \textbf{queries com poucas colunas sobre
+grandes volumes de dados}. Destaca-se ainda a maior \textbf{facilidade de compressão} por colunas,
+uma vez que estes dados neste domínio tendem a estar mais relacionados.
+
+\subsubsection{Explicado}
+Torna algumas queries mesmo muito rápidas:
+\begin{itemize}
+  \item Aggregation queries;
+  \item Funções sobre fields (ex: average salary);
+\end{itemize}
+Melhor compressão de dados:
+\begin{itemize}
+  \item Ao correr o algoritmo em cada coluna (dados similares);
+  \item Mais notável quando começamos a ter datasets grandes;
+\end{itemize}
+
+\subsection{Desvantagens}
+Possui algumas desvantagens, como o \textbf{carregamento incremental de dados}, o uso de \textbf{OLTP}
+(OnLine Transaction Processing), ou a realização de \textbf{queries a linhas} (dados individuais).
+
+\subsubsection{Explicado}
+
+Aggregation é boom, mas algumas aplicações precisam de ser capazes de mostrar dados para
+cada \uline{individual record}. BDs colunares são geralmente não muito boas para esses tipos de queries.
+Escrever novos dados pode demorar tempo, inserir um novo record numa row oriented database é uma simples
+write operation. Fazer update de muitos values numa column db pode demorar muito tempo.
 
 \end{document}
