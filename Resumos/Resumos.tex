@@ -619,9 +619,267 @@ Possui algumas desvantagens, como o \textbf{carregamento incremental de dados}, 
 
 \subsubsection{Explicado}
 
-Aggregation é boom, mas algumas aplicações precisam de ser capazes de mostrar dados para
+Aggregation é bom, mas algumas aplicações precisam de ser capazes de mostrar dados para
 cada \uline{individual record}. BDs colunares são geralmente não muito boas para esses tipos de queries.
 Escrever novos dados pode demorar tempo, inserir um novo record numa row oriented database é uma simples
 write operation. Fazer update de muitos values numa column db pode demorar muito tempo.
+
+\vspace{2mm}
+
+O \textbf{carregamento incremental} de dados caracteriza-se por atualizações constantes. É uma desvantagem porque a cada
+inserção têm de se editar todos os ficheiros de todas as colunas, pelo que este processo geralmente é realizado
+periodicamente e para grandes volumes de dados em simultâneo.
+
+\vspace{2mm}
+
+Contrariamente às bases de dados relacionais, são \textbf{orientadas aos serviços}
+e não aos dados.
+
+\vspace{2mm}
+
+Nasceu com o projeto \textbf{Bigtable} da Google, que serviu de inspiração
+aos restantes SGBD's colunares. Foi criado em resposta ao problema de greração
+de índices para o seu motor de busca, que levava demasiado tempo.
+Atualmente é utilizado também no Gmail e Google Maps.
+
+\pagebreak
+
+\subsection{Modelo de Dados}
+
+\begin{flushleft}
+  \textbf{Familia de colunas (tabela)} - Uma tabela é uma coleção de linhas semelhantes
+  (não necessariamente idênticas).
+
+  \textbf{Linha} - Uma linha é um conjunto de colunas (deve abranger um grupo de dados
+  que é acessado em conjunto).
+  Associado com uma chave de linha (row key) única.
+
+  \textbf{Coluna} - Uma coluna consiste num nome de coluna (column name)
+  e um valor de coluna (column value), possivelmente outros records de metadados.
+  Valores escalares, mas também sets, listas e mapas.
+\end{flushleft}
+
+\subsection{Casos de Uso}
+
+As bases de dados orientadas a colunas são utilizadas para o armazenamento de
+dados estrutrados com um esquema similar, como log de eventos, sistemas de
+gestão de conteúdo, blogs, \dots
+
+Processamento de dados em batch via MapReduce.
+
+\vspace{2mm}
+
+Não é recomendado a utilização deste tipo de bases de dados quando
+\textbf{transições ACID} (atomicidade, consistência, isolamento, durabilidade) são necessárias,
+quando é necessário usar \textbf{queries complexas} como joins, nem \textbf{prototipagem} (o design da BD pode mudar), uma vez que a
+sua orientação ao serviço, a torna altamente dependente dos seus requisitos.
+
+\subsection{Tecnologias Representativas}
+
+\begin{center}
+  \includegraphics[scale=0.3]{12}
+\end{center}
+
+\textbf{Bigtable} é a inspiração para as datastores orientadas a colunas.
+Bases de daods influenciadas pela Bigtable:
+\begin{itemize}
+  \item \textbf{HBase}
+  \item \textbf{HyperTable}
+\end{itemize}
+
+\textbf{Cassandra} é uma extensão da Bigtable com aspetos do Dynamo da Amazon.
+
+\pagebreak
+
+\subsection{Apache Cassandra}
+
+\subsubsection{Introdução}
+
+É uma Cross Plataform, \textbf{open-source} Column Database, cujas features incluem
+\textbf{alta disponibilidade}, \textbf{escalabilidade linear},
+\textbf{fragmentação}, \textbf{replicação P2P configuravél},
+\textbf{consistência tunable} e \textbf{suporte para MapReduce}.
+
+Atualmente é o sistema de bases de dados orientado a colunas mais utilizado.
+Foi inicialmente desenvolvido pelo Facebook (2008) mas atualmente está sob gestão da
+fundação para o software Apache.
+
+É ainda de destacar o alto desempenho na escrita, sem prejudicar a eficiência das leituras.
+Por exemplo: Para dados com uma dimensão superior a 50GB, as escritas e leituras levariam cerca de 300ms. A Cassandra oferece
+leituras a 0,12ms e escritas a 0,15ms.
+
+\subsubsection{Motivação}
+\begin{itemize}
+  \item High availability;
+  \item High write throughput, sem sacrificar read efficiency;
+  \item Fault tolerance;
+  \item High and incremental scalability;
+  \item Reliablility at massive scale;
+\end{itemize}
+
+\subsubsection{Topologia do Sistema}
+
+\begin{center}
+  \includegraphics[scale=0.3]{13}
+\end{center}
+
+\begin{flushleft}
+  \textbf{Node} - É a unidade base destes sistemas, são máquinas
+  onde a Cassandra está em execução.
+
+  \vspace{2mm}
+
+  \textbf{Data Center} - Os nós são agrupados em data centers.
+  Conjunto de nós relacionados entre si, que fazem \uline{replicação dos dados}
+  de forma a garantir a \textbf{tolerância a falhas}.
+
+  \vspace{2mm}
+
+  \textbf{Cluster} - Conjunto de data centers sobre os quais são escritos
+  os mesmo dados.
+\end{flushleft}
+
+\pagebreak
+
+\subsubsection{Arquitetura do Sistema}
+
+\begin{flushleft}
+  \textbf{Cluster Membership} - Como é que os nodes são adicionados ou
+  apagados de um cluster.
+
+  \vspace{2mm}
+
+  \textbf{Partitioning}
+  \begin{itemize}
+    \item Como é que os dados são particionados pelos nodes;
+    \item Nodes são logicamente estruturados numa \textbf{Ring Topology};
+    \item Hashed Values e Keys associados a Data Partitions são usadas para
+    lhes dar assign a um node no ring.
+  \end{itemize}
+
+  \vspace{2mm}
+
+  \textbf{Replication}
+  \begin{itemize}
+    \item Como é que os dados são duplicados pelos nós;
+    \item Cada DataItem é replicado por N (replication factor) Nodes.
+  \end{itemize}
+\end{flushleft}
+
+\subsubsection{Topologia do Sistema}
+
+\begin{center}
+  \includegraphics[scale=0.3]{14}
+\end{center}
+
+\begin{itemize}
+  \item Cluster Data é gerida por um Ring of Nodes;
+  \item Cada Node tem parte da BD;
+  \item Rows são distribuidas baseadas na primary key;
+  \item Rows são distribuidas baseadas na primary key (Row Lookups são rápidos);
+  \item Múltiplos nodes tem os mesmos dados, para garantir availability e durability;
+  \item Não há nenhum master node - Todos os nodes podem realizar todas as operações;
+\end{itemize}
+
+\pagebreak
+
+\subsubsection{Modelo de dados}
+\subsubsection*{Keyspaces $>$ Tables $>$ Rows $>$ Columns}
+
+\begin{flushleft}
+  \textbf{Keyspace:}
+  \begin{itemize}
+    \item É um \textbf{namespace} que define data replication nos nodes;
+    \item Um cluster contém \textbf{um keyspace por node};
+  \end{itemize}
+
+  \vspace{2mm}
+
+  \textbf{Table (Column Family):}
+  \begin{itemize}
+    \item Coleção de rows (parecidas);
+    \item Multi-Dimensional Map indexado por chave (row key);
+    \item Tables Schema tem de ser especificado mas pode ser modificado;
+    \item 2 tipos: Simple ou Super (nested Column Families);
+  \end{itemize}
+
+  \vspace{2mm}
+  
+  \textbf{Row:}
+  \begin{itemize}
+    \item Coleção de colunas;
+    \item Rows numa table não precisam de ter as mesmas colunas
+    \item Cada Row É \textbf{uniquely identified} por uma \textbf{primary key};
+  \end{itemize}
+
+  \vspace{2mm}
+
+  \textbf{Column:}
+  \begin{itemize}
+    \item Name-Value Pair + Dados Adicionais;
+  \end{itemize}
+\end{flushleft}
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics[scale=0.3]{15}
+  \includegraphics[scale=0.3]{16}
+  \caption{Exemplo de um Data Model}
+\end{figure}
+
+\pagebreak
+
+\subsubsection{Cassandra vs Relational Example}
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics[scale=0.25]{17}
+  \includegraphics[scale=0.25]{18}
+\end{figure}
+
+\subsubsection{Column Values}
+\begin{flushleft}
+  Os value types aceites pelas colunas são:
+  \begin{itemize}
+    \item \textbf{Empty Value}
+    \begin{itemize}
+      \item Null
+    \end{itemize}
+    \item \textbf{Atomic Value}
+    \begin{itemize}
+      \item \textbf{Native Data Types} (Text, Integers, Dates, \dots)
+      \item \textbf{Tuples} (Tuplo de fields anonimos, cada um com o seu Type
+      (podendo cada membro do tuplo ter um type diferente))
+      \item \textbf{User Defined Types (UDT)} (Set de named fields para cada type)
+    \end{itemize}
+    \item \textbf{Collections}
+    \begin{itemize}
+      \item \textbf{Lists}, \textbf{Sets} e \textbf{Maps} (Nested Tuples, UDTs ou collections são
+      permitidos mas apenas um Forzen Mode (elementos são serializados quando
+      são guardados))
+    \end{itemize}
+  \end{itemize}
+\end{flushleft}
+
+\subsubsection{Data Model - Dados adicionais}
+
+Associados a cada coluna no caso dos atomic values ou qualquer element de uma
+collection.
+
+\begin{flushleft}
+  \textbf{Time to Live (TTL):} Após um certo tempo (segundos) um dado value é automaticamente apagado;
+
+  \vspace{2mm}
+
+  \textbf{Timestamp:} Timestamp de quando a última modificação foi feita. Fornecido
+  automaticamente ou manualmente;
+\end{flushleft}
+
+Ambos estes elementos podem ser queried mas não no caso de collections e dos seus
+elementos.
+
+\pagebreak
+
+\subsubsection{Cassandra API}
 
 \end{document}

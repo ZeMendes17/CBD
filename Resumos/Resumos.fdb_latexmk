@@ -1,8 +1,8 @@
 # Fdb version 3
-["pdflatex"] 1698330545 "/home/mendes/Desktop/CBD/Resumos/Resumos.tex" "Resumos.pdf" "Resumos" 1698330550
+["pdflatex"] 1698410081 "/home/mendes/Desktop/CBD/Resumos/Resumos.tex" "Resumos.pdf" "Resumos" 1698410083
   "/etc/texmf/web2c/texmf.cnf" 1697307530 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/mendes/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk" 1697311057 11524 270ea80aaa0cabf6b47122c0c5a9462f ""
-  "/home/mendes/Desktop/CBD/Resumos/Resumos.tex" 1698330545 25306 b618645ec272e0c95cab3a40751b58a3 ""
+  "/home/mendes/Desktop/CBD/Resumos/Resumos.tex" 1698410078 33342 b15067c3e94008d3b1310a6998351543 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1136768653 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
@@ -29,6 +29,7 @@
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/latex-fonts/lasy6.tfm" 1136768653 520 4889cce2180234b97cad636b6039c722 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb" 1248133631 34811 78b52f49e893bcba91bd7581cdc144c0 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb" 1248133631 32080 340ef9bf63678554ee606688e7b5339d ""
+  "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb" 1248133631 36299 5f9df58c2139e7edcf37c8fca4bd384d ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1248133631 35752 024fb6c41858982481f6968b5fc26508 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1248133631 32722 d7379af29a190c3f453aba36302ff5a9 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb" 1248133631 32362 179c33bbf43f19adbb3825bb4e36e57a ""
@@ -68,6 +69,13 @@
   "Images//1.png" 1694951982 234492 c95e2103925c4b3bae07a1c7590634c1 ""
   "Images//10.png" 1698329489 609503 73d876cfff002d015641144ea643dad4 ""
   "Images//11.png" 1698329541 329615 777b9aa93c2b457781065c75a248395b ""
+  "Images//12.png" 1698406044 84719 c843171d9f0ad46924e9d38352e9621f ""
+  "Images//13.png" 1698407738 79258 15d4a23f18c0886d7e934407e60b6d9d ""
+  "Images//14.png" 1698408142 41327 fb58dbf9ef520a97bd2620a59e8f4f82 ""
+  "Images//15.png" 1698409119 143225 c55098c50bebcd865e575dca1112c486 ""
+  "Images//16.png" 1698409157 112224 4a82f1582b5cdfa1e992b5c0fe8359a9 ""
+  "Images//17.png" 1698409481 121949 51c34c476e2ee66432fd1c627edf4429 ""
+  "Images//18.png" 1698409505 114390 adcc79571c1b87aab252dc946c27471a ""
   "Images//2.png" 1697324881 466441 b9d5087c6d33e261eca46bee899dfdaf ""
   "Images//3.png" 1697324896 473282 0a6d5dcef2ab01a75232f1ec1c29e4eb ""
   "Images//4.png" 1697326285 319196 5dff885faa805feb6afd980c7c5fe775 ""
@@ -76,8 +84,8 @@
   "Images//7.png" 1697329568 179289 f0b4df15188be7f2fb4592b4a5250f93 ""
   "Images//8.png" 1697329715 300673 64bbad8c4a94311fd01f64a2634d3dd6 ""
   "Images//9.png" 1697385906 55915 72fabd8f5c32d31e6f546ff68526c07f ""
-  "Resumos.aux" 1698330550 4258 1aadcf1d701c8a694a320dbe276e51e5 "pdflatex"
-  "Resumos.tex" 1698330545 25306 b618645ec272e0c95cab3a40751b58a3 ""
+  "Resumos.aux" 1698410083 6009 b715d95c5531a096edcade2b7ec8dc73 "pdflatex"
+  "Resumos.tex" 1698410078 33342 b15067c3e94008d3b1310a6998351543 ""
   "UA.jpg" 1694949688 24745 bb294df60b1949399db2c463a4c9dbd7 ""
   "UA.png" 1694949688 4155 29baef92e33889c7f171c7001cfe64ba ""
   (generated)
