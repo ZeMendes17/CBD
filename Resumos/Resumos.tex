@@ -568,7 +568,151 @@ em que o valor é examinavél.
 
 \subsubsection{Column Databases}
 
-caralho moço
+\begin{flushleft}
+  \textbf{Data Model:}
+  \begin{itemize}
+    \item \textbf{Familia de Colunas (Table)}
+    \begin{itemize}
+      \item Table é uma coleção de rows similares (mas não necessariamente identicas);
+    \end{itemize}
+    \item \textbf{Row}
+    \begin{itemize}
+      \item Coleção de colunas - deve compactar um grupo de dados a ser acedidos juntos;
+      \item Associado a uma chave única de row (row key);
+    \end{itemize}
+    \item \textbf{Column}
+    \begin{itemize}
+      \item Consiste no nome da coluna, valor da coluna (possivelmente outros metadados)
+      \item Valores escalares, sets flat, listas ou maps;
+    \end{itemize}
+  \end{itemize}
+
+  \textbf{Query Patterns:}
+  \begin{itemize}
+    \item Criar, atualizar ou remover row de uma dada familia de colunas;
+    \item Selecionar rows de acordo com a row key ou outras condições simples;
+  \end{itemize}
+
+  \textbf{Use Cases:}
+  \begin{itemize}
+    \item Event logging, content management systems, blogs, \dots
+    \item Basicamente tudo o que for structured flat data com um schema parecido
+    \item Batch processing via MapReduce;
+  \end{itemize}
+
+  \pagebreak
+
+  \textbf{Quando NÃO usar:}
+  \begin{itemize}
+    \item Precisamos de ACID transactions;
+    \item Queries complexas (aggregation, joins, \dots);
+    \item Prototipos iniciais (quando o design da bd ainda está sujeita a mudanças)
+  \end{itemize}
+\end{flushleft}
+
+\subsubsection{Graph Databases}
+
+\begin{flushleft}
+  \textbf{Data Model:}
+  \begin{itemize}
+    \item Foco na modelação da estrutura e propriedade dos grafos;
+    \item Grafos podem ser ou não direcionados;
+    \item Grafos são coleções de:
+    \begin{itemize}
+      \item Nós (vertices) para entidades do mundo real;
+      \item Relações (edges) entre estes nós;
+    \end{itemize}
+    \item Ambos os nós e relações podem ter propriedades;
+  \end{itemize}
+
+  \textbf{Query Patterns:}
+  \begin{itemize}
+    \item Criar, atualizar ou remover nós/relações do grafo:
+    \begin{itemize}
+      \item Algoritmos de Grafos
+      \item General Graph Traversal
+      \item Sub-Graph ou Super-Graph Queries
+      \item Similarity based Queries
+    \end{itemize}
+  \end{itemize}
+
+  \textbf{Use Cases:}
+  \begin{itemize}
+    \item Social networks, routing, dispatch, location based services, \dots
+  \end{itemize}
+
+  \textbf{Quando NÃO usar:}
+  \begin{itemize}
+    \item Quando operações extensivas de batch são necessárias (múltiplos nós/relações
+    são afetadas);
+    \item Vamos dar store de grafos demasiado grandes (a distribuição de grafos ou até mesmo impossível);
+  \end{itemize}
+\end{flushleft}
+
+\pagebreak
+
+\subsubsection{Native XML Databases}
+
+\begin{flushleft}
+  \textbf{Data Model:}
+  \begin{itemize}
+    \item Documentos XML;
+    \item Estrutura em árvore com nested elements, atributos e valores de texto;
+    \item Documentos organizados em coleções;
+  \end{itemize}
+
+  \textbf{Query Languages:}
+  \begin{itemize}
+    \item Xpath (XML Path Language);
+    \item XQuery (XML Query Language);
+    \item XSLT (Extensible Stylesheet Language Transformations);
+  \end{itemize}
+\end{flushleft}
+
+\subsubsection{RDF Databases}
+
+\begin{flushleft}
+  \begin{itemize}
+    \item RDF Triples
+    \begin{itemize}
+      \item Subject, Predicate, Object;
+      \item Cada Triple representa uma statement sobre uma entidade do mundo real;
+    \end{itemize}
+    \item Triples podem sser vistas em grafos
+    \begin{itemize}
+      \item Vertices representam os subjects e objects;
+      \item Edges correspondem diretamente às statements individuais;
+    \end{itemize}
+  \end{itemize}
+
+  \textbf{Query Languages:}
+  \begin{itemize}
+    \item SPARQL (SPARQL Protocol and RDF Query Language);
+  \end{itemize}
+\end{flushleft}
+
+\subsubsection{Databases and data connectivity}
+
+\begin{center}
+  \includegraphics[scale=0.25]{41}
+\end{center}
+
+\pagebreak
+
+\subsubsection{Considerações Finais}
+
+As NoSQL DBs \textbf{NÃO} são o fim das bases de dados relacionais.
+Estas continuam a ser preferiveis para 90\% dos projetos, para além do facto
+das pessoas estarem mais familiarizadas, serem mais estáveis, terem mais
+fearures e mais documentação e suporte disponível.
+
+Mesmo assim devemos considerar diferentes modelos e sistemas de bases de dados.
+
+\vspace{2mm}
+
+\begin{flushleft}
+  \textbf{Persistência Poliglota} - Uso de diferentes data stores em diferentes circunstâncias.
+\end{flushleft}
 
 
 
