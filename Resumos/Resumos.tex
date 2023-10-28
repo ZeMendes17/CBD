@@ -568,7 +568,7 @@ em que o valor é examinavél.
 
 \subsubsection{Column Databases}
 
-
+caralho moço
 
 
 
@@ -881,5 +881,295 @@ elementos.
 \pagebreak
 
 \subsubsection{Cassandra API}
+
+\begin{flushleft}
+  \includegraphics[scale=0.3]{19}
+\end{flushleft}
+
+\subsection{Cassandra Query Language (CQL)}
+
+Declarative query language inspired by SQL.
+
+\begin{center}
+  \includegraphics[scale=0.3]{20}
+\end{center}
+
+\subsubsection{Keyspace}
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics[scale=0.25]{21}
+  \includegraphics[scale=0.25]{22}
+\end{figure}
+
+\pagebreak
+
+\subsubsection{Table - Create Statement}
+
+\begin{center}
+  \includegraphics[scale=0.25]{23}
+\end{center}
+
+\subsubsection{Table - Primary Key}
+
+\begin{flushleft}
+  Primary key has 2 parts:
+
+  \textbf{Compulsory Partition Key:} 
+  \begin{itemize}
+    \item Uma ou mais colunas;
+    \item Descreve como é que as table rows são distribuidas pelas partitions
+  \end{itemize}
+
+  \textbf{Optional Clustering Key (ou Columns):}
+  \begin{itemize}
+    \item Define a Clustering Order, isto é, como é que as tables estão localmente
+    guardadas dentro de uma partição;
+  \end{itemize}
+
+  \begin{center}
+    \includegraphics[scale=0.3]{24}
+  \end{center}
+\end{flushleft}
+
+\subsubsection{Key Roles}
+
+\begin{flushleft}
+  \textbf{Partition Key:} Responsável por da Distribution (partitioning)
+  pelos nodes da BD. Pode ter multiplas colunas.
+  
+  \vspace{2mm}
+
+  \textbf{Clustering Key:} Responsável oir Data Sorting dentro de uma partition.
+  Pode ter multiplas colunas.
+
+  \vspace{2mm}
+
+  \textbf{Primary Key:} Equivalente a uma Partition Key num Single-Field-Key Table;
+
+  \vspace{2mm}
+
+  \textbf{Composite Key:} Multiple-Column Key
+
+  \begin{figure}[!h]
+    \centering
+    \includegraphics[scale=0.3]{25}
+    \caption{Exemplo de uma Composite Key}
+  \end{figure}
+\end{flushleft}
+
+\pagebreak
+
+\subsubsection{Table - Other Statements}
+
+\begin{center}
+  \includegraphics[scale=0.3]{26}
+\end{center}
+
+\subsubsection{Select Statement}
+
+\begin{center}
+  \includegraphics[scale=0.3]{27}
+\end{center}
+
+\subsubsection{Select - FROM Clause}
+
+\begin{flushleft}
+  Define uma \textbf{única tabela} para a query:
+  \begin{itemize}
+    \item do keyspace atual/especificado;
+    \item \uline{dar join a outras tabelas não é possível};
+  \end{itemize}
+
+  \pagebreak
+
+  Suporta:
+  \begin{itemize}
+    \item \textbf{distinct} para eliminar rows duplicadas;
+    \item (user-defined) \textbf{aggregate functions}
+    \item \textbf{*} para selecionar todas as colunas;
+    \item \textbf{AS} para atribuit um alias a uma coluna;
+    \item WRITETIME (timestamp) e TTL (time to live) para selecionar os valores
+    de timestamp e ttl de uma coluna (não pode ser usado na clausula WHERE);
+  \end{itemize}
+
+  \begin{center}
+    \includegraphics[scale=0.3]{28}
+  \end{center}
+\end{flushleft}
+
+\subsubsection{Select - WHERE Clause}
+
+\begin{flushleft}
+  Sintaxe parecidas entre CQL e SQL.
+
+  As diferenças aparecem devido ao facto da Cassandra estar a lidar com dados
+  distribuidos, logo temos de procurar prevenir queries ineficientes
+  \begin{itemize}
+    \item Rows estão espalhadas pelo cluster baseado na Hash das suas partition keys;
+    \item Clustering keys são usadas para fazer cluster dos dados de uma partição
+    permitindo um retrieval muito eficiente das rows;
+  \end{itemize}
+
+  \vspace{2mm}
+
+  \textbf{Nota:} Partition Key, Clustering e normal columns supostam diferentes
+  sets de restrições dentro da clausula WHERE.
+
+  \vspace{2mm}
+
+  \textbf{Partition Key Columns:}
+  \begin{itemize}
+    \item Suportam \textbf{=} e \textbf{IN};
+    \item Todas as primary keys columns tem de ser usadas (restricted),
+    a não ser que tenhasmos secondary indexes;
+    \item Todas as colunas são precisas para computar a hash que vai permirie localizar
+    os nós que contenham os dados partição;
+  \end{itemize}
+
+  \vspace{2mm}
+
+  \textbf{Clustering Key:}
+  \begin{itemize}
+    \item Suportam \textbf{=, $<$, $>$, $<$=, $>$=};
+    \item \textbf{IN} retorna verdadeiro se o valor for um dos enumerados;
+    \item \textbf{CONTAINS*} e \textbf{CONTAINS KEY}:
+    \begin{itemize}
+      \item Retornam True se a coleção contiver o dado elemento;
+      \item Quando o query estiver a usar um secondary index;
+      \item Usado em collections* (lists, sets, maps) / maps**; 
+    \end{itemize}
+  \end{itemize}
+\end{flushleft}
+
+\pagebreak
+
+\subsubsection*{Examples:}
+
+\begin{center}
+  \includegraphics[scale=0.35]{29}
+\end{center}
+
+\begin{center}
+  \includegraphics[scale=0.35]{30}
+\end{center}
+
+\begin{center}
+  \includegraphics[scale=0.3]{31}
+\end{center}
+
+\pagebreak
+
+\subsubsection{Select - GROUP BY, ORDER BY \& LIMIT}
+
+\begin{flushleft}
+  \textbf{GROUP BY} clause:
+  \begin{itemize}
+    \item Agrupar Rows de uma Table de acordo com certas colunas;
+    \item \textbf{Apenas grouping induzidos por primary key columns são permitidos};
+    \item Quando non-grouping columns são selecionadas sem uma aggregate function,
+    o primeiro value encontrado é sempre retornado;
+  \end{itemize}
+
+  \vspace{2mm}
+
+  \textbf{ORDER BY} clause:
+  \begin{itemize}
+    \item Define a ordem (ASC ou DESC) das rows retornadas;
+    \item \textbf{Partition Key tem de ser restricted com = ou IN};
+    \item \textbf{APENAS} orderings induzidos por \textbf{CLUSTERING COLUMNS} são permitidos;
+  \end{itemize}
+
+  \vspace{2mm}
+
+  \textbf{LIMIT} clause:
+  \begin{itemize}
+    \item Limita o número de rows retornadas numa query result;
+  \end{itemize}
+
+  \begin{center}
+    \includegraphics[scale=0.3]{32}
+  \end{center}
+\end{flushleft}
+
+\subsubsection{Select - User Defined Functions}
+
+\begin{center}
+  \includegraphics[scale=0.3]{33}
+\end{center}
+
+\pagebreak
+
+\subsubsection{Select - Aggregates}
+
+\begin{center}
+  \includegraphics[scale=0.3]{34}
+\end{center}
+
+\subsubsection{Select - ALLOW FILTERING}
+
+\begin{center}
+  \includegraphics[scale=0.3]{35}
+\end{center}
+
+\pagebreak
+
+\subsubsection{Insert Statement}
+
+\begin{flushleft}
+  Insere uma nova row numa dada table:
+  \begin{itemize}
+    \item Se a Primary Key existir, a row é atualizada;
+    \item Existe a \textbf{condição IF NOT EXISTS} para apenas inserir caso uma row não exista;
+  \end{itemize}
+
+  Escreve uma ou mais colunas para uma dada row.
+  Pelo menos as Primeary Key Columns têm de ser especificadas.
+
+  \begin{center}
+    \includegraphics[scale=0.3]{36}
+  \end{center}
+\end{flushleft}
+
+\subsubsection{Update Statement}
+
+\begin{flushleft}
+  Atualiza rows existentes dentro de uma dada table:
+  \begin{itemize}
+    \item Se a row com a dada primary key não existir, é inserida; 
+  \end{itemize}
+
+  Todas as Primary Key Columns têm de ser especificadas na clausula WHERE.
+
+  \begin{figure}[!h]
+    \centering
+    \includegraphics[scale=0.3]{37}
+    \includegraphics[scale=0.3]{38}
+  \end{figure}
+\end{flushleft}
+
+\pagebreak
+
+\subsubsection{Parametros Insert \& Update}
+
+\begin{center}
+  \includegraphics[scale=0.25]{39}
+\end{center}
+
+\subsubsection{Delete Statement}
+
+\begin{flushleft}
+  Remove existing rows/columns/collection elements de uma dada tabela.
+
+  A clausula \textbf{WHERE} é usada para especificar qual a row que queremos deleted.
+
+  Múltiplas Rows podem ser apagadas com uma única query usando o operador \textbf{IN}.
+
+  Um range de rows pode ser apagado usando um inequality operator ($<$, $>$, $<=$, $>=$).
+
+  \begin{center}
+    \includegraphics[scale=0.3]{40}
+  \end{center}
+\end{flushleft}
 
 \end{document}
