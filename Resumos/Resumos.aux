@@ -36,42 +36,73 @@
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.7.6}RDF Databases}{15}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.7.7}Databases and data connectivity}{15}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.7.8}Considerações Finais}{16}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5}NoSQL Databases - Column Databases}{17}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Vantagens}{18}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.1}Explicado}{18}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Desvantagens}{18}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.1}Explicado}{18}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Modelo de Dados}{19}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Casos de Uso}{19}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Tecnologias Representativas}{19}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.6}Apache Cassandra}{20}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.6.1}Introdução}{20}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.6.2}Motivação}{20}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.6.3}Topologia do Sistema}{20}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.6.4}Arquitetura do Sistema}{21}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.6.5}Topologia do Sistema}{21}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.6.6}Modelo de dados}{22}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Exemplo de um Data Model}}{22}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.6.7}Cassandra vs Relational Example}{23}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.6.8}Column Values}{23}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.6.9}Data Model - Dados adicionais}{23}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.6.10}Cassandra API}{24}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.7}Cassandra Query Language (CQL)}{24}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.1}Keyspace}{24}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.2}Table - Create Statement}{25}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.3}Table - Primary Key}{25}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.4}Key Roles}{25}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Exemplo de uma Composite Key}}{25}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.5}Table - Other Statements}{26}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.6}Select Statement}{26}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.7}Select - FROM Clause}{26}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.8}Select - WHERE Clause}{27}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.9}Select - GROUP BY, ORDER BY \& LIMIT}{29}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.10}Select - User Defined Functions}{29}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.11}Select - Aggregates}{30}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.12}Select - ALLOW FILTERING}{30}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.13}Insert Statement}{31}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.14}Update Statement}{31}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.15}Parametros Insert \& Update}{32}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.16}Delete Statement}{32}{}\protected@file@percent }
-\gdef \@abspage@last{33}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Armazenamento e recolha de dados}{16}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Append-only log: Um exmplo em bash}{16}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Índices Hash}{17}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Gestão do espaço em disco}{18}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Outros problemas}{18}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Append-only log}{19}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6}Sorted String Table (SSTable)}{19}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.6.1}Vantagens}{20}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.6.2}Combinação de segmentos da SSTable}{20}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.6.3}Ordenação}{20}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.6.4}Recuperação a falhas}{21}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.7}B-trees}{21}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.1}Operações}{21}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.2}Split numa página}{22}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.3}Aspetos a considerar}{22}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.4}Otimização}{22}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.7.5}B-tree versus LSM-trees}{22}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.8}Outras estruturas de indexação}{23}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.9}Manter tudo na memória}{23}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.10}Processamento e análise transacional}{23}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.10.1}Online Transaction Processing (OLTP)}{23}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.10.2}Online Analytic Processing (OLAP)}{24}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.10.3}OLTP vs OLAP}{24}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.11}Data Warehouse}{25}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.11.1}Porquê separa Data Warehouse}{25}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.12}Esquema da base de dados}{26}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.13}Queries}{26}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.13.1}Armazenamento orientado a colunas}{27}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.13.2}Escrita}{27}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.14}Materialized views}{28}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Formatos de dados}{28}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}NoSQL Databases - Column Databases}{29}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Vantagens}{30}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.1.1}Explicado}{30}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Desvantagens}{30}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.2.1}Explicado}{30}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}Modelo de Dados}{31}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}Casos de Uso}{31}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.5}Tecnologias Representativas}{31}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.6}Apache Cassandra}{32}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.6.1}Introdução}{32}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.6.2}Motivação}{32}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.6.3}Topologia do Sistema}{32}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.6.4}Arquitetura do Sistema}{33}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.6.5}Topologia do Sistema}{33}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.6.6}Modelo de dados}{34}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Exemplo de um Data Model}}{34}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.6.7}Cassandra vs Relational Example}{35}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.6.8}Column Values}{35}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.6.9}Data Model - Dados adicionais}{35}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.6.10}Cassandra API}{36}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.7}Cassandra Query Language (CQL)}{36}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.7.1}Keyspace}{36}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.7.2}Table - Create Statement}{37}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.7.3}Table - Primary Key}{37}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.7.4}Key Roles}{37}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Exemplo de uma Composite Key}}{37}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.7.5}Table - Other Statements}{38}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.7.6}Select Statement}{38}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.7.7}Select - FROM Clause}{38}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.7.8}Select - WHERE Clause}{39}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.7.9}Select - GROUP BY, ORDER BY \& LIMIT}{41}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.7.10}Select - User Defined Functions}{41}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.7.11}Select - Aggregates}{42}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.7.12}Select - ALLOW FILTERING}{42}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.7.13}Insert Statement}{43}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.7.14}Update Statement}{43}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.7.15}Parametros Insert \& Update}{44}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.7.16}Delete Statement}{44}{}\protected@file@percent }
+\gdef \@abspage@last{45}

@@ -10,6 +10,29 @@
 \usepackage{ulem}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{amssymb}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
 
 \def\ojoin{\setbox0=\hbox{$\bowtie$}%
   \rule[-.02ex]{.25em}{.4pt}\llap{\rule[\ht0]{.25em}{.4pt}}}
@@ -714,9 +737,592 @@ Mesmo assim devemos considerar diferentes modelos e sistemas de bases de dados.
   \textbf{Persistência Poliglota} - Uso de diferentes data stores em diferentes circunstâncias.
 \end{flushleft}
 
+\section{Armazenamento e recolha de dados}
 
+Até aqui as bases de dados foram analisadas da perspetiva do utilizador, de quem armazena
+dados e opera sobre eles. No entanto, a escolha de uma base de dados para um projeto
+implica um conhecimento mais profundo sobre o seu modo de funcionamento interno.
 
+Neste capítulo será explorada em detalhe a forma como as bases de dados armazenam e
+obtêm os dados e distinguidas as bases de dados otimizadas para trabalhos transacionais das
+otimizadas para analíticos.
 
+\subsection{Append-only log: Um exmplo em bash}
+
+O script abaixo define uma base de dados em bash.
+
+\begin{lstlisting}
+  #!/bin/bash
+
+  cbd_set () { echo "$1,$2" >> database }
+
+  cbd_get () { grep "^$1," database | sed -e "s/^$1,//" | tail -n 1 }
+
+  # Usage: $ cbd_set <key> <value> $ cbd_get <key>
+\end{lstlisting}
+
+Este limita-se a adicionar a um ficheiro (append) um par chave/valor em cada
+linha através da função cbd\_set e a filtrar o seu conteúdo para as linhas que
+contenham a chave no cbd\_get, mostrando a última correspondência (chave mais
+recente). É um ficheiro de texto simples, em que cada linha é um par chave/valor
+separados por vírgula. Uma call ao cbd\_set acrescenta uma linha ao ficheiro,
+sendo que versões anteriores não são overwriten.
+
+\begin{lstlisting}
+  $ cbd_set 42 '{"name":"San Francisco","attractions":["Exploratorium"]}'
+
+  $ cbd_get 42
+  {"name":"San Francisco","attractions":["Exploratorium"]}
+
+  $ cat database
+  123456,{"name":"London","attractions":["Big Ben","London Eye"]}
+  42,{"name":"San Francisco","attractions":["Golden Gate Bridge"]}
+  42,{"name":"San Francisco","attractions":["Exploratorium"]}
+\end{lstlisting}
+
+\pagebreak
+
+Uma vez que não altera o conteúdo do ficheiro, limitando-se apenas a acrescentar-lhe linhas no
+final, a função de inserção tem uma \textbf{excelente perfomance, O(1)}, que é independente do
+tamanho da base de dados.
+
+Por outro lado, as consultas são \textbf{pouco eficientes} uma vez que obrigam à consulta de todo o
+ficheiro à procura da chave mais recente que corresponda. Apresenta por isso um
+desempenho \textbf{O(n)}. Para um função extremamente simples tem uma boa performance.
+Muitas bases de dados usam uma append-only data file ou logs. O problema é quando a DB cresce.
+
+Para encontrar eficientemente o valor de uma chave, precisamos de uma
+estrutura de dados diferente: um índice.
+\begin{itemize}
+  \item Um índice é uma estrutura de dados adicional que deriva dos dados primários;
+  \item Um índice bem escolhido aumentam a velocidade das queries, mas cada índice
+  torna as operações de write mais lentas;
+\end{itemize}
+
+\begin{flushleft}
+  \textbf{Nota:} A não repetição de chaves iria aumentar a eficiência da consulta uma vez que assim que encontrasse uma
+  correspondência não precisava de continuar à procura da chave mais recente. No entanto, neste cenário a inserção iria
+  ser prejudicada, uma vez que a alteração de uma linha implica a leitura e reescrita da totalidade do ficheiro, uma
+  operação que é bastante mais dispendiosa que o
+  append que faz atualmente.
+\end{flushleft}
+
+\subsection{Índices Hash}
+
+Uma solução para \uline{aumentar a eficiência das consultas} são os \textbf{índices}, estruturas adicionais às
+tabelas das BD que mantêm um mapeamento entre as chaves e a sua posição na base de
+dados.
+
+Key-value stores são tipo um dicionário, normalmente implementados como um hash map.
+Uma estratégia simples de indexação: manter um in-memory hash map onde todas as keys
+estão mapeadas para um byte offset no ficheiro de dados.
+
+Isto é o que algumas key-store databases fazem (e.g. Bitcask, Riak, \dots).
+Oferecem boa performance se o hash map for mantido em memória.
+
+\begin{center}
+  \includegraphics[scale=0.3]{42}
+\end{center}
+
+Apesar de agilizarem as consultas, \uline{prejudicam ligeiramente as inserções}, uma vez que para
+além de registar os pares chave/valor é necessário atualizar também a sua localização nos
+índices associados
+
+\pagebreak
+
+\subsection{Gestão do espaço em disco}
+
+Uma base de dados como a analisada em que o conteúdo é sempre adicionado e nunca
+reescrito vai ocupar cada vez mais espaço ao longo do tempo, aumentando também o tempo
+das operações de consulta. A solução passa por \textbf{segmentar} e \textbf{compactar} e \textbf{combinar}.
+
+\begin{flushleft}
+  \textbf{Segmentar:} Em vez de utilizar um único ficheiro, utilizar vários (melhor performance).
+  Cada segmento contém todos os valores escritos na DB num período de tempo.
+
+  \vspace{2mm}
+
+  \textbf{Nota: } Os ficheiros podem ter um tamanho máximo que quando é atingido faz com que os dados passem a ser armazenados
+  num novo ficheiro. Com este modo de funcionamento pode inveter-se a pesquisa e começá-la pelos ficheiros mais
+  recentes, evitando assim a análise de versões mais antigas da chave a ser procurada.
+  O pior caso passa no entanto a ser menos eficiente, que é quando a chave tiver sido escrita apenas no primeiro ficheiro
+  e nunca alterada, o que implica a análise de todos os ficheiros desde o mais recente ao mais antigo. Ao tempo da
+  análise soma-se o tempo de abertura dos vários ficheiros
+
+  \vspace{2mm}
+
+  \textbf{Compactar:} Remove chaves duplicadas do log.
+
+  \vspace{2mm}
+
+  \textbf{Compactar e combinar:} Combinar os ficheiros antigos em versões mais compactas,
+  mantendo apenas as versões mais recentes das chaves.
+
+  \vspace{2mm}
+
+  \textbf{Nota:} Esta operação pode ser realizada periodicamente por
+  threads em background e não irá interferir com a
+  disponibilidade da BD, uma vez que as operações são realizadas sobre os ficheiros mais recentes,
+  que não estão a ser manipulados.
+
+  \begin{center}
+    \includegraphics[scale=0.3]{43}
+  \end{center}
+\end{flushleft}
+
+\subsection{Outros problemas}
+
+Para além dos problemas analisados anteriormente há outros fatores que devem ser
+considerados.
+
+\vspace{2mm}
+
+\begin{flushleft}
+  O \textbf{formato de ficheiro} CSV não é o mais eficiente, sendo preferível a utilização de ficheiros
+  binários.
+
+  \vspace{2mm}
+
+  Quanto à eliminação de registos, a remoção de todos os pares de uma chave em todos os
+  ficheiros torna-se muito dispendiosa uma vez que como já foi mencionado implica a leitura e
+  reescrita de todos os ficheiros alterados. A solução mais eficiente passa pela adição de um
+  registo especial que indica a sua remoção (tombstone). Quando os segmentos do log são combinados,
+  o processo discarta qualquer valor anterior para a chave eliminada.
+
+  \pagebreak
+
+  No que toca à \textbf{recuperação de falhas}, se o sistema utilizar estruturas de mapeamento (índices)
+  em memória, o sistema irá demorar algum tempo a reconstrui-los em caso de falha do sistema
+  uma vez que serão perdidos. A solução passa pela criação de
+  snapshots em memória de cada hash map dos seguimentos (índice).
+
+  \vspace{2mm}
+
+  Há ainda a hipótese de \textbf{registos escritos parcialmente} caso o sistema falhe durante um
+  processo de inserção. Uma solução possível é a implementação de checksums que permitem a partes
+  corrompidas do log serem identificadas e ignoradas.
+
+  \vspace{2mm}
+
+  Por fim é ainda importante controlar o \textbf{acesso em concorrência} aos ficheiros. Sendo feita de
+  forma sequencial, a \uline{escrita} deve ser feita apenas por uma
+  thread única, enquanto que pelos
+  dados serem imutáveis e
+  append-only a \uline{leitura} pode ser feita em simultâneo por várias
+  threads.
+\end{flushleft}
+
+\subsection{Append-only log}
+
+O design append-only parece discartável À primeira vista, porque não dar update
+aos dados do ficheiros dando overwrite aos valor antigo com o novo valor?
+
+\vspace{2mm}
+
+Acaba por ser bom por várias razões:
+\begin{itemize}
+  \item Dar append e combinar segmentos são operações de escrita sequanciais,
+  que são muito mais rápidas que operações de escrita aleatórias;
+  \item Concorrência e recuperação de falhas são muito mais simples se os ficheiros
+  segmentados forem append-only ou imutáveis;
+\end{itemize}
+
+Mesmo havendo soluções para todos os problemas apresentados, há alguns que não têm
+resolução, como a necessidade da
+\textbf{hash-table caber em memória} (é dificil fazer um hash map on-disk que tenha
+boa performance) e a dificuldade em fazer
+\textbf{queries para intervalos de valores}.
+
+\subsection{Sorted String Table (SSTable)}
+
+Neste tipo de base de dados os pares chave/valor são ordenados pela chave, que é única (não
+pode aparecer mais do que uma vez em cada ficheiro segmentado combinado, o processo
+de combinar já faz isso).
+
+\pagebreak
+
+\subsubsection{Vantagens}
+
+Aqui a \textbf{combinação} dos segmentos torna-se ainda mais \textbf{simples} e \textbf{eficiente}, uma vez que em cada segmento estarão os
+pares cujas chaves estão próximas em termos de ordenação. Mesmo se os ficheiros
+são maiores do que (tipo algoritmo mergesort).
+
+Como consequência os \textbf{índices} tornam-se menos densos porque deixam de ter a necessidade
+de indexar todas as chaves e passam a integrar apenas os padrões que identificam o início de
+cada segmento (por exemplo “aa”, “br”, “h”).
+
+A segmentação deve ser um compromisso entre ter o menor número de blocos possível e ter blocos o
+mais pequenos possível
+
+\begin{center}
+  \includegraphics[scale=0.3]{44}
+\end{center}
+
+\subsubsection{Combinação de segmentos da SSTable}
+
+\begin{center}
+  \includegraphics[scale=0.3]{45}
+\end{center}
+
+\subsubsection{Ordenação}
+
+Quando a estrutura em árvore em memória (memtable) atinge um determinado limite, esta pode ser
+armazenada em disco gerando um novo segmento.
+\begin{itemize}
+  \item Pode ser feito eficientemente porque os dados já estão ordenados nos pares key-value;
+  \item A novo file SSTAble torna-se o segmento mais recente da DB;
+  \item Quando a noca SSTable está pronta, a memtable pode ser esvasiada; 
+\end{itemize}
+
+\vspace{2mm}
+
+As \uline{consultas analisam primeiro a árvore binária e se não encontrarem vão procurar no
+segmento mais recente}, regredimento depois no tempo até encontrar uma correspondência.
+
+\vspace{2mm}
+
+Esta abordagem, apesar de agilizar os processos de escrita prejudica os de leitura. Deve para
+evitar isto ser aplicada periodicamente a \textbf{combinação} e \textbf{compactação}.
+
+\pagebreak
+
+\subsubsection{Recuperação a falhas}
+
+Uma vez que os dados mais recentes são armazenados em memória, em caso de falha do
+sistema serão perdidos. Para evitar este problema, muitas SST mantém um \textbf{append-only log} em
+memória, que atualizam em cada escrita, de forma a permitir esta recuperação.
+
+\subsection{B-trees}
+
+Este é o mecanismo de indexação mais comum em sistemas de bases de dados. Tal como as
+SST estudadas anteriormente, as B-trees mantêm os pares chave/valor ordenados pela chave,
+o que torna as \textbf{leituras bastante eficientes}, mesmo com
+\uline{queries com intervalos}.
+
+As B-trees partem a Db em blocos/páginas de tamanho fixo,
+tradicionalmente 4KB, e a leitura e escrita numa página de cada vez.
+Facilita o seu armazenamento uma vez que estão em sintonia com o
+hardware.
+
+\begin{center}
+  \includegraphics[scale=0.3]{46}
+\end{center}
+
+\begin{flushleft}
+  \textbf{Nota:} Na camada do
+  hardware os discos também são compostos por blocos de
+  tamanho fixo.
+\end{flushleft}
+
+A estrutura começa pela página raiz.
+
+Em cada página há k valores e k+1 referências a outras
+páginas, sendo k geralmente um valor na ordem das
+centenas.
+
+Cada filho é responsavél por um intervalo continuo de chaves, e as chaves
+da página root indicam os intervalos de chaves dos filhos.
+
+\subsubsection{Operações}
+
+As operações de \textbf{pesquisa}, \textbf{inserção} e \textbf{remoção} são de complexidade $O(log_k n)$.
+
+A \textbf{inserção} é a operação com maior custo, uma vez que no caso de ser feita numa página que
+já tenha atingido o tamanho k, obriga à sua divisão em duas páginas e à reoganização dessa
+área da árvore, que pode impactar várias páginas.
+
+\textbf{Atualizar} um valor de uma key já existente:
+Pesquisar pela leaf page que contém a key e atualizar o valor. Escrever
+a página de volta para o disco (qualquer referência a esta página permanece válida).
+
+A árvore permanece balanceada.
+
+\pagebreak
+
+\subsubsection{Split numa página}
+
+\begin{center}
+  \includegraphics[scale=0.3]{47}
+\end{center}
+
+\subsubsection{Aspetos a considerar}
+
+A \textbf{gestão de falhas} pode ser feita tal como nas SST com append-only logs.
+
+A \textbf{gestão de concorrência} torna-se também fundamental, uma vez que não são desejáveis
+escritas em simultâneo. Utilizam-se semáfros.
+
+\subsubsection{Otimização}
+
+De forma a responder aos problemas endereçados no último tópico pode ainda ser aplicada a
+técnica \textbf{copy-on-write scheme}, que consiste na criação de páginas novas cada vez que alguma vai ser reescrita,
+mudando a referência da antiga para a nova apenas quando a última estiver concluída.
+
+\begin{flushleft}
+  \textbf{Nota:} Garanta-se assim que caso haja alguma falha no processo de escrita a integridade da base de dados não é
+  comprometida (embora as atualizações que estavam a ser feitas possam ser perdidas) e ainda que podem continuar a
+  haver leituras sobre os dados antigos com garantia de que a base de dados está integra durante o processo de cópia.
+\end{flushleft}
+
+Podem ainda ser aplicadas técnicas de \uline{abreviação das chaves}.
+
+\subsubsection{B-tree versus LSM-trees}
+
+LSM-trees são tipicamente mais rápidas para escritas,
+enquanto que as B-trees são mais rápidas para leituras.
+
+\vspace{2mm}
+
+Um downside de um log-structured storage é que o processo compactação
+pode interferir com a performance de ongoing leitura e escritas.
+
+\vspace{2mm}
+
+Nas B-trees cada key existe apenas uma vez no índice, enquanto que
+num log-structured storage pode ter várias cópias de diferentes segmentos.
+\begin{itemize}
+  \item Isto faz com que as B-trees sejam melhores para DB's que
+  querem oferecer semânticas de transações fortes;
+  \item Em muitas DB's relacionais, é implementado usando locks no range das keys,
+  num índice B-tree, estes locks podem ser diretamente aplicados na árvore;
+\end{itemize}
+
+\pagebreak
+
+\subsection{Outras estruturas de indexação}
+
+Por vezes é útil a criação de \textbf{índices secundários} cujas \uline{chaves são atributos não únicos}. Podem
+fazer corresponder a uma chave as suas várias referências (there
+might be many rows (documents, vertices) with the same
+key).
+
+Pode ser feito de duas maneiras:
+\begin{itemize}
+  \item Fazer aos valores do índice um matching row identifiers (como um posting list in a full-text index);
+  \item Tornar cada key única adicionando um identificador de row;
+\end{itemize}
+
+Os índices B-trees e log-structured podem ser usados como índices secundários. 
+
+\vspace{2mm}
+
+Há ainda cenários em que se justifica o \textbf{armazenamento dos valores no índice}, total ou
+parcialmente. Tem limitações dependendo do espaço da memória. Facilitam a leitura, mas
+prejudicam escritas.
+
+\vspace{2mm}
+
+Para situações em que seja necessário fazer
+queries sobre várias colunas podem ser definidos
+\textbf{índices multi-column}.
+
+\vspace{2mm}
+
+Todos os anteriores pressupõe a pesquisa por termos exatos. Os \textbf{índices fuzzy} fornecem uma
+solução para \uline{pesquisas por similaridade}. Muito usado em pesquisas textuais (like).
+
+\subsection{Manter tudo na memória}
+
+Hoje em dia já existem bastantes bases de dados que funcionam baseadas em memória,
+oferecendo redundância e persistência, ou seja, tolerantes a falhas
+
+\vspace{2mm}
+
+São geralmente mais rápidas que as suas homólogas (lados opostos), uma vez que não têm de codificar os
+dados de forma a poderem ser armazenados em disco. Permitem por isso trabalhar com
+estruturas que são difíceis de guardar em disco como
+priority queues e sets.
+
+\begin{flushleft}
+  \textbf{Nota:} A rapidez não se deve por isso diretamente ao facto de não terem de escrever em disco, uma vez que as bases de
+  dados em disco são geralmente carregadas em memória e acedidas a maior parte das vezes a partir da memória.
+\end{flushleft}
+
+\subsection{Processamento e análise transacional}
+
+\subsubsection{Online Transaction Processing (OLTP)}
+
+O \textbf{processamento transacional} define-se por permitir aos clientes fazer leituras e escritas com
+baixa latência. As \uline{bases de dados que seguem este padrão de acesso} dizem-se \textbf{OLTP} (padrão de acesso).
+
+Contrasta com o \textbf{batch processing}, uma tarefa de processamento realizada periodicamente
+(p.e. uma vez por dia) para algum fim.
+
+\pagebreak
+
+\subsubsection{Online Analytic Processing (OLAP)}
+
+Com a evolução das bases de dados, estas começaram a ser também utilizadas para \textbf{análise
+de dados analíticos}, que geralmente consiste em ler e processar uma grande quantidade de
+dados.
+
+\begin{flushleft}
+  \textbf{Nota:} Do ponto de vista técnico a construção do
+  query não é complexa, mas a tarefa em si pode tornar-se dependendo do
+  volume de dados em análise, que pode levar algum tempo a ser processado. Pode ainda haver o cenário em que um
+  query para dados do ano anterior ser feito várias vezes, desnecessariamente uma vez que os dados não vão mudar.
+\end{flushleft}
+
+\subsubsection{OLTP vs OLAP}
+
+O \textbf{OLTP} faz leituras de poucos registos de cada vez e de acesso aleatório, tal como a escrita,
+que deve ter uma baixa latência. Os dados, utilizados maioritariamente pelo segmento
+operacional das empresas, devem estar sempre atualizados e ocupam gigas.
+
+\vspace{2mm}
+
+Já no \textbf{OLAP} a leitura é feita em massa e a escrita em
+bulk import, sobre dados históricos, que
+ocupam teras. É utilizado pro gestores como suporte às suas tarefas de controlo e
+planeamento.
+
+\begin{center}
+  \includegraphics[scale=0.3]{48}
+\end{center}
+
+RDBMS e SQL trabalham bem com OLTP-type queries e com OLAP-type queries.
+
+Os sistemas OLAP geralmente ocupam mais espaço que os OLTP porque não apresentam
+normalização dos dados, ou seja, não tiram partido das características relacionais.
+
+Dadas as suas características distintas, estes padrões são geralmente \uline{implememtados por
+bases de dados distintas}.
+
+As focadas em OLTP dizem-se \textbf{relacionais}, enquanto que as OLAP se dizem \textbf{data warehouses}.
+
+\pagebreak
+
+\subsection{Data Warehouse}
+
+Estas bases de dados focadas na análise de dados \uline{geralmente estão associadas às
+transacionais}, das quais \textbf{extraem} os dados, que são \textbf{transformados} e \textbf{limpos} antes de
+\textbf{carregados}.
+
+\begin{center}
+  \includegraphics[scale=0.3]{49}
+\end{center}
+
+Este processamento é conhecido por \textbf{ETL} (
+Extract, Transform, Load).
+
+\vspace{2mm}
+
+Os dados podem ser provenientes de várias bases de dados e ser \textbf{transformados} de forma a ser integrados de forma
+unificada. Pode ainda ser feita uma \textbf{limpeza} eliminando registos nulos ou não consistentes.
+
+\subsubsection{Porquê separa Data Warehouse}
+
+\begin{flushleft}
+  Porquê combinar OLTP e OLAP?
+  \begin{itemize}
+    \item Data warehouse são normalmente relacionais, porque SQL é bom para analytic queries.
+    \item Muitas ferramentas OLTP (querying, visualization, \dots)
+  \end{itemize}
+
+  Porquê separar?
+  \begin{itemize}
+    \item Diferentes duncções e diferentes dados;
+  \end{itemize}
+
+  Muitos vendedores suportam ou transaction
+  processing or analytics workloads.
+\end{flushleft}
+
+\pagebreak
+
+\subsection{Esquema da base de dados}
+
+O esquema destas bases de dados é conhecido por esquema em estrela (\textbf{star schema}) e consiste numa
+tabela (entidade) principal, designada por \textbf{fact table}, onde cada linha corresponde a um evento num determinado tempo e cada
+atributo um valor ou referência a outra tabela.
+
+Existe ainda um modelo alternativo chamado \textbf{snowflake}, em que divide as duas dimensões do
+anterior em várias. É por isso mais normalizada, mas como consequência mais complexa de
+utilizar. 
+
+\begin{center}
+  \includegraphics[scale=0.3]{50}
+\end{center}
+
+\subsection{Queries}
+
+O facto de armazenar os dados históricos não normalizados leva a que as tabelas destas bases
+de dados tenham um volume gigante de registos com um número muito elevado de colunas (fact tables
+podem ter trilhões de rows e pentabytes de dados, normalmente têm mais de 100 colunas).
+Isto não é um problema nas consultas às linhas, porque geralmente são apenas lidas poucas
+de cada vez
+
+\vspace{2mm}
+
+No entanto, para obter todos os valores de uma coluna é necessário ler a totalidade da tabela,
+desperdiçando imensos recursos, OLTP databases são row-oriented: todos os valores de uma row
+estão próximos. Neste caso, a solução passa pelo \textbf{armazenamento orientado
+às colunas}.
+
+\pagebreak
+
+\subsubsection{Armazenamento orientado a colunas}
+
+Este tipo de armazenamento consiste em separar cada linha
+pelas suas colunas e guardar cada coluna num ficheiro/bloco
+separado. Tem por base o princípio que cada ficheiro tem as
+\textbf{colunas de cada linha pela mesma ordem}
+Se cada coluna estiver num ficheiro separado,
+a query apenas precisa de ler e processar estas colunas.
+
+Este tipo de armazenamento não é eficiente para leituras por linha!
+
+\begin{center}
+  \includegraphics[scale=0.3]{51}
+\end{center}
+
+Devido à \textbf{homogeneidade entre os dados} da mesma coluna é facilitada a compressão.
+
+Uma técnica que é particularmente efetiva em data warehouses é bitmap encoding.
+
+\vspace{2mm}
+
+A \textbf{ordenação} pode ser realizada por uma determinada coluna dependendo dos dados e do fim
+a que se destinam, mas não esquecer que a mesma posição em todos os ficheiros tem de
+corresponder à mesma linha, pelo que todos os ficheiros têm de ser reordenados.
+
+\subsubsection{Escrita}
+
+O armazenamento de column-oriented, a compressão e a ordenação ajudam
+a fazer as queries OLAP mais rápidas.
+
+Se os dados forem ordenados, a escrita de novos valores na BD torna-se um processo algo
+complexo, de forma a garantir a consistência.
+
+\vspace{2mm}
+
+Em \uline{estruturas operacionais} que implementam este tipo de armazenamento geralmente opta-se
+por \textbf{B-trees com append-log}. Uma boa solução é uma \textbf{LSM-tree}, que na prática é uma \textbf{SSTable}.
+
+\begin{center}
+  \includegraphics[scale=0.3]{52}
+\end{center}
+
+\pagebreak
+
+\subsection{Materialized views}
+
+Data warehouse queries often involve an
+aggregate function (COUNT, SUM, AVG, MIN, ...).
+
+\textbf{Materialized views} são um conjunto de agregações agrupadas em várias dimensões.
+
+Dada a complexidade dos
+queries de consulta às bases de dados OLAP, geralmente estas têm
+a si associadas \textbf{data cubes ou OLAP cube}, um tipo de \textbf{materialized view}, que consistem numa tabela da base
+de dados em
+cache que armazena dados agregados para efeitos de eficiência.
+
+\begin{center}
+  \includegraphics[scale=0.3]{53}
+\end{center}
+
+\section{Formatos de dados}
 
 
 \pagebreak
