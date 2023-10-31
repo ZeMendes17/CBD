@@ -1324,6 +1324,317 @@ cache que armazena dados agregados para efeitos de eficiência.
 
 \section{Formatos de dados}
 
+Aplicações inevitavelmente \textbf{mudam} ao longo do tempo, e em muitos casos
+isto precisa de uma mudança nos dados.
+Versões antigas e novas do código, e versões antigas e novas dos dados,
+podem, potencialmente, coexistir no sistema ao mesmo tempo.
+
+Para o sistema continuar a correr sem problemas, é necessário
+manter compatibilidade em ambas as direções:
+
+\begin{flushleft}
+  \textbf{Backward compatibility -} Novo código pode ler dados que foram escritos
+  pelo código antigo (novas versões podem ler dados antigos).
+
+  \textbf{Forward compatibility -} Código antigo pode ler dados que foram escritos
+  pelo novo código (versões antigas podem ler dados novos). Requere que o código antigo
+  ignore adições feitas pela nova versão do código.
+\end{flushleft}
+
+Programas geralmente trabalham com dados\dots
+\begin{itemize}
+  \item In memory, os dados são mantidos em objetos, structs, arrays, hash tables, trees \dots
+  \item Out of memory, para escrever dados para um ficheiro, ou mandá-lo pela rede
+  (i.e diferentes sequancias de bytes).
+\end{itemize}
+
+A translação da representação in-memory para uma sequência de bytes é chamada de
+\textbf{encoding}, \textbf{serialization} ou \textbf{marshalling}.
+
+O inverso é chamado de \textbf{decoding}, \textbf{deserialization} ou \textbf{unmarshalling}.
+
+\pagebreak
+
+\subsection{Formatos específicos de linguagens}
+
+Muitas linguagens de programação oferecem bibliotecas que permitem a realização deste
+processo. No entanto, os mecanismos que oferecem estão muitas vezes acoplados a essa
+linguagem (não permitem a leitura por outras) e dependentes da sua versão, pelo que devem
+ser apenas aplicados em \textbf{soluções temporárias}.
+
+\begin{flushleft}
+  \textbf{Nota:} Java mapeia
+  Serializable, Ruby
+  Marshal e Python
+  Pickle
+\end{flushleft}
+
+\subsection{Formatos textuais}
+
+A alternativa a este modelo são os formatos textuais, que a \textbf{maior vantagem} é serem legíveis pelo ser
+humano. No entanto têm alguns problemas uma vez que implementam menos restrições, que
+geram alguma \textbf{ambiguidade} entre tipos de dados, nomeadamente
+strings e números (JSON lida com isto, mas não integers).
+CSV não tem um schema, a aplicação deve definir o significado de cada row e colun.
+
+Apesar de tudo, JSON, XML e CSV são bastante utilizados e úteis em muitos cenários.
+
+\subsection{Codificação binária}
+
+A terceira alternativa consiste no armazenamento em formato binário, que apesar de não ser
+legível pelo ser humano, é \textbf{mais compacto e lidos mais rapidamente}, uma vez que o esquema
+nos indica os tipos de dados a ler, pelo que são lidos diretamente no seu formato.
+
+Para um dataset pequeno, os ganhos não são significativos, mas com terabytes,
+a escolha do formato pode fazer uma grande diferença.
+
+Num formato textual este é lido por completo como uma
+string e dependendo do seu tipo é depois convertido.
+
+Os formatos mais utilizados são binários de JSON (BSON, BJSON, UBJSON, …).
+
+\subsection{Formatos textuais}
+
+\subsubsection{CSV (comma-separated values)}
+
+Este formato é \textbf{pouco estandardizado}, uma vez que aceita \uline{dois tipos de separadores} (vírgula e
+ponto e vírgula), \uline{não tem um formato
+escape definido}, nem informação quanto à sua
+codificação.
+
+\subsubsection*{Exemplo}
+
+\begin{center}
+  \includegraphics[scale=0.3]{54}
+\end{center}
+
+\pagebreak
+
+\subsubsection{XML (Extensible Markup Language)}
+
+Este formato é \textbf{semi-estruturado}, estando definidas normas quanto à forma como os dados são
+organizados. Tem o objetivo de ser simples, generativo e usável na internet.
+
+A sua estrutura é composta por \textbf{constructs}, que são delimitados pelos marcadores de abertura
+e fecho, que podem ser do tipo vazio, textual, elemento (se tiverem
+nested elements) ou uma
+mistura dos anteriores.
+Cada elemento pode estar associado com um conjunto de atributos.
+
+Os atributos são feitos numa noção de \textbf{chave}(marcador)/valor.
+
+Sequências de escape (entidades predefinidas), são usados dentro de valores de atributos
+ou conteúdo textual de elementos. Ex: \&lt; é $<$, \&gt é $>$, \&quot é $"$, \dots
+
+\subsubsection*{Exemplo}
+
+\begin{center}
+  \includegraphics[scale=0.3]{55}
+\end{center}
+
+\subsubsection{JSON (JavaScript Object Notation)}
+
+Este é um XML simplificado baseado na notação JavaScript (mas independente da linguagem), como sugerido pelo nome.
+
+Objetivos:
+\begin{itemize}
+  \item Simplicidade: text-based, fácil de ler e escrever;
+  \item Universal: estruturas de dados comuns (object e array);
+\end{itemize}
+
+JSON é construído em duas estruturas:
+
+\begin{flushleft}
+  \textbf{Coleção de pares chave/valor} - Em muitas linguagens, isto é caracterizado como um object, record, struct, dictionary,
+  hash table, keyed list ou associative array.
+
+  \textbf{Lista ordenada de valores} - Na maioria das linguagens, isto é caracterizado como um array, vector, list ou sequence.
+\end{flushleft}
+
+\pagebreak
+
+\subsubsection*{Exemplo}
+
+\begin{center}
+  \includegraphics[scale=0.3]{56}
+\end{center}
+
+\subsubsection*{Estrutura de dados - Object}
+
+Coleção não ordenada de pares chave/valor (propriedades). Corresponde a estruturas
+como object, record, struct, dictionary, hash table, keyed list, associative array\dots
+
+\begin{lstlisting}
+  { "name": "John", "age": 22, "city": "London" }
+  { }
+\end{lstlisting}
+
+\subsubsection*{Estrutura de dados - Array}
+
+Coleção ordenada de valores. Corresponde a estruturas como array, vector, list, sequence\dots
+
+Os valores podem ser de diferentes tipos, valores duplicados não são permitidos.
+
+\begin{lstlisting}
+  [ 2, 7, 7, 5 ]
+  [ "John", 22, "London" ]
+  [ ]
+\end{lstlisting}
+
+\pagebreak
+
+\subsubsection*{Estrutura de dados - Value}
+
+\begin{itemize}
+  \item String unicode:
+  \begin{itemize}
+    \item Delimitada por aspas duplas;
+    \item Sequências de escape: \textbackslash "a \textbackslash n b \textbackslash " c \textbackslash \textbackslash d;
+  \end{itemize}
+
+  \item Número:
+  \begin{itemize}
+    \item Inteiros decimais ou floats;
+    \item Example: 42, -1.234, 6.02e23;
+  \end{itemize}
+
+  \item Nested object;
+  \item Nested array;
+  \item Boolean value: true or false;
+  \item Missing information: null;
+\end{itemize}
+
+\subsubsection{BSON (Binary JSON)}
+
+Binary-encoded serialization de JSON documents
+\begin{itemize}
+  \item Caracteristicas: Lightweight, \textbf{traversable}, efficient;
+  \item \textbf{Armazenamento conveniente de informação binária} (bom para imagens e attachements);
+  \item desenhado para fast in-memory manipulation;
+  \item tipos de dados extra (para além de JSON): double, date, byte array, JS code,\dots
+\end{itemize}
+
+Usado pelo MongoDB:
+\begin{itemize}
+  \item NoSQL document database para documentos JSON;
+\end{itemize}
+
+\subsubsection*{Exemplo}
+
+\begin{center}
+  \includegraphics[scale=0.3]{57}
+\end{center}
+
+\pagebreak
+
+\subsubsection*{Estrutura do Documento}
+
+\begin{flushleft}
+  \textbf{Documento:} Serialização de um objeto JSON ou array;
+
+  O objeto JSON é serializado diretamente, e o array JSON é primeiro transformado
+  num objeto JSON ([1, 2, 3] $\rightarrow$ \{"0": 1, "1": 2, "2": 3\});
+\end{flushleft}
+
+\begin{center}
+  \includegraphics[scale=0.3]{58}
+\end{center}
+
+\begin{flushleft}
+  \textbf{Elemento:} Serialização de uma propriedade JSON;
+\end{flushleft}
+
+\begin{center}
+  \includegraphics[scale=0.3]{59}
+\end{center}
+
+\subsubsection{RDF (Resource Description Framework)}
+
+RDF é baseado no conceito em que todos os \textbf{recursos} podem ter diferentes \textbf{propriedades}
+que têm \textbf{valores}.
+
+\begin{flushleft}
+  \textbf{Recursos:} Qualquer real-world entity
+\end{flushleft}
+
+\begin{center}
+  \includegraphics[scale=0.3]{60}
+\end{center}
+
+\pagebreak
+
+\subsubsection*{Statements}
+
+\begin{center}
+  \includegraphics[scale=0.25]{61}
+\end{center}
+
+\subsubsection*{RDF Triple}
+
+\begin{center}
+  \includegraphics[scale=0.25]{62}
+\end{center}
+
+\subsubsection*{RDF Example}
+
+\begin{center}
+  \includegraphics[scale=0.25]{63}
+\end{center}
+
+\subsection{Serialization approaches}
+
+\begin{flushleft}
+  \begin{itemize}
+    \item RDF/XML notation (XML syntax para RDF);
+    \item Turtle notation (Terse RDF Triple Language);
+    \item N-Triples notation;
+    \item JSON-LD notation (JSON-based serialization for Linked Data);
+  \end{itemize}
+\end{flushleft}
+
+\pagebreak
+
+\subsubsection{Turtle Notation}
+
+Formato de texto compacto, várias abreviações para padrões de usage comuns.
+
+\subsubsection*{Exemplo}
+
+\begin{center}
+  \includegraphics[scale=0.25]{64}
+\end{center}
+
+\subsection{Protocol Buffers}
+
+Biblioteca de encoding \textbf{binário} que requer um \textbf{schema}
+para os dados que estão encoded.
+
+Mecanismo extensível para serializar dados estruturados. Usado em protocolos de
+comunicação, data storage,\dots
+
+Criado (e bastante usado) pela Google (maioritariamente para comunicação server-side).
+
+Caracteristicas de desenho: \textbf{Fast}, \textbf{Small}, \textbf{Simple}.
+
+File extension: *.proto
+
+\begin{center}
+  \includegraphics[scale=0.3]{65}
+\end{center}
+
+\subsubsection*{Schema: encoding examples}
+
+\begin{center}
+  \includegraphics[scale=0.3]{66}
+\end{center}
+
+\pagebreak
+
+\subsubsection*{Example: ProtoBuf to Java}
+
+\begin{center}
+  \includegraphics[scale=0.3]{67}
+\end{center}
 
 \pagebreak
 \section{NoSQL Databases - Column Databases}
