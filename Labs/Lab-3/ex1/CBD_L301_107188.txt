@@ -1,0 +1,250 @@
+# Create, show, delete and alter a Keyspace:
+
+cqlsh>
+cqlsh> CREATE KEYSPACE IF NOT EXISTS Excelsior WITH replication = {'class':'SimpleStrategy', 'replication_factor': 3};           
+cqlsh> DESC KEYSPACES;
+
+excelsior  system_auth         system_schema  system_views         
+system     system_distributed  system_traces  system_virtual_schema
+
+cqlsh> USE excelsior;
+cqlsh:excelsior> DROP KEYSPACE excelsior;
+cqlsh:excelsior> DESC KEYSPACES;
+
+system       system_distributed  system_traces  system_virtual_schema
+system_auth  system_schema       system_views 
+
+cqlsh:excelsior> CREATE KEYSPACE IF NOT EXISTS Excelsior WITH replication = {'class':'SimpleStrategy', 'replication_factor': 3};
+
+Warnings :
+Your replication factor 3 for keyspace excelsior is higher than the number of nodes 1
+
+cqlsh:excelsior> ALTER KEYSPACE excelsior WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 4};
+
+Warnings :
+Your replication factor 4 for keyspace excelsior is higher than the number of nodes 1
+
+When increasing replication factor you need to run a full (-full) repair to distribute the data.
+
+cqlsh:excelsior>
+
+# Show Keyspaces
+
+cqlsh:excelsior> SELECT * FROM system_schema.keyspaces;
+
+ keyspace_name      | durable_writes | replication
+--------------------+----------------+-------------------------------------------------------------------------------------
+          excelsior |           True | {'class': 'org.apache.cassandra.locator.SimpleStrategy', 'replication_factor': '4'}
+        system_auth |           True | {'class': 'org.apache.cassandra.locator.SimpleStrategy', 'replication_factor': '1'}
+      system_schema |           True |                             {'class': 'org.apache.cassandra.locator.LocalStrategy'}
+ system_distributed |           True | {'class': 'org.apache.cassandra.locator.SimpleStrategy', 'replication_factor': '3'}
+             system |           True |                             {'class': 'org.apache.cassandra.locator.LocalStrategy'}
+      system_traces |           True | {'class': 'org.apache.cassandra.locator.SimpleStrategy', 'replication_factor': '2'}
+
+(6 rows)
+
+# Create, Delete and Alter a Table
+
+cqlsh:excelsior> CREATE TABLE numberOfRequests (
+             ... cluster text,
+             ... data text,
+             ... datacenter text,
+             ... hour int,
+             ... minute int,
+             ... numberOfRequests int,            
+             ... PRIMARY KEY ((cluster, data), datacenter, hour, minute))
+             ... ;
+cqlsh:excelsior>
+cqlsh:excelsior> CREATE TABLE movies (
+             ... id text,
+             ... title text,
+             ... director tuple<text,text>,
+             ... year smallint,
+             ... actors map<text,text>,
+             ... genres list<text>,
+             ... countries set<text>,
+             ... PRIMARY KEY (id));
+cqlsh:excelsior> DROP TABLE IF EXISTS movies;
+cqlsh:excelsior> 
+cqlsh:excelsior> 
+cqlsh:excelsior> 
+cqlsh:excelsior> 
+cqlsh:excelsior> 
+cqlsh:excelsior> CREATE TABLE movies ( id text, title text, director tuple<text,text>, year smallint, actors map<text,text>, genres list<text>, countries set<text>, PRIMARY KEY ((id), title)) WITH CLUSTERING ORDER BY (title DESC);
+cqlsh:excelsior> ALTER TABLE excelsior.movies WITH compaction = {'class': 'LeveledCompactionStrategy'};
+cqlsh:excelsior>
+cqlsh:excelsior> 
+
+
+# Show all the tables from a Keyspace
+
+cqlsh:excelsior> DESC excelsior
+
+CREATE KEYSPACE excelsior WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '4'}  AND durable_writes = true;
+
+CREATE TABLE excelsior.movies (
+    id text,
+    title text,
+    director frozen<tuple<text, text>>,
+    year smallint,
+    actors map<text, text>,
+    countries set<text>,
+    genres list<text>,
+    PRIMARY KEY (id, title)
+) WITH CLUSTERING ORDER BY (title DESC)
+    AND additional_write_policy = '99p'
+    AND bloom_filter_fp_chance = 0.01
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'NONE'}
+    AND cdc = false
+    AND comment = ''
+    AND compaction = {'class': 'org.apache.cassandra.db.compaction.LeveledCompactionStrategy', 'max_threshold': '32', 'min_threshold': '4'}
+    AND compression = {'chunk_length_in_kb': '16', 'class': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
+    AND default_time_to_live = 0
+    AND extensions = {}
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair = 'BLOCKING'
+    AND speculative_retry = '99p';
+
+CREATE TABLE excelsior.numberofrequests (
+    cluster text,
+    data text,
+    datacenter text,
+    hour int,
+    minute int,
+    numberofrequests int,
+    PRIMARY KEY ((cluster, data), datacenter, hour, minute)
+) WITH CLUSTERING ORDER BY (datacenter ASC, hour ASC, minute ASC)
+    AND additional_write_policy = '99p'
+    AND bloom_filter_fp_chance = 0.01
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'NONE'}
+    AND cdc = false
+    AND comment = ''
+    AND compaction = {'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold': '32', 'min_threshold': '4'}
+    AND compression = {'chunk_length_in_kb': '16', 'class': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
+    AND default_time_to_live = 0
+    AND extensions = {}
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair = 'BLOCKING'
+    AND speculative_retry = '99p';
+cqlsh:excelsior> 
+
+# Insert into Table
+
+cqlsh:excelsior> INSERT INTO excelsior.movies (id, title, director, year, actors, genres, countries) VALUES ('1', 'CoolMovie', ('Manel', 'Antonio'), 2000, {'main': 'Ze', 'secondary': 'Quim'}, ['Horror', 'Comedy'], {'Portugal', 'USA'}) USING TTL 8000;
+
+# Select from Table
+
+cqlsh:excelsior> SELECT * FROM excelsior.movies  ;
+
+ id | title     | actors                              | countries           | director             | genres               | year
+----+-----------+-------------------------------------+---------------------+----------------------+----------------------+------
+  1 | CoolMovie | {'main': 'Ze', 'secondary': 'Quim'} | {'Portugal', 'USA'} | ('Manel', 'Antonio') | ['Horror', 'Comedy'] | 2000
+
+(1 rows)
+cqlsh:excelsior> SELECT title, year, genres FROM excelsior.movies;
+
+ title     | year | genres
+-----------+------+----------------------
+ CoolMovie | 2000 | ['Horror', 'Comedy']
+
+(1 rows)
+cqlsh:excelsior> SELECT title, year, genres FROM excelsior.movies WHERE id IN ( '1','2','3');
+
+ title     | year | genres
+-----------+------+----------------------
+ CoolMovie | 2000 | ['Horror', 'Comedy']
+
+(1 rows)
+cqlsh:excelsior> SELECT title, year, genres FROM excelsior.movies WHERE id IN ('2','3');
+
+ title | year | genres
+-------+------+--------
+
+(0 rows)
+
+## With Error
+
+cqlsh:excelsior> SELECT title, year, genres FROM excelsior.movies WHERE year > 1990;
+InvalidRequest: Error from server: code=2200 [Invalid query] message="Cannot execute this query as it might involve data filtering and thus may have unpredictable performance. If you want to execute this query despite the performance unpredictability, use ALLOW FILTERING"
+
+## ALLOW FILTERING
+
+cqlsh:excelsior> SELECT * FROM excelsior.movies WHERE year = 2003;
+InvalidRequest: Error from server: code=2200 [Invalid query] message="Cannot execute this query as it might involve data filtering and thus may have unpredictable performance. If you want to execute this query despite the performance unpredictability, use ALLOW FILTERING"
+cqlsh:excelsior> SELECT * FROM excelsior.movies WHERE year = 2003 ALLOW FILTERING;
+
+ id | title      | actors           | countries    | director        | genres               | year
+----+------------+------------------+--------------+-----------------+----------------------+------
+  2 | CoolMovie2 | {'main': 'Quim'} | {'Portugal'} | ('Manel', None) | ['Comedy', 'Action'] | 2003
+
+(1 rows)
+
+## Create an Index and use it in the SELECT Statement
+
+cqlsh:excelsior> CREATE INDEX ON excelsior.movies (keys(actors));
+cqlsh:excelsior> SELECT * FROM excelsior.movies WHERE actors CONTAINS KEY 'main';
+
+ id | title      | actors                              | countries           | director             | genres               | year
+----+------------+-------------------------------------+---------------------+----------------------+----------------------+------
+  2 | CoolMovie2 |                    {'main': 'Quim'} |        {'Portugal'} |      ('Manel', None) | ['Comedy', 'Action'] | 2003
+  1 |  CoolMovie | {'main': 'Ze', 'secondary': 'Quim'} | {'Portugal', 'USA'} | ('Manel', 'Antonio') | ['Horror', 'Comedy'] | 2000
+
+(2 rows)
+
+## Group By
+
+cqlsh:excelsior> SELECT count(*) FROM excelsior.movies GROUP BY id;
+
+ count
+-------
+     1
+     1
+
+(2 rows)
+
+## Order By
+
+cqlsh:excelsior> SELECT * FROM excelsior.movies WHERE id = '1' AND title = 'CoolMovie' ORDER BY title;
+
+ id | title     | actors                              | countries           | director             | genres               | year
+----+-----------+-------------------------------------+---------------------+----------------------+----------------------+------
+  1 | CoolMovie | {'main': 'Ze', 'secondary': 'Quim'} | {'Portugal', 'USA'} | ('Manel', 'Antonio') | ['Horror', 'Comedy'] | 2000
+
+(1 rows)
+
+### Error
+
+cqlsh:excelsior> SELECT * FROM excelsior.movies WHERE id = '1' AND title = 'CoolMovie' ORDER BY id;
+InvalidRequest: Error from server: code=2200 [Invalid query] message="Order by is currently only supported on the clustered columns of the PRIMARY KEY, got id"
+
+
+
+# Update Row
+
+cqlsh:excelsior> UPDATE excelsior.movies USING TTL 400 SET year = 2003 WHERE id = '2' AND title = 'CoolMovie2'; 
+cqlsh:excelsior> SELECT * FROM excelsior.movies ;
+
+ id | title      | actors                              | countries           | director             | genres               | year
+----+------------+-------------------------------------+---------------------+----------------------+----------------------+------
+  2 | CoolMovie2 |                    {'main': 'Quim'} |        {'Portugal'} |      ('Manel', None) | ['Comedy', 'Action'] | 2003
+  1 |  CoolMovie | {'main': 'Ze', 'secondary': 'Quim'} | {'Portugal', 'USA'} | ('Manel', 'Antonio') | ['Horror', 'Comedy'] | 2000
+
+# Delete
+
+cqlsh:excelsior> DELETE FROM excelsior.movies WHERE id='1';
+cqlsh:excelsior> SELECT * FROM excelsior.movies ;
+
+ id | title      | actors           | countries    | director        | genres               | year
+----+------------+------------------+--------------+-----------------+----------------------+------
+  2 | CoolMovie2 | {'main': 'Quim'} | {'Portugal'} | ('Manel', None) | ['Comedy', 'Action'] | 2003
+
+(1 rows)
+

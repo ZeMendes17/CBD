@@ -1,0 +1,12 @@
+[
+    {"videoid": 5, "id": 10, "rating": 4},
+    {"videoid": 1, "id": 1, "rating": 5},
+    {"videoid": 1, "id": 2, "rating": 4},
+    {"videoid": 2, "id": 3, "rating": 4},
+    {"videoid": 2, "id": 4, "rating": 3},
+    {"videoid": 6, "id": 9, "rating": 5},
+    {"videoid": 9, "id": 7, "rating": 3},
+    {"videoid": 9, "id": 8, "rating": 2},
+    {"videoid": 3, "id": 5, "rating": 4},
+    {"videoid": 3, "id": 6, "rating": 5}
+]
