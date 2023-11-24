@@ -1,23 +1,10 @@
-[
-    {"videoid": 5, "username": "jane_smith"},
-    {"videoid": 5, "username": "olivia_smith"},
-    {"videoid": 10, "username": "lucas_baker"},
-    {"videoid": 10, "username": "sam_wilson"},
-    {"videoid": 10, "username": "sara_brown"},
-    {"videoid": 1, "username": "alex_123"},
-    {"videoid": 1, "username": "emily_wilson"},
-    {"videoid": 1, "username": "jane_smith"},
-    {"videoid": 8, "username": "david_roberts"},
-    {"videoid": 2, "username": "emily_wilson"},
-    {"videoid": 2, "username": "michael_jones"},
-    {"videoid": 2, "username": "sara_brown"},
-    {"videoid": 4, "username": "john_doe"},
-    {"videoid": 4, "username": "lucas_baker"},
-    {"videoid": 7, "username": "david_roberts"},
-    {"videoid": 7, "username": "sara_brown"},
-    {"videoid": 6, "username": "lucas_baker"},
-    {"videoid": 9, "username": "olivia_smith"},
-    {"videoid": 3, "username": "alex_123"},
-    {"videoid": 3, "username": "emily_wilson"},
-    {"videoid": 3, "username": "john_doe"}
-]
+{"videoid": 5, "users": ["emily_wilson", "john_doe", "sam_wilson"]}
+{"videoid": 10, "users": ["alex_123", "jane_smith", "john_doe", "sara_brown"]}
+{"videoid": 1, "users": ["alex_123", "emily_wilson", "jane_smith"]}
+{"videoid": 8, "users": ["michael_jones", "sara_brown"]}
+{"videoid": 2, "users": ["emily_wilson"]}
+{"videoid": 4, "users": ["alex_123", "david_roberts", "sara_brown"]}
+{"videoid": 7, "users": ["jane_smith", "john_doe"]}
+{"videoid": 6, "users": ["david_roberts", "lucas_baker", "olivia_smith"]}
+{"videoid": 9, "users": ["david_roberts"]}
+{"videoid": 3, "users": ["john_doe", "olivia_smith", "sam_wilson"]}

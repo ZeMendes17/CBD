@@ -1,24 +1,24 @@
-CREATE TABLE IF NOT EXISTS user (
+CREATE TABLE IF NOT EXISTS videos.user (
 	username text,
 	name text,
 	email text,
-	registTime timestamp,
+	registryTime timestamp,
 
 	PRIMARY KEY (username)
 );
 
-CREATE TABLE IF NOT EXISTS video (
-	id int,
+CREATE TABLE IF NOT EXISTS videos.video (
+    id int,
 	author text,
 	name text,
 	description text,
 	tags set<text>,
 	uploadTime timestamp,
-	
-	PRIMARY KEY (id, author, uploadTime)
-);
 
-CREATE TABLE IF NOT EXISTS commentUser(
+    PRIMARY KEY ((id, author), uploadTime)
+) WITH CLUSTERING ORDER BY (uploadTime DESC);
+
+CREATE TABLE IF NOT EXISTS videos.comment_user(
 	id int,
 	author text,
 	videoId int,
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS commentUser(
 	PRIMARY KEY ((author), postTime)
 ) WITH CLUSTERING ORDER BY (postTime DESC);
 
-CREATE TABLE IF NOT EXISTS commentVideo(
+CREATE TABLE IF NOT EXISTS videos.comment_video(
 	id int,
 	author text,
 	videoId int,
@@ -38,29 +38,29 @@ CREATE TABLE IF NOT EXISTS commentVideo(
 	PRIMARY KEY ((videoId), postTime)
 ) WITH CLUSTERING ORDER BY (postTime DESC);
 
-CREATE TABLE IF NOT EXISTS follower (
+CREATE TABLE IF NOT EXISTS videos.follower (
 	videoId int,
-	username text,
+	users set<text>,
 
-	PRIMARY KEY (videoId, username)
+    PRIMARY KEY (videoId)
 );
 
-CREATE TABLE IF NOT EXISTS event (
+CREATE TABLE IF NOT EXISTS videos.event (
 	videoId int,
-	username text,
+	author text,
 	eventType text,
 	eventTime timestamp,
-	moment int,
+	moment timestamp,
 
-	PRIMARY KEY ((videoId, username), eventTime)
+	PRIMARY KEY ((videoId, author), eventTime)
 );
 
-CREATE TABLE IF NOT EXISTS rating (
+CREATE TABLE IF NOT EXISTS videos.rating (
 	id int,
 	videoId int,
-	rating int,
+	rate int,
 
-	PRIMARY KEY (videoId, id)
+	PRIMARY KEY ((videoId), rate)
 );
 
 

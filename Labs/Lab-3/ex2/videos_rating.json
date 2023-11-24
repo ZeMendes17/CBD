@@ -1,12 +1,15 @@
-[
-    {"videoid": 5, "id": 10, "rating": 4},
-    {"videoid": 1, "id": 1, "rating": 5},
-    {"videoid": 1, "id": 2, "rating": 4},
-    {"videoid": 2, "id": 3, "rating": 4},
-    {"videoid": 2, "id": 4, "rating": 3},
-    {"videoid": 6, "id": 9, "rating": 5},
-    {"videoid": 9, "id": 7, "rating": 3},
-    {"videoid": 9, "id": 8, "rating": 2},
-    {"videoid": 3, "id": 5, "rating": 4},
-    {"videoid": 3, "id": 6, "rating": 5}
-]
+{"id": 15, "videoid": 6, "rate": 4}
+{"id": 8, "videoid": 9, "rate": 2}
+{"id": 5, "videoid": 3, "rate": 4}
+{"id": 10, "videoid": 5, "rate": 4}
+{"id": 12, "videoid": 10, "rate": 5}
+{"id": 2, "videoid": 1, "rate": 4}
+{"id": 4, "videoid": 2, "rate": 3}
+{"id": 7, "videoid": 9, "rate": 3}
+{"id": 11, "videoid": 1, "rate": 3}
+{"id": 1, "videoid": 1, "rate": 5}
+{"id": 14, "videoid": 7, "rate": 3}
+{"id": 3, "videoid": 2, "rate": 4}
+{"id": 13, "videoid": 10, "rate": 4}
+{"id": 6, "videoid": 3, "rate": 5}
+{"id": 9, "videoid": 6, "rate": 5}

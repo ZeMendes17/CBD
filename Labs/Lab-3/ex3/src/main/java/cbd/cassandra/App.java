@@ -3,7 +3,7 @@ package cbd.cassandra;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
 
-public class Main {
+public class App {
     public static void main(String[] args) {
         try (Cluster cluster = Cluster.builder().addContactPoint("127.0.0.1").build()) {
             Session session = cluster.connect("videos");
@@ -13,6 +13,7 @@ public class Main {
             deleteUser(session, "Ze");
             System.out.println("User deleted");
         } catch (Exception e) {
+            System.err.println("Failed to connect to cluster: " + e.getMessage());
             e.printStackTrace();
         }
 
