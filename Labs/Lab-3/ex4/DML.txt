@@ -1,83 +1,3 @@
-# Exercício 4
-
-Desenvolvimento de uma pequena base de dados
-que tire partido do modelo de dados de Cassandra e cuja temática é livre.
-
-**Tema:** Base de dados para um banco.
-
-## Alínea a) Um keyspace com, pelo menos, 4 tabelas;
-
-### Criação do keyspace
-
-```sql
-CREATE KEYSPACE IF NOT EXISTS bank_system WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '3'}
-```
-
-### Criação das tabelas
-
-```sql
-CREATE TABLE IF NOT EXISTS bank_system.client (
-    id int,
-    name text,
-    address text,
-    phone text,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS bank_system.account (
-    id id,
-    client_id int,
-    balance decimal,
-    acc_number text,
-    transactions_list list<uuid>,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS bank_system.transaction (
-    id id,
-    acc_id uuid,
-    amount decimal,
-    date timestamp,
-    transaction_type text,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS bank_system.loans (
-    id id,
-    acc_id uuid,
-    amount decimal,
-    interest_rate decimal,
-    duration int,
-    date timestamp,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS bank_system.manager (
-    id int,
-    name text,
-    address text,
-    phone text,
-    managed_accounts set<uuid>,
-    performance map<text, decimal>,
-    PRIMARY KEY (id)
-);
-```
-
-> **Client:** Clientes do banco.
-
-> **Account:** Contas bancárias dos clientes.
-
-> **Transaction:** Transações realizadas em cada conta.
-
-> **Loans:** Empréstimos realizados em cada conta.
-
-> **Manager:** Gestores de conta, que podem gerir uma ou mais contas.
-
-## Alínea b) Inserção de uma média de 12 registos por tabela;
-
-### Client
-    
-```sql
 INSERT INTO bank_system.client (id, name, address, phone) VALUES (1, 'João', 'Rua do João', '912345678');
 INSERT INTO bank_system.client (id, name, address, phone) VALUES (2, 'Maria', 'Rua da Esquina', '943009123');
 INSERT INTO bank_system.client (id, name, address, phone) VALUES (3, 'José', 'Travessa 7', '912345397');
@@ -90,11 +10,7 @@ INSERT INTO bank_system.client (id, name, address, phone) VALUES (9, 'Pedro', 'R
 INSERT INTO bank_system.client (id, name, address, phone) VALUES (10, 'Inês', 'Viela dos Amores', '945668123');
 INSERT INTO bank_system.client (id, name, address, phone) VALUES (11, 'Ricardo', 'Rua Qualquer', '912349000');
 INSERT INTO bank_system.client (id, name, address, phone) VALUES (12, 'Mariana', 'Travessa Da Escola', '914424989');
-```
 
-### Account
-
-```sql
 INSERT INTO bank_system.account (id, client_id, balance, acc_number, transactions_list) VALUES (1, 1, 1000, '123456789', [2]);
 INSERT INTO bank_system.account (id, client_id, balance, acc_number, transactions_list) VALUES (2, 2, 2000, '987654321', [1, 3]);
 INSERT INTO bank_system.account (id, client_id, balance, acc_number, transactions_list) VALUES (3, 3, 3000, '123123123', []);
@@ -107,11 +23,7 @@ INSERT INTO bank_system.account (id, client_id, balance, acc_number, transaction
 INSERT INTO bank_system.account (id, client_id, balance, acc_number, transactions_list) VALUES (10, 10, 9000000, '753753753', [14]);
 INSERT INTO bank_system.account (id, client_id, balance, acc_number, transactions_list) VALUES (11, 11, 100000, '951951951', []);
 INSERT INTO bank_system.account (id, client_id, balance, acc_number, transactions_list) VALUES (12, 12, 9.13, '357357357', [13, 15]);
-```
 
-### Transaction
-
-```sql
 INSERT INTO bank_system.transaction (id, acc_id, amount, date, transaction_type) VALUES (1, 2, 65, toTimestamp(now()), 'deposit');
 INSERT INTO bank_system.transaction (id, acc_id, amount, date, transaction_type) VALUES (2, 1, 15, toTimestamp(now()), 'withdraw');
 INSERT INTO bank_system.transaction (id, acc_id, amount, date, transaction_type) VALUES (3, 2, 200, toTimestamp(now()), 'withdraw');
@@ -127,11 +39,7 @@ INSERT INTO bank_system.transaction (id, acc_id, amount, date, transaction_type)
 INSERT INTO bank_system.transaction (id, acc_id, amount, date, transaction_type) VALUES (13, 12, 10, toTimestamp(now()), 'withdraw');
 INSERT INTO bank_system.transaction (id, acc_id, amount, date, transaction_type) VALUES (14, 10, 1000000, toTimestamp(now()), 'deposit');
 INSERT INTO bank_system.transaction (id, acc_id, amount, date, transaction_type) VALUES (15, 12, 19.13, toTimestamp(now()), 'deposit');
-```
 
-### Loans
-
-```sql
 INSERT INTO bank_system.loans (id, acc_id, amount, interest_rate, duration, date) VALUES (1, 1, 1000, 0.2, 6, toTimestamp(now()));
 INSERT INTO bank_system.loans (id, acc_id, amount, interest_rate, duration, date) VALUES (2, 2, 2000, 0.2, 10, toTimestamp(now()));
 INSERT INTO bank_system.loans (id, acc_id, amount, interest_rate, duration, date) VALUES (3, 3, 2000, 0.3, 12, toTimestamp(now()));
@@ -145,11 +53,7 @@ INSERT INTO bank_system.loans (id, acc_id, amount, interest_rate, duration, date
 INSERT INTO bank_system.loans (id, acc_id, amount, interest_rate, duration, date) VALUES (11, 10, 1000000, 1, 24, toTimestamp(now()));
 INSERT INTO bank_system.loans (id, acc_id, amount, interest_rate, duration, date) VALUES (12, 10, 500000, 0.75, 12, toTimestamp(now()));
 INSERT INTO bank_system.loans (id, acc_id, amount, interest_rate, duration, date) VALUES (13, 1, 1000, 0.2, 6, toTimestamp(now()));
-```
 
-### Manager
-
-```sql
 INSERT INTO bank_system.manager (id, name, address, phone, managed_accounts, performance) VALUES (1, 'Marco', 'Rua do Marco', '999898979', {1, 2}, {'2021': 0.2, '2022': 0.3});
 INSERT INTO bank_system.manager (id, name, address, phone, managed_accounts, performance) VALUES (2, 'Ricardo', 'Rua do Ricardo', '914664132', {4, 5}, {'2021': 0.2, '2022': 0.3});
 INSERT INTO bank_system.manager (id, name, address, phone, managed_accounts, performance) VALUES (3, 'Joana', 'Largo da St Joana', '918097635', {7}, {'2020': 0.2, '2021': 0.2, '2022': 0.1});
@@ -157,34 +61,3 @@ INSERT INTO bank_system.manager (id, name, address, phone, managed_accounts, per
 INSERT INTO bank_system.manager (id, name, address, phone, managed_accounts, performance) VALUES (5, 'Ana', 'Rua da Ana', '932143876', {3}, {'2021': 1, '2022': 0.1});
 INSERT INTO bank_system.manager (id, name, address, phone, managed_accounts, performance) VALUES (6, 'Vitor', 'Travessa 7', '90891555', {6, 8}, {'2020': 0.6,'2021': 0.2, '2022': 0.2});
 INSERT INTO bank_system.manager (id, name, address, phone, managed_accounts, performance) VALUES (7, 'Sara', 'Largo do Canto', '919191919', {9}, {'2021': 0.8, '2022': 1.2});
-```
-
-## Alínea c) Utilização das seguintes estruturas de dados (todas): set, list, map;
-
-Como se pode ver nas tabelas acima criadas, todas estas estruturas de dados foram utilizadas:
-
-- **Set:** *managed_accounts* na tabela *manager*.
-
-- **List:** *transactions_list* na tabela *account*.
-
-- **Map:** *performance* na tabela *manager*.
-
-## Alínea d) Definição de, pelo menos, 2 índices secundários;
-
-```sql
-CREATE INDEX ON bank_system.account (client_id);
-CREATE INDEX ON bank_system.transaction (acc_id);
-CREATE INDEX ON bank_system.loans (acc_id);
-```
-
-> **Índice 1:** Permite pesquisar por pelo id do cliente e obter todas as suas contas.
-
-> **Índice 2:** Permite pesquisar por pelo id da conta e obter todas as suas transações.
-
-> **Índice 3:** Permite pesquisar por pelo id da conta e obter todos os seus empréstimos.
-
-## Alínea e) Utilização de, pelo menos, 5 updates e 5 deletes de dados: utilize operações não triviais sobre as estruturas de dados (da alínea c))
-
-### Updates
-
-```sql
