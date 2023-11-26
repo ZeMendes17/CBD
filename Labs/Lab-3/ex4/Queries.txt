@@ -1,0 +1,29 @@
+-- 1. Selecionar todos os clientes
+SELECT * FROM bank_system.client;
+
+-- 2. Todas as transações realizadas na conta 2, ordenadas por ordem decrescente de data
+SELECT * FROM bank_system.transaction WHERE acc_id = 2 ORDER BY date DESC;
+
+-- 3. Os 3 últimos empréstimos realizados na conta 10 ordenados por ordem decrescente de data
+SELECT * FROM bank_system.loans WHERE acc_id = 10 ORDER BY date DESC LIMIT 3;
+
+-- 4. O id das contas geridas pelo gestor 5
+SELECT managed_accounts FROM bank_system.manager WHERE id = 5;
+
+-- 5. O id, nome e o número dos clientes 3 e 10
+SELECT id, name, phone FROM bank_system.client WHERE id IN (3, 10);
+
+-- 6. Todos os levantamentos realizados na conta 9
+SELECT * FROM bank_system.transaction_by_type WHERE acc_id = 9 AND transaction_type = 'withdraw';
+
+-- 7. O saldo da conta 2
+SELECT balance FROM bank_system.account WHERE id = 2;
+
+-- 8. Todas as transações realizadas pela conta 9 no mês de novembro de 2023
+SELECT * FROM bank_system.transaction WHERE acc_id = 9 AND date >= '2023-11-01' AND date < '2023-12-01';
+
+-- 9. O id e a performance de 2021 de todos os gestores
+SELECT id, performance['2021'] AS performance_2021 FROM bank_system.manager;
+
+-- 10. Os empréstimos realizados na conta 10 com uma duração superior a 12 meses
+SELECT * FROM bank_system.loans_by_duration WHERE acc_id = 10 AND duration > 12;

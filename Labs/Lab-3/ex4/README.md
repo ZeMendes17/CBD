@@ -58,8 +58,18 @@ CREATE TABLE IF NOT EXISTS bank_system.loans (
     interest_rate decimal,
     duration int,
     date timestamp,
-    PRIMARY KEY ((acc_id), date, duration)
-);
+    PRIMARY KEY ((acc_id), date)
+) WITH CLUSTERING ORDER BY (date DESC);
+
+CREATE TABLE IF NOT EXISTS bank_system.loans_by_duration (
+    id int,
+    acc_id int,
+    amount decimal,
+    interest_rate decimal,
+    duration int,
+    date timestamp,
+    PRIMARY KEY ((acc_id), duration)
+) WITH CLUSTERING ORDER BY (duration DESC);
 
 CREATE TABLE IF NOT EXISTS bank_system.manager (
     id int,
@@ -172,6 +182,20 @@ INSERT INTO bank_system.loans (id, acc_id, amount, interest_rate, duration, date
 INSERT INTO bank_system.loans (id, acc_id, amount, interest_rate, duration, date) VALUES (11, 10, 1000000, 1, 24, toTimestamp(now()));
 INSERT INTO bank_system.loans (id, acc_id, amount, interest_rate, duration, date) VALUES (12, 10, 500000, 0.75, 12, toTimestamp(now()));
 INSERT INTO bank_system.loans (id, acc_id, amount, interest_rate, duration, date) VALUES (13, 1, 1000, 0.2, 6, toTimestamp(now()));
+
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (1, 1, 1000, 0.2, 6, toTimestamp(now()));
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (2, 2, 2000, 0.2, 10, toTimestamp(now()));
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (3, 3, 2000, 0.3, 12, toTimestamp(now()));
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (4, 10, 6000, 0.4, 6, toTimestamp(now()));
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (5, 10, 3000, 0.27, 6, toTimestamp(now()));
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (6, 12, 10000, 0.5, 24, toTimestamp(now()));
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (7, 4, 5000, 0.2, 6, toTimestamp(now()));
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (8, 7, 20000, 0.76, 36, toTimestamp(now()));
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (9, 9, 1000, 0.2, 6, toTimestamp(now()));
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (10, 9, 2000, 0.35, 12, toTimestamp(now()));
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (11, 10, 1000000, 1, 24, toTimestamp(now()));
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (12, 10, 500000, 0.75, 12, toTimestamp(now()));
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (13, 1, 1000, 0.2, 6, toTimestamp(now()));
 ```
 
 ### Manager
@@ -295,7 +319,7 @@ SELECT * FROM bank_system.transaction WHERE acc_id = 2 ORDER BY date DESC;
       2 | 2023-11-26 17:32:29.813000+0000 |     65 |  1 |          deposit
 ```
 
-### 3. Os 3 últimos empréstimos realizados na conta 10
+### 3. Os 3 últimos empréstimos realizados na conta 10 ordenados por ordem decrescente de data
 
 ```sql
 SELECT * FROM bank_system.loans WHERE acc_id = 10 ORDER BY date DESC LIMIT 3;
@@ -391,4 +415,14 @@ SELECT id, performance['2021'] AS performance_2021 FROM bank_system.manager;
   3 |              0.2
 ```
 
-### 10. 
+### 10. Os empréstimos realizados na conta 10 com uma duração superior a 12 meses
+
+```sql
+SELECT * FROM bank_system.loans_by_duration WHERE acc_id = 10 AND duration > 12;
+```
+
+```sql
+ acc_id | duration | amount  | date                            | id | interest_rate
+--------+----------+---------+---------------------------------+----+---------------
+     10 |       24 | 1000000 | 2023-11-26 22:25:06.196000+0000 | 11 |             1
+```

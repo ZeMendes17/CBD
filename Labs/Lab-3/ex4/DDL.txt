@@ -42,8 +42,18 @@ CREATE TABLE IF NOT EXISTS bank_system.loans (
     interest_rate decimal,
     duration int,
     date timestamp,
-    PRIMARY KEY ((acc_id), date, duration)
-);
+    PRIMARY KEY ((acc_id), date)
+) WITH CLUSTERING ORDER BY (date DESC);
+
+CREATE TABLE IF NOT EXISTS bank_system.loans_by_duration (
+    id int,
+    acc_id int,
+    amount decimal,
+    interest_rate decimal,
+    duration int,
+    date timestamp,
+    PRIMARY KEY ((acc_id), duration)
+) WITH CLUSTERING ORDER BY (duration DESC);
 
 CREATE TABLE IF NOT EXISTS bank_system.manager (
     id int,

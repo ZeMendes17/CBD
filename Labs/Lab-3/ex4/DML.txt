@@ -72,6 +72,20 @@ INSERT INTO bank_system.loans (id, acc_id, amount, interest_rate, duration, date
 INSERT INTO bank_system.loans (id, acc_id, amount, interest_rate, duration, date) VALUES (12, 10, 500000, 0.75, 12, toTimestamp(now()));
 INSERT INTO bank_system.loans (id, acc_id, amount, interest_rate, duration, date) VALUES (13, 1, 1000, 0.2, 6, toTimestamp(now()));
 
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (1, 1, 1000, 0.2, 6, toTimestamp(now()));
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (2, 2, 2000, 0.2, 10, toTimestamp(now()));
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (3, 3, 2000, 0.3, 12, toTimestamp(now()));
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (4, 10, 6000, 0.4, 6, toTimestamp(now()));
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (5, 10, 3000, 0.27, 6, toTimestamp(now()));
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (6, 12, 10000, 0.5, 24, toTimestamp(now()));
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (7, 4, 5000, 0.2, 6, toTimestamp(now()));
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (8, 7, 20000, 0.76, 36, toTimestamp(now()));
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (9, 9, 1000, 0.2, 6, toTimestamp(now()));
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (10, 9, 2000, 0.35, 12, toTimestamp(now()));
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (11, 10, 1000000, 1, 24, toTimestamp(now()));
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (12, 10, 500000, 0.75, 12, toTimestamp(now()));
+INSERT INTO bank_system.loans_by_duration (id, acc_id, amount, interest_rate, duration, date) VALUES (13, 1, 1000, 0.2, 6, toTimestamp(now()));
+
 INSERT INTO bank_system.manager (id, name, address, phone, managed_accounts, performance) VALUES (1, 'Marco', 'Rua do Marco', '999898979', {1, 2}, {'2021': 0.2, '2022': 0.3});
 INSERT INTO bank_system.manager (id, name, address, phone, managed_accounts, performance) VALUES (2, 'Ricardo', 'Rua do Ricardo', '914664132', {4, 5}, {'2021': 0.2, '2022': 0.3});
 INSERT INTO bank_system.manager (id, name, address, phone, managed_accounts, performance) VALUES (3, 'Joana', 'Largo da St Joana', '918097635', {7}, {'2020': 0.2, '2021': 0.2, '2022': 0.1});
