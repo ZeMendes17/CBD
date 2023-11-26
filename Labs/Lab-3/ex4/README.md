@@ -39,8 +39,17 @@ CREATE TABLE IF NOT EXISTS bank_system.transaction (
     amount decimal,
     date timestamp,
     transaction_type text,
-    PRIMARY KEY (id)
-);
+    PRIMARY KEY ((acc_id), date)
+) WITH CLUSTERING ORDER BY (date DESC);
+
+CREATE TABLE IF NOT EXISTS bank_system.transaction_by_type (
+    id int,
+    acc_id int,
+    amount decimal,
+    date timestamp,
+    transaction_type text,
+    PRIMARY KEY ((acc_id), transaction_type, date)
+) WITH CLUSTERING ORDER BY (transaction_type ASC, date DESC);
 
 CREATE TABLE IF NOT EXISTS bank_system.loans (
     id int,
@@ -49,7 +58,7 @@ CREATE TABLE IF NOT EXISTS bank_system.loans (
     interest_rate decimal,
     duration int,
     date timestamp,
-    PRIMARY KEY (id)
+    PRIMARY KEY ((acc_id), date, duration)
 );
 
 CREATE TABLE IF NOT EXISTS bank_system.manager (
@@ -128,6 +137,23 @@ INSERT INTO bank_system.transaction (id, acc_id, amount, date, transaction_type)
 INSERT INTO bank_system.transaction (id, acc_id, amount, date, transaction_type) VALUES (14, 10, 1000000, toTimestamp(now()), 'deposit');
 INSERT INTO bank_system.transaction (id, acc_id, amount, date, transaction_type) VALUES (15, 12, 19.13, toTimestamp(now()), 'deposit');
 INSERT INTO bank_system.transaction (id, acc_id, amount, date, transaction_type) VALUES (16, 12, 10, toTimestamp(now()), 'withdraw');
+
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (1, 2, 65, toTimestamp(now()), 'deposit');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (2, 1, 15, toTimestamp(now()), 'withdraw');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (3, 2, 200, toTimestamp(now()), 'withdraw');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (4, 4, 10, toTimestamp(now()), 'withdraw');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (5, 5, 100, toTimestamp(now()), 'deposit');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (6, 5, 500, toTimestamp(now()), 'deposit');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (7, 4, 26.04, toTimestamp(now()), 'deposit');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (8, 7, 4, toTimestamp(now()), 'deposit');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (9, 9, 10, toTimestamp(now()), 'withdraw');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (10, 9, 10000, toTimestamp(now()), 'withdraw');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (11, 9, 100, toTimestamp(now()), 'deposit');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (12, 8, 29.87, toTimestamp(now()), 'deposit');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (13, 12, 10, toTimestamp(now()), 'withdraw');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (14, 10, 1000000, toTimestamp(now()), 'deposit');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (15, 12, 19.13, toTimestamp(now()), 'deposit');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (16, 12, 10, toTimestamp(now()), 'withdraw');
 ```
 
 ### Loans
@@ -232,3 +258,137 @@ DELETE FROM bank_system.transaction WHERE id = 16;
 
 
 ## Alínea f) Criação de 10 queries expressivas do seu domínio de conhecimento da cláusula SELECT: use WHERE, ORDER BY, LIMIT, etc.
+
+### 1. Selecionar todos os clientes
+
+```sql
+SELECT * FROM bank_system.client;
+```
+
+```sql
+ id | address                 | name    | phone
+----+-------------------------+---------+-----------
+  5 |         Largo dos Patos |     Rui |  90891444
+ 10 |        Viela dos Amores |    Inês | 945668123
+ 11 |            Rua Qualquer | Ricardo | 912349000
+  1 | Rua do João e Antonieta |    João | 912345678
+  2 |          Rua da Esquina |   Maria | 943009123
+  4 |              Rua do Sol |     Ana | 932143876
+  7 |         Rua do Carlitos |  Carlos | 943345678
+  6 |              Rua do Mar |   Marta | 919475678
+  9 |             Rua do João |   Pedro | 901432661
+ 12 |      Travessa Da Escola | Mariana | 914424989
+  3 |              Travessa 7 |    José | 912345397
+```
+
+
+### 2. Todas as transações realizadas na conta 2, ordenadas por ordem decrescente de data
+
+```sql
+SELECT * FROM bank_system.transaction WHERE acc_id = 2 ORDER BY date DESC;
+```
+
+```sql
+  acc_id | date                            | amount | id | transaction_type
+--------+---------------------------------+--------+----+------------------
+      2 | 2023-11-26 17:32:29.822000+0000 |    200 |  3 |         withdraw
+      2 | 2023-11-26 17:32:29.813000+0000 |     65 |  1 |          deposit
+```
+
+### 3. Os 3 últimos empréstimos realizados na conta 10
+
+```sql
+SELECT * FROM bank_system.loans WHERE acc_id = 10 ORDER BY date DESC LIMIT 3;
+```
+
+```sql
+ acc_id | date                            | amount  | duration | id | interest_rate
+--------+---------------------------------+---------+----------+----+---------------
+     10 | 2023-11-26 17:37:53.241000+0000 |  500000 |       12 | 12 |          0.75
+     10 | 2023-11-26 17:37:53.236000+0000 | 1000000 |       24 | 11 |             1
+     10 | 2023-11-26 17:37:53.205000+0000 |    3000 |        6 |  5 |          0.27
+```
+
+### 4. O id das contas geridas pelo gestor 5
+
+```sql
+SELECT managed_accounts FROM bank_system.manager WHERE id = 5;
+```
+
+```sql
+  managed_accounts
+------------------
+          {3, 12}
+```
+
+### 5. O id, nome e o número dos clientes 3 e 10
+
+```sql
+SELECT id, name, phone FROM bank_system.client WHERE id IN (3, 10);
+```
+
+```sql
+ id | name | phone
+----+------+-----------
+  3 | José | 912345397
+ 10 | Inês | 945668123
+```
+
+### 6. Todos os levantamentos realizados na conta 9
+
+```sql
+SELECT * FROM bank_system.transaction_by_type WHERE acc_id = 9 AND transaction_type = 'withdraw';
+```
+
+```sql
+ acc_id | transaction_type | date                            | amount | id
+--------+------------------+---------------------------------+--------+----
+      9 |         withdraw | 2023-11-26 18:03:51.604000+0000 |  10000 | 10
+      9 |         withdraw | 2023-11-26 18:03:51.600000+0000 |     10 |  9
+```
+
+### 7. O saldo da conta 2
+
+```sql
+SELECT balance FROM bank_system.account WHERE id = 2;
+```
+
+```sql
+ balance
+---------
+    2000
+```
+
+### 8. Todas as transações realizadas pela conta 9 no mês de novembro de 2023
+
+```sql
+SELECT * FROM bank_system.transaction WHERE acc_id = 9 AND date >= '2023-11-01' AND date < '2023-12-01';
+```
+
+```sql
+ acc_id | date                            | amount | id | transaction_type
+--------+---------------------------------+--------+----+------------------
+      9 | 2023-11-26 18:03:51.534000+0000 |    100 | 11 |          deposit
+      9 | 2023-11-26 18:03:51.529000+0000 |  10000 | 10 |         withdraw
+      9 | 2023-11-26 18:03:51.523000+0000 |     10 |  9 |         withdraw
+```
+
+### 9. O id e a performance de 2021 de todos os gestores
+
+```sql
+SELECT id, performance['2021'] AS performance_2021 FROM bank_system.manager;
+```
+
+```sql
+ id | performance_2021
+----+------------------
+  5 |                1
+  1 |              0.2
+  2 |              0.2
+  4 |              0.2
+  7 |              0.8
+  6 |              0.2
+  3 |              0.2
+```
+
+### 10. 

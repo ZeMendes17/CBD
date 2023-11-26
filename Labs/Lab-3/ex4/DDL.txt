@@ -23,8 +23,17 @@ CREATE TABLE IF NOT EXISTS bank_system.transaction (
     amount decimal,
     date timestamp,
     transaction_type text,
-    PRIMARY KEY (id)
-);
+    PRIMARY KEY ((acc_id), date)
+) WITH CLUSTERING ORDER BY (date DESC);
+
+CREATE TABLE IF NOT EXISTS bank_system.transaction_by_type (
+    id int,
+    acc_id int,
+    amount decimal,
+    date timestamp,
+    transaction_type text,
+    PRIMARY KEY ((acc_id), transaction_type, date)
+) WITH CLUSTERING ORDER BY (transaction_type ASC, date DESC);
 
 CREATE TABLE IF NOT EXISTS bank_system.loans (
     id int,
@@ -33,7 +42,7 @@ CREATE TABLE IF NOT EXISTS bank_system.loans (
     interest_rate decimal,
     duration int,
     date timestamp,
-    PRIMARY KEY (id)
+    PRIMARY KEY ((acc_id), date, duration)
 );
 
 CREATE TABLE IF NOT EXISTS bank_system.manager (

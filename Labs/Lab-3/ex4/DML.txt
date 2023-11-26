@@ -41,6 +41,23 @@ INSERT INTO bank_system.transaction (id, acc_id, amount, date, transaction_type)
 INSERT INTO bank_system.transaction (id, acc_id, amount, date, transaction_type) VALUES (15, 12, 19.13, toTimestamp(now()), 'deposit');
 INSERT INTO bank_system.transaction (id, acc_id, amount, date, transaction_type) VALUES (16, 12, 10, toTimestamp(now()), 'withdraw');
 
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (1, 2, 65, toTimestamp(now()), 'deposit');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (2, 1, 15, toTimestamp(now()), 'withdraw');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (3, 2, 200, toTimestamp(now()), 'withdraw');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (4, 4, 10, toTimestamp(now()), 'withdraw');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (5, 5, 100, toTimestamp(now()), 'deposit');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (6, 5, 500, toTimestamp(now()), 'deposit');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (7, 4, 26.04, toTimestamp(now()), 'deposit');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (8, 7, 4, toTimestamp(now()), 'deposit');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (9, 9, 10, toTimestamp(now()), 'withdraw');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (10, 9, 10000, toTimestamp(now()), 'withdraw');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (11, 9, 100, toTimestamp(now()), 'deposit');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (12, 8, 29.87, toTimestamp(now()), 'deposit');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (13, 12, 10, toTimestamp(now()), 'withdraw');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (14, 10, 1000000, toTimestamp(now()), 'deposit');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (15, 12, 19.13, toTimestamp(now()), 'deposit');
+INSERT INTO bank_system.transaction_by_type (id, acc_id, amount, date, transaction_type) VALUES (16, 12, 10, toTimestamp(now()), 'withdraw');
+
 INSERT INTO bank_system.loans (id, acc_id, amount, interest_rate, duration, date) VALUES (1, 1, 1000, 0.2, 6, toTimestamp(now()));
 INSERT INTO bank_system.loans (id, acc_id, amount, interest_rate, duration, date) VALUES (2, 2, 2000, 0.2, 10, toTimestamp(now()));
 INSERT INTO bank_system.loans (id, acc_id, amount, interest_rate, duration, date) VALUES (3, 3, 2000, 0.3, 12, toTimestamp(now()));
