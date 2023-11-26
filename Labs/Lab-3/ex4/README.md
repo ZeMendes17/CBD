@@ -25,17 +25,17 @@ CREATE TABLE IF NOT EXISTS bank_system.client (
 );
 
 CREATE TABLE IF NOT EXISTS bank_system.account (
-    id id,
+    id int,
     client_id int,
     balance decimal,
     acc_number text,
-    transactions_list list<uuid>,
+    transactions_list list<int>,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS bank_system.transaction (
-    id id,
-    acc_id uuid,
+    id int,
+    acc_id int,
     amount decimal,
     date timestamp,
     transaction_type text,
@@ -43,8 +43,8 @@ CREATE TABLE IF NOT EXISTS bank_system.transaction (
 );
 
 CREATE TABLE IF NOT EXISTS bank_system.loans (
-    id id,
-    acc_id uuid,
+    id int,
+    acc_id int,
     amount decimal,
     interest_rate decimal,
     duration int,
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS bank_system.manager (
     name text,
     address text,
     phone text,
-    managed_accounts set<uuid>,
+    managed_accounts set<int>,
     performance map<text, decimal>,
     PRIMARY KEY (id)
 );
@@ -127,6 +127,7 @@ INSERT INTO bank_system.transaction (id, acc_id, amount, date, transaction_type)
 INSERT INTO bank_system.transaction (id, acc_id, amount, date, transaction_type) VALUES (13, 12, 10, toTimestamp(now()), 'withdraw');
 INSERT INTO bank_system.transaction (id, acc_id, amount, date, transaction_type) VALUES (14, 10, 1000000, toTimestamp(now()), 'deposit');
 INSERT INTO bank_system.transaction (id, acc_id, amount, date, transaction_type) VALUES (15, 12, 19.13, toTimestamp(now()), 'deposit');
+INSERT INTO bank_system.transaction (id, acc_id, amount, date, transaction_type) VALUES (16, 12, 10, toTimestamp(now()), 'withdraw');
 ```
 
 ### Loans
@@ -188,3 +189,46 @@ CREATE INDEX ON bank_system.loans (acc_id);
 ### Updates
 
 ```sql
+-- Adicionar a transação 16 à lista de transações da conta 12
+UPDATE bank_system.account SET transactions_list = transactions_list + [16] WHERE id = 12;
+
+-- Adicionar a conta 12 à lista de contas geridas pelo gestor 5
+UPDATE bank_system.manager SET managed_accounts = managed_accounts + {12} WHERE id = 5;
+
+-- Atualizar a performance do gestor 5 no ano 2022
+UPDATE bank_system.manager SET performance['2022'] = 0.5 WHERE id = 5;
+
+-- Atualizar a performance do gestor 5 no ano 2023
+UPDATE bank_system.manager SET performance = performance + {'2023': 0.2} WHERE id = 5;
+
+-- Atualizar a morada do cliente 1
+UPDATE bank_system.client SET address = 'Rua do João e Antonieta' WHERE id = 1;
+
+-- Atualizar o interesse do empréstimo 8
+UPDATE bank_system.loans SET interest_rate = 0.8 WHERE id = 8;
+
+-- Remover o cliente 8 da lista de contas geridas pelo gestor 6
+UPDATE bank_system.manager SET managed_accounts = managed_accounts - {8} WHERE id = 6;
+```
+
+### Deletes
+
+```sql
+-- Remover o cliente 8
+DELETE FROM bank_system.client WHERE id = 8;
+
+-- Remover a conta 8
+DELETE FROM bank_system.account WHERE id = 8;
+
+-- Remover a transação 12
+DELETE FROM bank_system.transaction WHERE id = 12;
+
+-- Remover o empréstimo 1
+DELETE FROM bank_system.loans WHERE id = 1;
+
+-- Remover última transação
+DELETE FROM bank_system.transaction WHERE id = 16;
+```
+
+
+## Alínea f) Criação de 10 queries expressivas do seu domínio de conhecimento da cláusula SELECT: use WHERE, ORDER BY, LIMIT, etc.

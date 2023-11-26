@@ -9,17 +9,17 @@ CREATE TABLE IF NOT EXISTS bank_system.client (
 );
 
 CREATE TABLE IF NOT EXISTS bank_system.account (
-    id uuid,
+    id int,
     client_id int,
     balance decimal,
     acc_number text,
-    transactions_list list<uuid>,
+    transactions_list list<int>,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS bank_system.transaction (
-    id uuid,
-    acc_id uuid,
+    id int,
+    acc_id int,
     amount decimal,
     date timestamp,
     transaction_type text,
@@ -27,8 +27,8 @@ CREATE TABLE IF NOT EXISTS bank_system.transaction (
 );
 
 CREATE TABLE IF NOT EXISTS bank_system.loans (
-    id uuid,
-    acc_id uuid,
+    id int,
+    acc_id int,
     amount decimal,
     interest_rate decimal,
     duration int,
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS bank_system.manager (
     name text,
     address text,
     phone text,
-    managed_accounts set<uuid>,
+    managed_accounts set<int>,
     performance map<text, decimal>,
     PRIMARY KEY (id)
 );

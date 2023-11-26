@@ -39,6 +39,7 @@ INSERT INTO bank_system.transaction (id, acc_id, amount, date, transaction_type)
 INSERT INTO bank_system.transaction (id, acc_id, amount, date, transaction_type) VALUES (13, 12, 10, toTimestamp(now()), 'withdraw');
 INSERT INTO bank_system.transaction (id, acc_id, amount, date, transaction_type) VALUES (14, 10, 1000000, toTimestamp(now()), 'deposit');
 INSERT INTO bank_system.transaction (id, acc_id, amount, date, transaction_type) VALUES (15, 12, 19.13, toTimestamp(now()), 'deposit');
+INSERT INTO bank_system.transaction (id, acc_id, amount, date, transaction_type) VALUES (16, 12, 10, toTimestamp(now()), 'withdraw');
 
 INSERT INTO bank_system.loans (id, acc_id, amount, interest_rate, duration, date) VALUES (1, 1, 1000, 0.2, 6, toTimestamp(now()));
 INSERT INTO bank_system.loans (id, acc_id, amount, interest_rate, duration, date) VALUES (2, 2, 2000, 0.2, 10, toTimestamp(now()));
@@ -61,3 +62,40 @@ INSERT INTO bank_system.manager (id, name, address, phone, managed_accounts, per
 INSERT INTO bank_system.manager (id, name, address, phone, managed_accounts, performance) VALUES (5, 'Ana', 'Rua da Ana', '932143876', {3}, {'2021': 1, '2022': 0.1});
 INSERT INTO bank_system.manager (id, name, address, phone, managed_accounts, performance) VALUES (6, 'Vitor', 'Travessa 7', '90891555', {6, 8}, {'2020': 0.6,'2021': 0.2, '2022': 0.2});
 INSERT INTO bank_system.manager (id, name, address, phone, managed_accounts, performance) VALUES (7, 'Sara', 'Largo do Canto', '919191919', {9}, {'2021': 0.8, '2022': 1.2});
+
+
+-- Adicionar a transação 16 à lista de transações da conta 12
+UPDATE bank_system.account SET transactions_list = transactions_list + [16] WHERE id = 12;
+
+-- Adicionar a conta 12 à lista de contas geridas pelo gestor 5
+UPDATE bank_system.manager SET managed_accounts = managed_accounts + {12} WHERE id = 5;
+
+-- Atualizar a performance do gestor 5 no ano 2022
+UPDATE bank_system.manager SET performance['2022'] = 0.5 WHERE id = 5;
+
+-- Atualizar a performance do gestor 5 no ano 2023
+UPDATE bank_system.manager SET performance = performance + {'2023': 0.2} WHERE id = 5;
+
+-- Atualizar a morada do cliente 1
+UPDATE bank_system.client SET address = 'Rua do João e Antonieta' WHERE id = 1;
+
+-- Atualizar o interesse do empréstimo 8
+UPDATE bank_system.loans SET interest_rate = 0.8 WHERE id = 8;
+
+-- Remover o cliente 8 da lista de contas geridas pelo gestor 6
+UPDATE bank_system.manager SET managed_accounts = managed_accounts - {8} WHERE id = 6;
+
+-- Remover o cliente 8
+DELETE FROM bank_system.client WHERE id = 8;
+
+-- Remover a conta 8
+DELETE FROM bank_system.account WHERE id = 8;
+
+-- Remover as transações que o cliente 8
+DELETE FROM bank_system.transaction WHERE acc_id = 8;
+
+-- Remover os empréstimos da conta 8
+DELETE FROM bank_system.loans WHERE acc_id = 8;
+
+-- Remover última transação
+DELETE FROM bank_system.transaction WHERE id = 16;
