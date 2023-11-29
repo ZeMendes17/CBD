@@ -1,0 +1,142 @@
+// NMEC: 107188
+
+#1
+match (p:Person)-[:DIRECTED]->(m:Movie)<-[:ACTED_IN]-(p2:Person)
+where p=p2
+return distinct p.name as Nome, m.title as Titulo
+// ╒════════════════╤═══════════════════╕
+// │Nome            │Titulo             │
+// ╞════════════════╪═══════════════════╡
+// │"Tom Hanks"     │"That Thing You Do"│
+// ├────────────────┼───────────────────┤
+// │"Clint Eastwood"│"Unforgiven"       │
+// ├────────────────┼───────────────────┤
+// │"Danny DeVito"  │"Hoffa"            │
+// └────────────────┴───────────────────┘
+
+#2
+match (m:Movie)<-[:ACTED_IN]-(p:Person)
+where m.released > 2005
+return m.title as Titulo, collect(p.name) as Atores
+// ╒══════════════════════╤═════════════════════════════════════════════════════════════════════════════════════════════════════════╕
+// │Titulo                │Atores                                                                                                   │
+// ╞══════════════════════╪═════════════════════════════════════════════════════════════════════════════════════════════════════════╡
+// │"RescueDawn"          │["Zach Grenier", "Steve Zahn", "Christian Bale", "Marshall Bell"]                                        │
+// ├──────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+// │"The Da Vinci Code"   │["Tom Hanks", "Ian McKellen", "Audrey Tautou", "Paul Bettany"]                                           │
+// ├──────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+// │"V for Vendetta"      │["John Hurt", "Stephen Rea", "Natalie Portman", "Hugo Weaving", "Ben Miles"]                             │
+// ├──────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+// │"Charlie Wilson's War"│["Julia Roberts", "Tom Hanks", "Philip Seymour Hoffman"]                                                 │
+// ├──────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+// │"Speed Racer"         │["Emile Hirsch", "Rain", "Christina Ricci", "Ben Miles", "Susan Sarandon", "John Goodman", "Matthew Fox"]│
+// ├──────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+// │"Frost/Nixon"         │["Sam Rockwell", "Michael Sheen", "Frank Langella", "Oliver Platt", "Kevin Bacon"]                       │
+// ├──────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+// │"Ninja Assassin"      │["Rain", "Ben Miles", "Rick Yune", "Naomie Harris"]                                                      │
+// ├──────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+// │"Cloud Atlas"         │["Tom Hanks", "Jim Broadbent", "Halle Berry", "Hugo Weaving"]                                            │
+// └──────────────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+#3
+match (node1)-[r]->(node2)
+with node1, node2, count(r) as numOfRels
+where numOfRels > 1
+return node1 as No1, node2 as No2
+// ╒══════════════════════════════════════════════╤══════════════════════════════════════════════════════════════════════╕
+// │No1                                           │No2                                                                   │
+// ╞══════════════════════════════════════════════╪══════════════════════════════════════════════════════════════════════╡
+// │(:Person {born: 1961,name: "Aaron Sorkin"})   │(:Movie {tagline: "In the heart of the nation's capital, in a courthou│
+// │                                              │se of the U.S. government, one man will stop at nothing to keep his ho│
+// │                                              │nor, and one will stop at nothing to find the truth.",title: "A Few Go│
+// │                                              │od Men",released: 1992})                                              │
+// ├──────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+// │(:Person {born: 1957,name: "Cameron Crowe"})  │(:Movie {tagline: "The rest of his life begins now.",title: "Jerry Mag│
+// │                                              │uire",released: 2000})                                                │
+// ├──────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+// │(:Person {born: 1947,name: "Rob Reiner"})     │(:Movie {tagline: "Can two friends sleep together and still love each │
+// │                                              │other in the morning?",title: "When Harry Met Sally",released: 1998}) │
+// ├──────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+// │(:Person {born: 1941,name: "Nora Ephron"})    │(:Movie {tagline: "Can two friends sleep together and still love each │
+// │                                              │other in the morning?",title: "When Harry Met Sally",released: 1998}) │
+// ├──────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+// │(:Person {born: 1956,name: "Tom Hanks"})      │(:Movie {tagline: "In every life there comes a time when that thing yo│
+// │                                              │u dream becomes that thing you do",title: "That Thing You Do",released│
+// │                                              │: 1996})                                                              │
+// ├──────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+// │(:Person {born: 1930,name: "Clint Eastwood"}) │(:Movie {tagline: "It's a hell of a thing, killing a man",title: "Unfo│
+// │                                              │rgiven",released: 1992})                                              │
+// ├──────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+// │(:Person {born: 1967,name: "Lilly Wachowski"})│(:Movie {tagline: "Freedom! Forever!",title: "V for Vendetta",released│
+// │                                              │: 2006})                                                              │
+// ├──────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+// │(:Person {born: 1965,name: "Lana Wachowski"}) │(:Movie {tagline: "Freedom! Forever!",title: "V for Vendetta",released│
+// │                                              │: 2006})                                                              │
+// ├──────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+// │(:Person {born: 1967,name: "Lilly Wachowski"})│(:Movie {tagline: "Speed has no limits",title: "Speed Racer",released:│
+// │                                              │ 2008})                                                               │
+// ├──────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+// │(:Person {born: 1965,name: "Lana Wachowski"}) │(:Movie {tagline: "Speed has no limits",title: "Speed Racer",released:│
+// │                                              │ 2008})                                                               │
+// ├──────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+// │(:Person {born: 1944,name: "Danny DeVito"})   │(:Movie {tagline: "He didn't want law. He wanted justice.",title: "Hof│
+// │                                              │fa",released: 1992})                                                  │
+// ├──────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+// │(:Person {born: 1949,name: "Nancy Meyers"})   │(:Movie {title: "Something's Gotta Give",released: 2003})             │
+// └──────────────────────────────────────────────┴──────────────────────────────────────────────────────────────────────┘
+
+#4
+match (p1:Person)-[:REVIEWED]->(m:Movie)<-[:REVIEWED]-(p2:Person)
+where id(p1) < id(p2)
+return m.title as Titulo, p1.name as Pessoa1, p2.name as Pessoa2
+// ╒═══════════════════╤══════════════════╤══════════════════╕
+// │Titulo             │Pessoa1           │Pessoa2           │
+// ╞═══════════════════╪══════════════════╪══════════════════╡
+// │"The Replacements" │"Angela Scope"    │"Jessica Thompson"│
+// ├───────────────────┼──────────────────┼──────────────────┤
+// │"The Replacements" │"Angela Scope"    │"James Thompson"  │
+// ├───────────────────┼──────────────────┼──────────────────┤
+// │"The Replacements" │"Jessica Thompson"│"James Thompson"  │
+// ├───────────────────┼──────────────────┼──────────────────┤
+// │"The Da Vinci Code"│"Jessica Thompson"│"James Thompson"  │
+// └───────────────────┴──────────────────┴──────────────────┘
+
+#5
+match (p1:Person)-[:ACTED_IN]->(m:Movie)<-[:ACTED_IN]-(p2:Person)
+where id(p1) < id(p2)
+with p1, p2, collect(m.title) as commMovies
+where size(commMovies) > 1
+return p1.name as Pessoa1, p2.name as Pessoa2, commMovies as Titulos
+// ╒════════════════════╤════════════════════╤═════════════════════════════════════════════════════════════════════╕
+// │Pessoa1             │Pessoa2             │Titulos                                                              │
+// ╞════════════════════╪════════════════════╪═════════════════════════════════════════════════════════════════════╡
+// │"Laurence Fishburne"│"Hugo Weaving"      │["The Matrix", "The Matrix Reloaded", "The Matrix Revolutions"]      │
+// ├────────────────────┼────────────────────┼─────────────────────────────────────────────────────────────────────┤
+// │"Carrie-Anne Moss"  │"Hugo Weaving"      │["The Matrix", "The Matrix Reloaded", "The Matrix Revolutions"]      │
+// ├────────────────────┼────────────────────┼─────────────────────────────────────────────────────────────────────┤
+// │"Keanu Reeves"      │"Hugo Weaving"      │["The Matrix", "The Matrix Reloaded", "The Matrix Revolutions"]      │
+// ├────────────────────┼────────────────────┼─────────────────────────────────────────────────────────────────────┤
+// │"Carrie-Anne Moss"  │"Laurence Fishburne"│["The Matrix", "The Matrix Reloaded", "The Matrix Revolutions"]      │
+// ├────────────────────┼────────────────────┼─────────────────────────────────────────────────────────────────────┤
+// │"Keanu Reeves"      │"Laurence Fishburne"│["The Matrix", "The Matrix Reloaded", "The Matrix Revolutions"]      │
+// ├────────────────────┼────────────────────┼─────────────────────────────────────────────────────────────────────┤
+// │"Keanu Reeves"      │"Carrie-Anne Moss"  │["The Matrix", "The Matrix Reloaded", "The Matrix Revolutions"]      │
+// ├────────────────────┼────────────────────┼─────────────────────────────────────────────────────────────────────┤
+// │"Jack Nicholson"    │"J.T. Walsh"        │["A Few Good Men", "Hoffa"]                                          │
+// ├────────────────────┼────────────────────┼─────────────────────────────────────────────────────────────────────┤
+// │"Jack Nicholson"    │"Cuba Gooding Jr."  │["A Few Good Men", "As Good as It Gets"]                             │
+// ├────────────────────┼────────────────────┼─────────────────────────────────────────────────────────────────────┤
+// │"Tom Cruise"        │"Cuba Gooding Jr."  │["A Few Good Men", "Jerry Maguire"]                                  │
+// ├────────────────────┼────────────────────┼─────────────────────────────────────────────────────────────────────┤
+// │"Meg Ryan"          │"Tom Hanks"         │["You've Got Mail", "Sleepless in Seattle", "Joe Versus the Volcano"]│
+// ├────────────────────┼────────────────────┼─────────────────────────────────────────────────────────────────────┤
+// │"Tom Hanks"         │"Rosie O'Donnell"   │["Sleepless in Seattle", "A League of Their Own"]                    │
+// ├────────────────────┼────────────────────┼─────────────────────────────────────────────────────────────────────┤
+// │"Ben Miles"         │"Rain"              │["Speed Racer", "Ninja Assassin"]                                    │
+// ├────────────────────┼────────────────────┼─────────────────────────────────────────────────────────────────────┤
+// │"Tom Hanks"         │"Gary Sinise"       │["The Green Mile", "Apollo 13"]                                      │
+// ├────────────────────┼────────────────────┼─────────────────────────────────────────────────────────────────────┤
+// │"Jack Nicholson"    │"Danny DeVito"      │["Hoffa", "One Flew Over the Cuckoo's Nest"]                         │
+// ├────────────────────┼────────────────────┼─────────────────────────────────────────────────────────────────────┤
+// │"Tom Hanks"         │"Bill Paxton"       │["Apollo 13", "A League of Their Own"]                               │
+// └────────────────────┴────────────────────┴─────────────────────────────────────────────────────────────────────┘
