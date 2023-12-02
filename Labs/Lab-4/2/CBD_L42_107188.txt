@@ -356,3 +356,72 @@ return p.name as Ator, r.roles as ListaDeRoles
 // ├───────────────────┼──────────────────────────────────────────────────────────────┤
 // │"Tom Hanks"        │["Zachry", "Dr. Henry Goose", "Isaac Sachs", "Dermot Hoggins"]│
 // └───────────────────┴──────────────────────────────────────────────────────────────┘
+
+#18 - Listar as pessoas que escreveram, produziram e dirigiram filmes. Apresente o nome das pessoas e os títulos dos filmes.
+match (p:Person)-[:DIRECTED]->(m:Movie),
+(p)-[:PRODUCED]->(m),
+(p)-[:WROTE]->(m)
+return p.name as Pessoa, m.title as Titulo
+// ╒═══════════════╤════════════════════════╕
+// │Pessoa         │Titulo                  │
+// ╞═══════════════╪════════════════════════╡
+// │"Cameron Crowe"│"Jerry Maguire"         │
+// ├───────────────┼────────────────────────┤
+// │"Nancy Meyers" │"Something's Gotta Give"│
+// └───────────────┴────────────────────────┘
+
+#19 - Apresente os 5 atores que mais participaram de filmes, ordenados decrescentemente pelo número de filmes, juntamente com a lista de filmes e o número de filmes que cada um participou.
+match (p:Person)-[:ACTED_IN]->(m:Movie)
+with p, collect(m.title) as Filmes, count(m) as NumFilmes
+return p.name as Pessoa, Filmes, NumFilmes
+order by NumFilmes desc
+limit 5
+// ╒════════════════╤══════════════════════════════════════════════════════════════════════╤═════════╕
+// │Pessoa          │Filmes                                                                │NumFilmes│
+// ╞════════════════╪══════════════════════════════════════════════════════════════════════╪═════════╡
+// │"Tom Hanks"     │["You've Got Mail", "Sleepless in Seattle", "Joe Versus the Volcano", │12       │
+// │                │"That Thing You Do", "Cloud Atlas", "The Da Vinci Code", "The Green Mi│         │
+// │                │le", "Apollo 13", "Cast Away", "Charlie Wilson's War", "The Polar Expr│         │
+// │                │ess", "A League of Their Own"]                                        │         │
+// ├────────────────┼──────────────────────────────────────────────────────────────────────┼─────────┤
+// │"Keanu Reeves"  │["The Matrix", "The Matrix Reloaded", "The Matrix Revolutions", "The D│7        │
+// │                │evil's Advocate", "The Replacements", "Johnny Mnemonic", "Something's │         │
+// │                │Gotta Give"]                                                          │         │
+// ├────────────────┼──────────────────────────────────────────────────────────────────────┼─────────┤
+// │"Jack Nicholson"│["A Few Good Men", "As Good as It Gets", "Hoffa", "One Flew Over the C│5        │
+// │                │uckoo's Nest", "Something's Gotta Give"]                              │         │
+// ├────────────────┼──────────────────────────────────────────────────────────────────────┼─────────┤
+// │"Hugo Weaving"  │["The Matrix", "The Matrix Reloaded", "The Matrix Revolutions", "Cloud│5        │
+// │                │ Atlas", "V for Vendetta"]                                            │         │
+// ├────────────────┼──────────────────────────────────────────────────────────────────────┼─────────┤
+// │"Meg Ryan"      │["Top Gun", "You've Got Mail", "Sleepless in Seattle", "Joe Versus the│5        │
+// │                │ Volcano", "When Harry Met Sally"]                                    │         │
+// └────────────────┴──────────────────────────────────────────────────────────────────────┴─────────┘
+
+#20 - Apresente todos os pares de atores que atuaram em pelo menos 3 filmes juntos, juntamente com a lista de diretores que dirigiram esses filmes.
+match (p1:Person)-[:ACTED_IN]->(m:Movie)<-[:ACTED_IN]-(p2:Person),
+(d:Person)-[:DIRECTED]->(m)
+with p1, p2,collect(d.name) as Diretor, count(m) as NumFilmes
+where id(p1) < id(p2) and NumFilmes > 3
+return p1.name as Pessoa1, p2.name as Pessoa2, Diretor
+// ╒════════════════════╤════════════════════╤══════════════════════════════════════════════════════════════════════╕
+// │Pessoa1             │Pessoa2             │Diretor                                                               │
+// ╞════════════════════╪════════════════════╪══════════════════════════════════════════════════════════════════════╡
+// │"Laurence Fishburne"│"Hugo Weaving"      │["Lana Wachowski", "Lilly Wachowski", "Lana Wachowski", "Lilly Wachows│
+// │                    │                    │ki", "Lana Wachowski", "Lilly Wachowski"]                             │
+// ├────────────────────┼────────────────────┼──────────────────────────────────────────────────────────────────────┤
+// │"Carrie-Anne Moss"  │"Hugo Weaving"      │["Lana Wachowski", "Lilly Wachowski", "Lana Wachowski", "Lilly Wachows│
+// │                    │                    │ki", "Lana Wachowski", "Lilly Wachowski"]                             │
+// ├────────────────────┼────────────────────┼──────────────────────────────────────────────────────────────────────┤
+// │"Keanu Reeves"      │"Hugo Weaving"      │["Lana Wachowski", "Lilly Wachowski", "Lana Wachowski", "Lilly Wachows│
+// │                    │                    │ki", "Lana Wachowski", "Lilly Wachowski"]                             │
+// ├────────────────────┼────────────────────┼──────────────────────────────────────────────────────────────────────┤
+// │"Carrie-Anne Moss"  │"Laurence Fishburne"│["Lana Wachowski", "Lilly Wachowski", "Lana Wachowski", "Lilly Wachows│
+// │                    │                    │ki", "Lana Wachowski", "Lilly Wachowski"]                             │
+// ├────────────────────┼────────────────────┼──────────────────────────────────────────────────────────────────────┤
+// │"Keanu Reeves"      │"Laurence Fishburne"│["Lana Wachowski", "Lilly Wachowski", "Lana Wachowski", "Lilly Wachows│
+// │                    │                    │ki", "Lana Wachowski", "Lilly Wachowski"]                             │
+// ├────────────────────┼────────────────────┼──────────────────────────────────────────────────────────────────────┤
+// │"Keanu Reeves"      │"Carrie-Anne Moss"  │["Lana Wachowski", "Lilly Wachowski", "Lana Wachowski", "Lilly Wachows│
+// │                    │                    │ki", "Lana Wachowski", "Lilly Wachowski"]                             │
+// └────────────────────┴────────────────────┴──────────────────────────────────────────────────────────────────────┘
