@@ -1,0 +1,24 @@
+// NMEC: 107188
+
+// Alínea a)
+
+// Entidades:
+// Person { svn_id, real_name, organization }
+// Project { project_name }
+
+// Relações:
+// Apenas vamos ter uma relação que vai ser: COMMITED
+// (Person)-[:COMMITED]->(Project)
+// Com os atributos de relação: { num, role_on_project }
+
+
+// Alínea b)
+// Para carregar o conteúdo deste ficheiro CSV, usamos o comando LOAD,
+// sendo que é necessário separar as entidades e estabelecer as relações.
+
+LOAD CSV WITH HEADERS FROM 'file:///git_selection.csv' AS row
+MERGE (pe: Person { svn_id:row.svn_id, name:row.real_name, organization:row.organization })
+MERGE (pr: Project { name:row.project_name })
+MERGE (pe)-[:COMMITED { num:row.num, role_on_project:row.role_on_project }]->(pr)
+
+// Alínea c)
