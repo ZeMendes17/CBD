@@ -344,18 +344,17 @@ limit 10
 #17
 match (p:Person)-[r:ACTED_IN]->()
 where any(rol in r.roles where rol starts with "Dr.")
-return p.name as Ator, r.roles as ListaDeRoles
-// ╒═══════════════════╤══════════════════════════════════════════════════════════════╕
-// │Ator               │ListaDeRoles                                                  │
-// ╞═══════════════════╪══════════════════════════════════════════════════════════════╡
-// │"Christopher Guest"│["Dr. Stone"]                                                 │
-// ├───────────────────┼──────────────────────────────────────────────────────────────┤
-// │"Helen Hunt"       │["Dr. Jo Harding"]                                            │
-// ├───────────────────┼──────────────────────────────────────────────────────────────┤
-// │"Tom Hanks"        │["Dr. Robert Langdon"]                                        │
-// ├───────────────────┼──────────────────────────────────────────────────────────────┤
-// │"Tom Hanks"        │["Zachry", "Dr. Henry Goose", "Isaac Sachs", "Dermot Hoggins"]│
-// └───────────────────┴──────────────────────────────────────────────────────────────┘
+with p, collect([rol in r.roles where rol starts with "Dr."]) as ListaDeRoles
+return p.name as Ator, ListaDeRoles
+// ╒═══════════════════╤═════════════════════════════════════════════╕
+// │Ator               │ListaDeRoles                                 │
+// ╞═══════════════════╪═════════════════════════════════════════════╡
+// │"Christopher Guest"│[["Dr. Stone"]]                              │
+// ├───────────────────┼─────────────────────────────────────────────┤
+// │"Helen Hunt"       │[["Dr. Jo Harding"]]                         │
+// ├───────────────────┼─────────────────────────────────────────────┤
+// │"Tom Hanks"        │[["Dr. Robert Langdon"], ["Dr. Henry Goose"]]│
+// └───────────────────┴─────────────────────────────────────────────┘
 
 #18 - Listar as pessoas que escreveram, produziram e dirigiram filmes. Apresente o nome das pessoas e os títulos dos filmes.
 match (p:Person)-[:DIRECTED]->(m:Movie),
