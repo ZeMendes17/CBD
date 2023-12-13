@@ -1,0 +1,276 @@
+1. O nome do cliente e as respetivo número de todas as encomendas que realizou.
+MATCH (c:Customer)-[:PLACED_ORDER]->(o:Order)
+WITH c, COLLECT(o.orderNumber) AS orders
+RETURN c.customerName AS Cliente, orders AS Encomendas
+
+Cliente ---> Encomendas
+-----------------------
+Land of Toys Inc. ---> [10292, 10329, 10248, 10107]
+Reims Collectables ---> [10398, 10137, 10121, 10359, 10343]
+Lyon Souveniers ---> [10134, 10356, 10395]
+Toys4GrownUps.com ---> [10189, 10367, 10145]
+Technics Stores Inc. ---> [10362, 10140, 10168, 10317]
+Daedalus Designs Imports ---> [10224, 10180]
+Herkku Gifts ---> [10188, 10181, 10289]
+Auto Canal Petit ---> [10211, 10402, 10252]
+Australian Collectors, Co. ---> [10120, 10342, 10125, 10223, 10347]
+Vitachrome Inc. ---> [10237, 10324, 10102]
+Tekni Collectables Inc. ---> [10251, 10401, 10233]
+Gift Depot Inc. ---> [10263, 10172, 10413]
+La Rochelle Gifts ---> [10425, 10315, 10375, 10275]
+Marta's Replicas Co. ---> [10305, 10285]
+Toys of Finland, Co. ---> [10377, 10155, 10299]
+Baane Mini Imports ---> [10325, 10309, 10158, 10103]
+Diecast Classics Inc. ---> [10318, 10281, 10272, 10422]
+Salzburg Collectables ---> [10269, 10419, 10119, 10341]
+Souveniers And Things Co. ---> [10270, 10139, 10361, 10420]
+FunGiftIdeas.com ---> [10388, 10166, 10321]
+UK Collectables, Ltd. ---> [10403, 10302, 10253]
+Euro Shopping Channel ---> [10262, 10383, 10244, 10156, 10153, 10104, 10378, 10128, 10205, 10412, 10394, 10311, 10190, 10379, 10355, 10386, 10203, 10350, 10424, 10417, 10279, 10246, 10133, 10212, 10358, 10380]
+Volvo Model Replicas, Co ---> [10334, 10112, 10320, 10326]
+Corrida Auto Replicas, Ltd ---> [10348, 10214, 10126]
+Dragon Souveniers, Ltd. ---> [10387, 10165, 10150, 10117, 10277]
+Classic Legends Inc. ---> [10337, 10163, 10115]
+Australian Gift Network, Co ---> [10152, 10174, 10374]
+Classic Gift Ideas, Inc ---> [10183, 10307]
+Saveley & Henriot, Co. ---> [10208, 10194, 10227]
+Canadian Gift Exchange Network ---> [10206, 10313]
+West Coast Collectables Co. ---> [10215, 10199]
+Cambridge Collectables Co. ---> [10249, 10228]
+Super Scale Inc. ---> [10196, 10245]
+Tokyo Collectables, Ltd ---> [10372, 10258, 10339, 10408]
+Amica Models & Co. ---> [10293, 10280]
+Scandinavian Gift Ideas ---> [10389, 10167, 10291]
+Auto Assoc. & Cie. ---> [10304, 10216]
+Mini Gifts Distributors Ltd. ---> [10229, 10282, 10182, 10382, 10390, 10335, 10421, 10357, 10271, 10371, 10113, 10385, 10368, 10396, 10142, 10135, 10312]
+Online Diecast Creations Co. ---> [10100, 10322, 10192]
+Collectables For Less Inc. ---> [10147, 10274, 10369]
+Anna's Decorations, Ltd ---> [10169, 10391, 10370, 10148]
+Quebec Home Shopping Network ---> [10411, 10261, 10171]
+Osaka Souveniers Co. ---> [10210, 10240]
+Motor Mint Distributors Inc. ---> [10331, 10236, 10109]
+Atelier graphique ---> [10345, 10298, 10123]
+Mini Classics ---> [10308, 10195]
+Danish Wholesale Imports ---> [10238, 10406, 10256, 10327, 10105]
+Stylish Desk Decors, Co. ---> [10129, 10351, 10175]
+Mini Creations Ltd. ---> [10143, 10185, 10365]
+Alpha Cognac ---> [10178, 10397, 10136]
+Double Decker Gift Stores, Ltd ---> [10186, 10213]
+Enaco Distributors ---> [10118, 10340, 10197]
+Collectable Mini Designs Co. ---> [10222, 10226]
+Petit Auto ---> [10423, 10273, 10221]
+Royal Canadian Collectables, Ltd. ---> [10283, 10235]
+Gifts4AllAges.com ---> [10295, 10264, 10414]
+giftsbymail.co.uk ---> [10232, 10316]
+Oulu Toy Supplies, Inc. ---> [10239, 10373, 10151]
+The Sharp Gifts Warehouse ---> [10250, 10257, 10407, 10400]
+La Corne D'abondance, Co. ---> [10336, 10114, 10286]
+Mini Auto Werke ---> [10392, 10170, 10164]
+Diecast Collectables ---> [10207, 10243]
+Handji Gifts& Co ---> [10259, 10217, 10409, 10288]
+Cruz & Sons Co. ---> [10108, 10198, 10330]
+Marseille Mini Autos ---> [10122, 10364, 10344]
+Toms Spezialitten, Ltd ---> [10310, 10191]
+Vida Sport, Ltd ---> [10287, 10225]
+L'ordine Souveniers ---> [10266, 10416, 10176]
+Online Mini Collectables ---> [10294, 10276]
+Blauer See Auto, Co. ---> [10230, 10101, 10323, 10300]
+Suominen Souveniers ---> [10141, 10247, 10363]
+Muscle Machine Inc ---> [10349, 10267, 10204, 10127]
+Clover Collections, Co. ---> [10297, 10220]
+CAF Imports ---> [10231, 10177]
+AV Stores, Co. ---> [10110, 10306, 10332]
+Heintze Collectables ---> [10314, 10161]
+Microscale Inc. ---> [10319, 10242]
+Boards & Toys Co. ---> [10154, 10376]
+Iberia Gift Imports, Corp. ---> [10303, 10184]
+Signal Collectibles Ltd. ---> [10149, 10219]
+Mini Caravy ---> [10255, 10241, 10405]
+Signal Gift Stores ---> [10278, 10346, 10124]
+Norway Gifts By Mail, Co. ---> [10301, 10284]
+Rovelli Gifts ---> [10328, 10173, 10106]
+Australian Collectables, Ltd ---> [10415, 10265, 10193]
+Gift Ideas Corp. ---> [10353, 10146, 10131]
+Bavarian Collectables Imports, Co. ---> [10296]
+Royale Belge ---> [10116, 10338, 10144, 10366]
+Auto-Moto Classics Inc. ---> [10352, 10290, 10130]
+
+
+2. O nome do cliente e número de encomendas que realizou, ordenado por ordem decrescente do número de encomendas e o total gasto por cada cliente, com 2 casas decimais.
+MATCH (c:Customer)-[:PLACED_ORDER]->(o:Order)
+WITH c, COLLECT(o.orderNumber) AS orders, SUM(o.priceEach) AS total
+RETURN c.customerName AS Cliente, SIZE(orders) AS NumEncomendas, ROUND(total, 2) AS TotalGasto
+ORDER BY NumEncomendas DESC
+
+Cliente ---> NumEncomendas; TotalGasto
+--------------------------------------
+Euro Shopping Channel ---> 26; 2529.29
+Mini Gifts Distributors Ltd. ---> 17; 1414.13
+Danish Wholesale Imports ---> 5; 450.1
+Reims Collectables ---> 5; 357.85
+Australian Collectors, Co. ---> 5; 584.03
+Dragon Souveniers, Ltd. ---> 5; 422.27
+Land of Toys Inc. ---> 4; 299.62
+Technics Stores Inc. ---> 4; 377.45
+La Rochelle Gifts ---> 4; 351.95
+Baane Mini Imports ---> 4; 396.76
+Diecast Classics Inc. ---> 4; 336.93
+Salzburg Collectables ---> 4; 384.74
+Souveniers And Things Co. ---> 4; 339.66
+Volvo Model Replicas, Co ---> 4; 363.28
+Tokyo Collectables, Ltd ---> 4; 296.36
+Anna's Decorations, Ltd ---> 4; 503.88
+The Sharp Gifts Warehouse ---> 4; 283.93
+Handji Gifts& Co ---> 4; 263.49
+Blauer See Auto, Co. ---> 4; 296.66
+Muscle Machine Inc ---> 4; 267.74
+Royale Belge ---> 4; 452.63
+AV Stores, Co. ---> 3; 171.22
+Mini Caravy ---> 3; 286.9
+Signal Gift Stores ---> 3; 257.06
+Rovelli Gifts ---> 3; 255.38
+Australian Collectables, Ltd ---> 3; 343.54
+Gift Ideas Corp. ---> 3; 276.92
+Auto-Moto Classics Inc. ---> 3; 271.31
+Lyon Souveniers ---> 3; 433.97
+Toys4GrownUps.com ---> 3; 438.19
+Herkku Gifts ---> 3; 339.3
+Auto Canal Petit ---> 3; 240.56
+Vitachrome Inc. ---> 3; 243.43
+Tekni Collectables Inc. ---> 3; 256.38
+Gift Depot Inc. ---> 3; 278.64
+Toys of Finland, Co. ---> 3; 315.98
+FunGiftIdeas.com ---> 3; 402.9
+UK Collectables, Ltd. ---> 3; 274.82
+Corrida Auto Replicas, Ltd ---> 3; 219.87
+Classic Legends Inc. ---> 3; 294.04
+Australian Gift Network, Co ---> 3; 189.83
+Saveley & Henriot, Co. ---> 3; 196.79
+Scandinavian Gift Ideas ---> 3; 246.31
+Online Diecast Creations Co. ---> 3; 291.57
+Collectables For Less Inc. ---> 3; 210.19
+Quebec Home Shopping Network ---> 3; 191.47
+Motor Mint Distributors Inc. ---> 3; 302.59
+Atelier graphique ---> 3; 162.09
+Stylish Desk Decors, Co. ---> 3; 210.32
+Mini Creations Ltd. ---> 3; 228.36
+Alpha Cognac ---> 3; 316.6
+Enaco Distributors ---> 3; 308.62
+Petit Auto ---> 3; 221.75
+Gifts4AllAges.com ---> 3; 257.19
+Oulu Toy Supplies, Inc. ---> 3; 415.51
+La Corne D'abondance, Co. ---> 3; 378.29
+Mini Auto Werke ---> 3; 306.38
+Cruz & Sons Co. ---> 3; 227.69
+Marseille Mini Autos ---> 3; 128.12
+L'ordine Souveniers ---> 3; 248.8
+Suominen Souveniers ---> 3; 320.39
+Super Scale Inc. ---> 2; 199.6
+Amica Models & Co. ---> 2; 138.95
+Auto Assoc. & Cie. ---> 2; 239.14
+Osaka Souveniers Co. ---> 2; 231.39
+Mini Classics ---> 2; 173.44
+Double Decker Gift Stores, Ltd ---> 2; 155.49
+Collectable Mini Designs Co. ---> 2; 155.43
+Royal Canadian Collectables, Ltd. ---> 2; 123.87
+giftsbymail.co.uk ---> 2; 93.39
+Diecast Collectables ---> 2; 124.46
+Toms Spezialitten, Ltd ---> 2; 109.34
+Vida Sport, Ltd ---> 2; 158.45
+Online Mini Collectables ---> 2; 175.06
+Daedalus Designs Imports ---> 2; 170.85
+Marta's Replicas Co. ---> 2; 229.8
+Classic Gift Ideas, Inc ---> 2; 140.62
+Canadian Gift Exchange Network ---> 2; 216.46
+West Coast Collectables Co. ---> 2; 172.97
+Cambridge Collectables Co. ---> 2; 160.84
+Clover Collections, Co. ---> 2; 182.44
+CAF Imports ---> 2; 192.11
+Heintze Collectables ---> 2; 181.16
+Microscale Inc. ---> 2; 114.22
+Boards & Toys Co. ---> 2; 178.25
+Iberia Gift Imports, Corp. ---> 2; 150.17
+Signal Collectibles Ltd. ---> 2; 145.76
+Norway Gifts By Mail, Co. ---> 2; 218.88
+Bavarian Collectables Imports, Co. ---> 1; 45.19
+
+
+3. Listar todos os países e o número correspondente de clientes que realizaram encomendas nesse país, ordenado por ordem decrescente do número de clientes.
+MATCH (c:Customer)-[:LOCATED_IN_COUNTRY]->(co:Country)
+WITH co, COUNT(c) AS numClientes
+RETURN co.country AS Pais, numClientes AS NumClientes
+ORDER BY NumClientes DESC
+
+País ---> Número de clientes
+----------------------------
+USA ---> 32
+France ---> 12
+Australia ---> 5
+UK ---> 5
+Spain ---> 5
+Norway ---> 3
+Finland ---> 3
+Canada ---> 3
+Italy ---> 3
+Germany ---> 3
+Austria ---> 2
+Sweden ---> 2
+Singapore ---> 2
+Japan ---> 2
+Denmark ---> 2
+Belgium ---> 2
+Philippines ---> 1
+Switzerland ---> 1
+Ireland ---> 1
+
+
+4. Listar o nome dos clientes que realizaram encomendas no país “USA”, de acordo com a cidade onde se localizam, ordenado por ordem alfabética do nome da cidade.
+MATCH (c:Customer)-[:LOCATED_IN_COUNTRY]->(co:Country)
+WHERE co.country = 'USA'
+WITH c
+MATCH (c)-[:LOCATED_IN_CITY]->(ci:City)
+WITH ci, COLLECT(c.customerName) AS Clientes
+RETURN ci.city AS Cidade, Clientes
+ORDER BY Cidade
+
+Cidade ---> Clientes
+--------------------
+Allentown ---> ["Diecast Classics Inc."]
+Boston ---> ["Gifts4AllAges.com", "Diecast Collectables"]
+Brickhaven ---> ["Online Mini Collectables", "Collectables For Less Inc.", "Auto-Moto Classics Inc."]
+Bridgewater ---> ["Gift Depot Inc."]
+Brisbane ---> ["Signal Collectibles Ltd."]
+Burbank ---> ["West Coast Collectables Co."]
+Burlingame ---> ["Technics Stores Inc."]
+Cambridge ---> ["Cambridge Collectables Co.", "Marta's Replicas Co."]
+Glendale ---> ["Boards & Toys Co.", "Gift Ideas Corp."]
+Las Vegas ---> ["Signal Gift Stores"]
+NYC ---> ["Vitachrome Inc.", "Classic Legends Inc.", "Muscle Machine Inc", "Microscale Inc.", "Land of Toys Inc."]
+Nashua ---> ["Online Diecast Creations Co."]
+New Bedford ---> ["FunGiftIdeas.com", "Mini Creations Ltd."]
+New Haven ---> ["Super Scale Inc."]
+Newark ---> ["Tekni Collectables Inc."]
+Pasadena ---> ["Toys4GrownUps.com"]
+Philadelphia ---> ["Classic Gift Ideas, Inc", "Motor Mint Distributors Inc."]
+San Diego ---> ["Collectable Mini Designs Co."]
+San Jose ---> ["The Sharp Gifts Warehouse"]
+San Rafael ---> ["Mini Gifts Distributors Ltd."]
+White Plains ---> ["Mini Classics"]
+
+
+5. Listar o número de encomendas em cada status, quando o tamanho do negócio (“DealSize”) é grande (“Large”).
+MATCH (o:Order)-[:BELONGS_TO]->(d:DealSize)
+WHERE d.size = 'Large'
+WITH o.status AS stat, COUNT(o) AS numEncomendas
+RETURN stat, numEncomendas
+
+
+Status ---> Número de encomendas
+--------------------------------
+Shipped ---> 108
+On Hold ---> 2
+Disputed ---> 2
+Resolved ---> 1
+In Process ---> 1
+
+

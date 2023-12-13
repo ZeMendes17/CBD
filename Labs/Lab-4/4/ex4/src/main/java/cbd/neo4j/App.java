@@ -82,29 +82,109 @@ public class App {
         driver = GraphDatabase.driver(address, AuthTokens.basic(user, password));
         Session session = driver.session();
 
+        // Delete data
+        deleteData(session);
+
         // Insert data
         insertData(session, file);
 
         // Write output file
-        FileWriter out = new FileWriter("CBD_L44c_output.txt");
+        FileWriter out = new FileWriter("../CBD_L44c_output.txt");
 
-        // Queries here
-        // Example query
-        String query = "MATCH (n) return n";
-        out.write("Query 1:\n");
-        out.write(query + "\n");
+        // Queries
+        // 1. O nome do cliente e as respetivo número de todas as encomendas que realizou.
+        String query = "MATCH (c:Customer)-[:PLACED_ORDER]->(o:Order)\n";
+        query += "WITH c, COLLECT(o.orderNumber) AS orders\n";
+        query += "RETURN c.customerName AS Cliente, orders AS Encomendas";
+        out.write("1. O nome do cliente e as respetivo número de todas as encomendas que realizou.\n");
+        out.write(query + "\n\n");
         Result result = session.run(query);
+        out.write("Cliente ---> Encomendas\n");
+        out.write("-----------------------\n");
         while (result.hasNext()) {
             Record record = result.next();
-            Node node = record.get("n").asNode(); // Get the node
-            Map<String, Object> properties = node.asMap(); // Get node properties
-
-            // Print specific properties you want to display
-            out.write("Node Properties: " + properties.toString() + "\n");
+            String cliente = record.get("Cliente").asString();
+            String encomendas = record.get("Encomendas").toString();
+            out.write(cliente + " ---> " + encomendas + "\n");
         }
+        out.write("\n\n");
 
-        // Delete data
-        deleteData(session);
+        // 2. O nome do cliente e número de encomendas que realizou, ordenado por ordem decrescente do número de encomendas e o total gasto por cada cliente, com 2 casas decimais.
+        query = "MATCH (c:Customer)-[:PLACED_ORDER]->(o:Order)\n";
+        query += "WITH c, COLLECT(o.orderNumber) AS orders, SUM(o.priceEach) AS total\n";
+        query += "RETURN c.customerName AS Cliente, SIZE(orders) AS NumEncomendas, ROUND(total, 2) AS TotalGasto\n";
+        query += "ORDER BY NumEncomendas DESC";
+        out.write("2. O nome do cliente e número de encomendas que realizou, ordenado por ordem decrescente do número de encomendas e o total gasto por cada cliente, com 2 casas decimais.\n");
+        out.write(query + "\n\n");
+        result = session.run(query);
+        out.write("Cliente ---> NumEncomendas; TotalGasto\n");
+        out.write("--------------------------------------\n");
+        while (result.hasNext()) {
+            Record record = result.next();
+            String cliente = record.get("Cliente").asString();
+            String numEncomendas = record.get("NumEncomendas").toString();
+            String totalGasto = record.get("TotalGasto").toString();
+            out.write(cliente + " ---> " + numEncomendas + "; " + totalGasto + "\n");
+        }
+        out.write("\n\n");
+
+        // 3. Listar todos os países e o número correspondente de clientes que realizaram encomendas nesse país, ordenado por ordem decrescente do número de clientes.
+        query = "MATCH (c:Customer)-[:LOCATED_IN_COUNTRY]->(co:Country)\n";
+        query += "WITH co, COUNT(c) AS numClientes\n";
+        query += "RETURN co.country AS Pais, numClientes AS NumClientes\n";
+        query += "ORDER BY NumClientes DESC";
+        out.write("3. Listar todos os países e o número correspondente de clientes que realizaram encomendas nesse país, ordenado por ordem decrescente do número de clientes.\n");
+        out.write(query + "\n\n");
+        result = session.run(query);
+        out.write("País ---> Número de clientes\n");
+        out.write("----------------------------\n");
+        while (result.hasNext()) {
+            Record record = result.next();
+            String pais = record.get("Pais").asString();
+            String numClientes = record.get("NumClientes").toString();
+            out.write(pais + " ---> " + numClientes + "\n");
+        }
+        out.write("\n\n");
+
+        // 4. Listar o nome dos clientes que realizaram encomendas no país “USA”, de acordo com a cidade onde se localizam, ordenado por ordem alfabética do nome da cidade.
+        query = "MATCH (c:Customer)-[:LOCATED_IN_COUNTRY]->(co:Country)\n";
+        query += "WHERE co.country = 'USA'\n";
+        query += "WITH c\n";
+        query += "MATCH (c)-[:LOCATED_IN_CITY]->(ci:City)\n";
+        query += "WITH ci, COLLECT(c.customerName) AS Clientes\n";
+        query += "RETURN ci.city AS Cidade, Clientes\n";
+        query += "ORDER BY Cidade";
+        out.write("4. Listar o nome dos clientes que realizaram encomendas no país “USA”, de acordo com a cidade onde se localizam, ordenado por ordem alfabética do nome da cidade.\n");
+        out.write(query + "\n\n");
+        result = session.run(query);
+        out.write("Cidade ---> Clientes\n");
+        out.write("--------------------\n");
+        while (result.hasNext()) {
+            Record record = result.next();
+            String cidade = record.get("Cidade").asString();
+            String clientes = record.get("Clientes").toString();
+            out.write(cidade + " ---> " + clientes + "\n");
+        }
+        out.write("\n\n");
+
+        // 5. Listar o número de encomendas em cada status, quando o tamanho do negócio (“DealSize”) é grande (“Large”).
+        query = "MATCH (o:Order)-[:BELONGS_TO]->(d:DealSize)\n";
+        query += "WHERE d.size = 'Large'\n";
+        query += "WITH o.status AS stat, COUNT(o) AS numEncomendas\n";
+        query += "RETURN stat, numEncomendas\n";
+        out.write("5. Listar o número de encomendas em cada status, quando o tamanho do negócio (“DealSize”) é grande (“Large”).\n");
+        out.write(query + "\n\n");
+        result = session.run(query);
+        out.write("Status ---> Número de encomendas\n");
+        out.write("--------------------------------\n");
+        while (result.hasNext()) {
+            Record record = result.next();
+            String status = record.get("stat").asString();
+            String numEncomendas = record.get("numEncomendas").toString();
+            out.write(status + " ---> " + numEncomendas + "\n");
+        }
+        out.write("\n\n");
+
         driver.close();
         out.close();
     }
