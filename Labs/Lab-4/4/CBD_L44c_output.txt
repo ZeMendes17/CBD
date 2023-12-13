@@ -5,95 +5,95 @@ RETURN c.customerName AS Cliente, orders AS Encomendas
 
 Cliente ---> Encomendas
 -----------------------
-Land of Toys Inc. ---> [10292, 10329, 10248, 10107]
-Reims Collectables ---> [10398, 10137, 10121, 10359, 10343]
-Lyon Souveniers ---> [10134, 10356, 10395]
-Toys4GrownUps.com ---> [10189, 10367, 10145]
-Technics Stores Inc. ---> [10362, 10140, 10168, 10317]
-Daedalus Designs Imports ---> [10224, 10180]
-Herkku Gifts ---> [10188, 10181, 10289]
+Land of Toys Inc. ---> [10329, 10107, 10292, 10248]
+Reims Collectables ---> [10398, 10137, 10121, 10343, 10359]
+Lyon Souveniers ---> [10356, 10395, 10134]
+Toys4GrownUps.com ---> [10145, 10367, 10189]
+Technics Stores Inc. ---> [10317, 10140, 10168, 10362]
+Daedalus Designs Imports ---> [10180, 10224]
+Herkku Gifts ---> [10181, 10188, 10289]
 Auto Canal Petit ---> [10211, 10402, 10252]
-Australian Collectors, Co. ---> [10120, 10342, 10125, 10223, 10347]
+Australian Collectors, Co. ---> [10223, 10342, 10347, 10120, 10125]
 Vitachrome Inc. ---> [10237, 10324, 10102]
-Tekni Collectables Inc. ---> [10251, 10401, 10233]
+Tekni Collectables Inc. ---> [10233, 10251, 10401]
 Gift Depot Inc. ---> [10263, 10172, 10413]
-La Rochelle Gifts ---> [10425, 10315, 10375, 10275]
+La Rochelle Gifts ---> [10315, 10375, 10425, 10275]
 Marta's Replicas Co. ---> [10305, 10285]
-Toys of Finland, Co. ---> [10377, 10155, 10299]
-Baane Mini Imports ---> [10325, 10309, 10158, 10103]
-Diecast Classics Inc. ---> [10318, 10281, 10272, 10422]
-Salzburg Collectables ---> [10269, 10419, 10119, 10341]
-Souveniers And Things Co. ---> [10270, 10139, 10361, 10420]
-FunGiftIdeas.com ---> [10388, 10166, 10321]
-UK Collectables, Ltd. ---> [10403, 10302, 10253]
-Euro Shopping Channel ---> [10262, 10383, 10244, 10156, 10153, 10104, 10378, 10128, 10205, 10412, 10394, 10311, 10190, 10379, 10355, 10386, 10203, 10350, 10424, 10417, 10279, 10246, 10133, 10212, 10358, 10380]
-Volvo Model Replicas, Co ---> [10334, 10112, 10320, 10326]
-Corrida Auto Replicas, Ltd ---> [10348, 10214, 10126]
-Dragon Souveniers, Ltd. ---> [10387, 10165, 10150, 10117, 10277]
-Classic Legends Inc. ---> [10337, 10163, 10115]
-Australian Gift Network, Co ---> [10152, 10174, 10374]
-Classic Gift Ideas, Inc ---> [10183, 10307]
-Saveley & Henriot, Co. ---> [10208, 10194, 10227]
-Canadian Gift Exchange Network ---> [10206, 10313]
+Toys of Finland, Co. ---> [10299, 10155, 10377]
+Baane Mini Imports ---> [10103, 10309, 10158, 10325]
+Diecast Classics Inc. ---> [10272, 10281, 10318, 10422]
+Salzburg Collectables ---> [10341, 10419, 10269, 10119]
+Souveniers And Things Co. ---> [10361, 10270, 10420, 10139]
+FunGiftIdeas.com ---> [10321, 10388, 10166]
+UK Collectables, Ltd. ---> [10302, 10403, 10253]
+Euro Shopping Channel ---> [10153, 10417, 10156, 10203, 10355, 10394, 10128, 10424, 10104, 10383, 10133, 10378, 10212, 10350, 10244, 10311, 10262, 10358, 10279, 10190, 10412, 10386, 10246, 10205, 10379, 10380]
+Volvo Model Replicas, Co ---> [10326, 10334, 10320, 10112]
+Corrida Auto Replicas, Ltd ---> [10126, 10214, 10348]
+Dragon Souveniers, Ltd. ---> [10150, 10277, 10165, 10117, 10387]
+Classic Legends Inc. ---> [10163, 10115, 10337]
+Australian Gift Network, Co ---> [10152, 10374, 10174]
+Classic Gift Ideas, Inc ---> [10307, 10183]
+Saveley & Henriot, Co. ---> [10208, 10227, 10194]
+Canadian Gift Exchange Network ---> [10313, 10206]
 West Coast Collectables Co. ---> [10215, 10199]
-Cambridge Collectables Co. ---> [10249, 10228]
-Super Scale Inc. ---> [10196, 10245]
-Tokyo Collectables, Ltd ---> [10372, 10258, 10339, 10408]
+Cambridge Collectables Co. ---> [10228, 10249]
+Super Scale Inc. ---> [10245, 10196]
+Tokyo Collectables, Ltd ---> [10339, 10258, 10408, 10372]
 Amica Models & Co. ---> [10293, 10280]
-Scandinavian Gift Ideas ---> [10389, 10167, 10291]
-Auto Assoc. & Cie. ---> [10304, 10216]
-Mini Gifts Distributors Ltd. ---> [10229, 10282, 10182, 10382, 10390, 10335, 10421, 10357, 10271, 10371, 10113, 10385, 10368, 10396, 10142, 10135, 10312]
-Online Diecast Creations Co. ---> [10100, 10322, 10192]
-Collectables For Less Inc. ---> [10147, 10274, 10369]
-Anna's Decorations, Ltd ---> [10169, 10391, 10370, 10148]
-Quebec Home Shopping Network ---> [10411, 10261, 10171]
+Scandinavian Gift Ideas ---> [10167, 10389, 10291]
+Auto Assoc. & Cie. ---> [10216, 10304]
+Mini Gifts Distributors Ltd. ---> [10368, 10390, 10282, 10271, 10382, 10371, 10312, 10385, 10182, 10229, 10142, 10335, 10357, 10396, 10113, 10135, 10421]
+Online Diecast Creations Co. ---> [10322, 10100, 10192]
+Collectables For Less Inc. ---> [10369, 10147, 10274]
+Anna's Decorations, Ltd ---> [10391, 10370, 10148, 10169]
+Quebec Home Shopping Network ---> [10261, 10411, 10171]
 Osaka Souveniers Co. ---> [10210, 10240]
 Motor Mint Distributors Inc. ---> [10331, 10236, 10109]
-Atelier graphique ---> [10345, 10298, 10123]
+Atelier graphique ---> [10123, 10298, 10345]
 Mini Classics ---> [10308, 10195]
-Danish Wholesale Imports ---> [10238, 10406, 10256, 10327, 10105]
-Stylish Desk Decors, Co. ---> [10129, 10351, 10175]
-Mini Creations Ltd. ---> [10143, 10185, 10365]
-Alpha Cognac ---> [10178, 10397, 10136]
-Double Decker Gift Stores, Ltd ---> [10186, 10213]
-Enaco Distributors ---> [10118, 10340, 10197]
+Danish Wholesale Imports ---> [10327, 10105, 10406, 10256, 10238]
+Stylish Desk Decors, Co. ---> [10129, 10175, 10351]
+Mini Creations Ltd. ---> [10143, 10365, 10185]
+Alpha Cognac ---> [10136, 10397, 10178]
+Double Decker Gift Stores, Ltd ---> [10213, 10186]
+Enaco Distributors ---> [10340, 10118, 10197]
 Collectable Mini Designs Co. ---> [10222, 10226]
-Petit Auto ---> [10423, 10273, 10221]
+Petit Auto ---> [10221, 10273, 10423]
 Royal Canadian Collectables, Ltd. ---> [10283, 10235]
-Gifts4AllAges.com ---> [10295, 10264, 10414]
+Gifts4AllAges.com ---> [10295, 10414, 10264]
 giftsbymail.co.uk ---> [10232, 10316]
 Oulu Toy Supplies, Inc. ---> [10239, 10373, 10151]
-The Sharp Gifts Warehouse ---> [10250, 10257, 10407, 10400]
-La Corne D'abondance, Co. ---> [10336, 10114, 10286]
+The Sharp Gifts Warehouse ---> [10257, 10250, 10407, 10400]
+La Corne D'abondance, Co. ---> [10336, 10286, 10114]
 Mini Auto Werke ---> [10392, 10170, 10164]
 Diecast Collectables ---> [10207, 10243]
-Handji Gifts& Co ---> [10259, 10217, 10409, 10288]
+Handji Gifts& Co ---> [10217, 10259, 10409, 10288]
 Cruz & Sons Co. ---> [10108, 10198, 10330]
-Marseille Mini Autos ---> [10122, 10364, 10344]
-Toms Spezialitten, Ltd ---> [10310, 10191]
-Vida Sport, Ltd ---> [10287, 10225]
-L'ordine Souveniers ---> [10266, 10416, 10176]
+Marseille Mini Autos ---> [10344, 10364, 10122]
+Toms Spezialitten, Ltd ---> [10191, 10310]
+Vida Sport, Ltd ---> [10225, 10287]
+L'ordine Souveniers ---> [10176, 10266, 10416]
 Online Mini Collectables ---> [10294, 10276]
-Blauer See Auto, Co. ---> [10230, 10101, 10323, 10300]
-Suominen Souveniers ---> [10141, 10247, 10363]
-Muscle Machine Inc ---> [10349, 10267, 10204, 10127]
-Clover Collections, Co. ---> [10297, 10220]
-CAF Imports ---> [10231, 10177]
-AV Stores, Co. ---> [10110, 10306, 10332]
+Blauer See Auto, Co. ---> [10230, 10300, 10323, 10101]
+Suominen Souveniers ---> [10141, 10363, 10247]
+Muscle Machine Inc ---> [10204, 10127, 10267, 10349]
+Clover Collections, Co. ---> [10220, 10297]
+CAF Imports ---> [10177, 10231]
+AV Stores, Co. ---> [10110, 10332, 10306]
 Heintze Collectables ---> [10314, 10161]
 Microscale Inc. ---> [10319, 10242]
 Boards & Toys Co. ---> [10154, 10376]
 Iberia Gift Imports, Corp. ---> [10303, 10184]
-Signal Collectibles Ltd. ---> [10149, 10219]
-Mini Caravy ---> [10255, 10241, 10405]
-Signal Gift Stores ---> [10278, 10346, 10124]
+Signal Collectibles Ltd. ---> [10219, 10149]
+Mini Caravy ---> [10241, 10255, 10405]
+Signal Gift Stores ---> [10124, 10346, 10278]
 Norway Gifts By Mail, Co. ---> [10301, 10284]
 Rovelli Gifts ---> [10328, 10173, 10106]
-Australian Collectables, Ltd ---> [10415, 10265, 10193]
+Australian Collectables, Ltd ---> [10415, 10193, 10265]
 Gift Ideas Corp. ---> [10353, 10146, 10131]
 Bavarian Collectables Imports, Co. ---> [10296]
-Royale Belge ---> [10116, 10338, 10144, 10366]
-Auto-Moto Classics Inc. ---> [10352, 10290, 10130]
+Royale Belge ---> [10338, 10144, 10366, 10116]
+Auto-Moto Classics Inc. ---> [10290, 10130, 10352]
 
 
 2. O nome do cliente e número de encomendas que realizou, ordenado por ordem decrescente do número de encomendas e o total gasto por cada cliente, com 2 casas decimais.
@@ -237,21 +237,21 @@ Cidade ---> Clientes
 --------------------
 Allentown ---> ["Diecast Classics Inc."]
 Boston ---> ["Gifts4AllAges.com", "Diecast Collectables"]
-Brickhaven ---> ["Online Mini Collectables", "Collectables For Less Inc.", "Auto-Moto Classics Inc."]
+Brickhaven ---> ["Online Mini Collectables", "Auto-Moto Classics Inc.", "Collectables For Less Inc."]
 Bridgewater ---> ["Gift Depot Inc."]
 Brisbane ---> ["Signal Collectibles Ltd."]
 Burbank ---> ["West Coast Collectables Co."]
 Burlingame ---> ["Technics Stores Inc."]
 Cambridge ---> ["Cambridge Collectables Co.", "Marta's Replicas Co."]
-Glendale ---> ["Boards & Toys Co.", "Gift Ideas Corp."]
+Glendale ---> ["Gift Ideas Corp.", "Boards & Toys Co."]
 Las Vegas ---> ["Signal Gift Stores"]
-NYC ---> ["Vitachrome Inc.", "Classic Legends Inc.", "Muscle Machine Inc", "Microscale Inc.", "Land of Toys Inc."]
+NYC ---> ["Microscale Inc.", "Land of Toys Inc.", "Classic Legends Inc.", "Vitachrome Inc.", "Muscle Machine Inc"]
 Nashua ---> ["Online Diecast Creations Co."]
 New Bedford ---> ["FunGiftIdeas.com", "Mini Creations Ltd."]
 New Haven ---> ["Super Scale Inc."]
 Newark ---> ["Tekni Collectables Inc."]
 Pasadena ---> ["Toys4GrownUps.com"]
-Philadelphia ---> ["Classic Gift Ideas, Inc", "Motor Mint Distributors Inc."]
+Philadelphia ---> ["Motor Mint Distributors Inc.", "Classic Gift Ideas, Inc"]
 San Diego ---> ["Collectable Mini Designs Co."]
 San Jose ---> ["The Sharp Gifts Warehouse"]
 San Rafael ---> ["Mini Gifts Distributors Ltd."]
@@ -268,9 +268,210 @@ RETURN stat, numEncomendas
 Status ---> Número de encomendas
 --------------------------------
 Shipped ---> 108
-On Hold ---> 2
-Disputed ---> 2
-Resolved ---> 1
 In Process ---> 1
+Disputed ---> 2
+On Hold ---> 2
+Resolved ---> 1
 
 
+6. A média de dinheiro gerado por cada produto ao longo de todas as encomendas, ordenado por ordem decrescente da média.
+MATCH (o:Order)-[:PURCHASED]->(p:Product)
+WITH p.productCode AS code, AVG(o.sales) AS avgSales
+RETURN code, avgSales
+ORDER BY avgSales DESC
+
+Código do produto ---> Média de dinheiro gerado
+------------------------------------------------
+S24_3856 ---> 4674.276153846156
+S18_1889 ---> 4635.9412
+S18_1984 ---> 4621.806296296296
+S12_4675 ---> 4579.8896
+S18_1129 ---> 4530.082592592593
+S24_2972 ---> 4443.861538461539
+S18_3685 ---> 4386.2652
+S18_3232 ---> 4122.796274509804
+S18_2870 ---> 4022.2771999999995
+S18_1589 ---> 3886.6708
+S700_2824 ---> 3782.7007407407405
+S12_3380 ---> 3731.6054166666663
+S12_3990 ---> 3714.7929166666668
+S18_2432 ---> 3670.095185185185
+S18_4600 ---> 3656.709999999999
+S10_4962 ---> 3637.249259259259
+S12_1099 ---> 3629.1341666666667
+S12_1666 ---> 3627.9603846153846
+S24_2000 ---> 3626.646
+S24_3371 ---> 3610.2311999999997
+S32_1374 ---> 3593.1033333333335
+S18_3278 ---> 3588.243043478261
+S10_1949 ---> 3579.5726923076927
+S50_1392 ---> 3576.0639285714287
+S32_1268 ---> 3549.801111111111
+S24_2300 ---> 3547.1103703703698
+S12_2823 ---> 3544.570416666667
+S18_3482 ---> 3524.3275000000003
+S18_1097 ---> 3505.33
+S18_2957 ---> 3502.2067999999995
+S10_2016 ---> 3490.42875
+S24_1046 ---> 3489.3865217391294
+S24_1628 ---> 3483.8466666666673
+S10_4698 ---> 3482.6462500000002
+S10_1678 ---> 3479.6362499999996
+S18_3136 ---> 3477.1380000000004
+S18_2625 ---> 3469.1995833333326
+S12_4473 ---> 3462.469259259259
+S18_2319 ---> 3459.076923076923
+S700_2834 ---> 3456.8756000000003
+S24_2360 ---> 3453.362083333333
+S18_4668 ---> 3444.1953846153847
+S18_3320 ---> 3443.8704166666666
+S18_2949 ---> 3437.2279999999996
+S24_3432 ---> 3408.4873913043484
+S24_4258 ---> 3398.10875
+S32_4485 ---> 3397.6270833333338
+S32_3522 ---> 3394.261923076923
+S12_1108 ---> 3381.9811538461545
+S50_4713 ---> 3381.414583333333
+S18_4721 ---> 3370.3386956521736
+S24_1578 ---> 3354.6875000000005
+S18_2238 ---> 3346.482222222222
+S24_4048 ---> 3298.5757692307693
+S32_2509 ---> 3259.272857142858
+S18_3782 ---> 3259.09625
+S24_1444 ---> 3255.962142857142
+S24_2840 ---> 3231.866428571429
+S24_4620 ---> 3218.790434782609
+S18_2581 ---> 3137.079130434783
+S12_3891 ---> 3101.3453846153843
+S32_2206 ---> 3091.3629166666665
+S24_2766 ---> 3087.4665217391307
+S24_3191 ---> 3087.4665217391303
+S24_4278 ---> 3049.7262499999993
+S50_1514 ---> 3009.3192307692316
+S12_3148 ---> 3007.188
+S32_3207 ---> 3004.6926923076917
+S18_2795 ---> 2966.1
+S18_1367 ---> 2886.546956521739
+S18_3140 ---> 2878.7939999999994
+S24_2887 ---> 2872.8886363636366
+S18_1342 ---> 2859.2566666666667
+S32_4289 ---> 2838.279583333334
+S700_1691 ---> 2823.2050000000004
+S50_1341 ---> 2823.204999999999
+S18_4933 ---> 2773.812727272727
+S18_3259 ---> 2716.0224000000003
+S24_1785 ---> 2712.7530434782616
+S18_4027 ---> 2671.975000000001
+S24_2022 ---> 2620.8091666666674
+S700_3167 ---> 2609.6912
+S700_1938 ---> 2541.7475000000004
+S700_2466 ---> 2513.869629629629
+S10_4757 ---> 2503.2987999999996
+S700_3505 ---> 2486.583076923077
+S700_3962 ---> 2455.1838461538464
+S18_4409 ---> 2378.210476190476
+S24_1937 ---> 2370.737916666667
+S18_2325 ---> 2363.7025000000003
+S72_3212 ---> 2348.6192307692304
+S700_4002 ---> 2321.884814814815
+S18_4522 ---> 2315.575384615385
+S24_3949 ---> 2301.115185185185
+S700_2610 ---> 2295.2911538461535
+S18_1749 ---> 2288.2171428571423
+S18_3029 ---> 2285.7279999999996
+S18_3856 ---> 2269.3468000000003
+S18_1662 ---> 2259.9026923076926
+S24_2011 ---> 2229.2068000000004
+S700_1138 ---> 2195.6896153846155
+S24_3151 ---> 2178.6923999999995
+S18_2248 ---> 2140.5523809523806
+S72_1253 ---> 2080.357692307692
+S24_3420 ---> 2072.7857692307693
+S24_2841 ---> 2068.1132000000002
+S700_2047 ---> 2063.404230769231
+S24_3816 ---> 1924.1756000000003
+S24_3969 ---> 1875.6323809523808
+
+
+7. Top 5 dos produtos que foram mais vezes comprados, com o nome do produto e o número de vezes que foi comprado.
+MATCH (o:Order)-[:PURCHASED]->(p:Product)
+WITH p, COUNT(o) AS numOrders
+RETURN p.productCode AS productCode, p.productLine AS productLine, numOrders AS NumOrders
+ORDER BY numOrders DESC
+LIMIT 5
+
+Código do produto ---> Linha do produto; Número de vezes que foi comprado
+-------------------------------------------------------------------------
+S18_3232 ---> Classic Cars; 51
+S32_2509 ---> Trucks and Buses; 28
+S24_2840 ---> Classic Cars; 28
+S24_1444 ---> Classic Cars; 28
+S50_1392 ---> Trucks and Buses; 28
+
+
+8. Listar o MSRP (Manufacturer's Suggested Retail Price) por linha de produto.
+MATCH (p:Product)
+RETURN p.productLine AS productLine, AVG(p.msrp) AS msrp
+
+
+Linha do produto ---> MSRP
+---------------------------
+Motorcycles ---> 96.69230769230768
+Classic Cars ---> 117.86486486486481
+Trucks and Buses ---> 102.63636363636364
+Vintage Cars ---> 86.58333333333334
+Planes ---> 89.08333333333334
+Ships ---> 86.11111111111111
+Trains ---> 73.33333333333333
+
+
+9. Listar os 10 produtos mais vendidos de em uma única encomenda.
+MATCH (p:Product)<-[r:PURCHASED]-(:Order)
+WITH p, MAX(r.quantityOrdered) AS maxQuantityOrdered
+RETURN p.productCode, maxQuantityOrdered
+ORDER BY maxQuantityOrdered DESC
+LIMIT 10
+
+Código do produto ---> Número de produtos vendidos
+---------------------------------------------------
+S12_4675 ---> 97
+S700_2466 ---> 85
+S700_3167 ---> 77
+S24_2766 ---> 76
+S18_1749 ---> 76
+S24_3856 ---> 76
+S24_2300 ---> 70
+S18_4409 ---> 66
+S18_4933 ---> 66
+S12_2823 ---> 66
+
+
+10. Listar o número de produtos vendidos (código e linha do produto) a cada país, ordenado por ordem decrescente do número de produtos vendidos.
+MATCH (co:Country)<-[:LOCATED_IN_COUNTRY]-(:Customer)-[:PLACED_ORDER]->(:Order)-[r:PURCHASED]->(p:Product)
+WITH co, p, SUM(r.quantityOrdered) AS totalQuantityOrdered
+ORDER BY co.country, totalQuantityOrdered DESC
+WITH co, COLLECT({product: p, totalQuantityOrdered: totalQuantityOrdered})[0] AS topProductPerCountry
+RETURN co.country AS Country, topProductPerCountry.product.productCode AS ProductCode, topProductPerCountry.product.productLine AS ProductLine, topProductPerCountry.totalQuantityOrdered AS TotalQuantityOrdered
+ORDER BY TotalQuantityOrdered DESC
+
+País ---> Código do produto; Linha do produto; Número de produtos vendidos
+--------------------------------------------------------------------------
+USA ---> S12_4473; Trucks and Buses; 523
+Spain ---> S18_3232; Classic Cars; 336
+France ---> S50_4713; Motorcycles; 278
+Australia ---> S18_2949; Vintage Cars; 231
+UK ---> S24_2887; Classic Cars; 162
+Finland ---> S18_3232; Classic Cars; 141
+Italy ---> S700_4002; Planes; 130
+Austria ---> S12_4675; Classic Cars; 128
+Singapore ---> S18_4600; Trucks and Buses; 128
+Germany ---> S24_3371; Classic Cars; 117
+Denmark ---> S18_3685; Classic Cars; 101
+Canada ---> S700_2824; Classic Cars; 97
+Sweden ---> S18_4600; Trucks and Buses; 97
+Belgium ---> S18_3856; Vintage Cars; 95
+Philippines ---> S18_4721; Classic Cars; 94
+Japan ---> S700_4002; Planes; 92
+Switzerland ---> S18_1889; Classic Cars; 91
+Norway ---> S10_1678; Motorcycles; 89
+Ireland ---> S18_4027; Classic Cars; 50
