@@ -1,6 +1,6 @@
 # CBD
 
-Data Base Complements theoretical and practical classes of 2023/2024
+Data Base Complements theoretical and practical classes and assignments of 2023/2024
 
 # Grades
 
